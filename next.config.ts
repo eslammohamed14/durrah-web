@@ -12,6 +12,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  rewrites
+    : async () => [
+        {
+          source: '/login',
+          destination: '/auth/login',
+        },
+      ],
 };
 
 export default nextConfig;

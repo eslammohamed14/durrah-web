@@ -37,7 +37,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Header />
+      <Header transparent />
       <HomeContent topRated={topRated} distinguishedOffers={distinguishedOffers} />
       <Footer />
     </>
