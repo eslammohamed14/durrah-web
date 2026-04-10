@@ -30,33 +30,33 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Create lib/types/services.ts with service interface types (IAuthService, IPaymentService, IMapService, IFileStorageService, IEmailService)
     - _Requirements: 17.4_
 
-  - [ ] 1.4 Configure internationalization (i18n) system
+  - [x] 1.4 Configure internationalization (i18n) system
     - Create config/i18n.ts with locale configuration
     - Create public/locales/en.json and public/locales/ar.json with initial translations
     - Implement lib/utils/i18n.ts with translation helper functions
     - _Requirements: 1.1, 1.4_
 
-- [ ] 2. Implement localization context and provider
-  - [ ] 2.1 Create LocaleContext with localStorage-based persistence
+- [x] 2. Implement localization context and provider
+  - [x] 2.1 Create LocaleContext with localStorage-based persistence
     - Implement lib/contexts/LocaleContext.tsx with locale state management
     - Implement localStorage read/write for locale persistence
     - Implement translation function (t) that reads from locale files
     - Implement RTL/LTR direction switching based on locale
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5_
 
-  - [ ] 2.2 Create LanguageToggle component
+  - [x] 2.2 Create LanguageToggle component
     - Implement components/layout/LanguageToggle.tsx with toggle button
     - Add locale switching functionality that updates localStorage and context
     - Add visual indicator for current language
     - _Requirements: 1.1, 1.2, 1.3_
 
-  - [ ] 2.3 Create ClientOnly wrapper component
+  - [x] 2.3 Create ClientOnly wrapper component
     - Implement components/shared/ClientOnly.tsx to prevent hydration mismatches
     - Handle SSR/CSR locale differences
     - _Requirements: 1.1_
 
 - [ ] 3. Build UI component library
-  - [ ] 3.1 Create primitive UI components
+  - [x] 3.1 Create primitive UI components
     - Implement components/ui/Button.tsx with variants (primary, secondary, outline, ghost)
     - Implement components/ui/Input.tsx with validation states
     - Implement components/ui/Card.tsx with different layouts
@@ -73,48 +73,48 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Test keyboard navigation for Dropdown
     - _Requirements: 17.2_
 
-- [ ] 4. Implement layout components
-  - [ ] 4.1 Create root layout with locale support
+- [x] 4. Implement layout components
+  - [x] 4.1 Create root layout with locale support
     - Implement app/layout.tsx with HTML lang and dir attributes
     - Add LocaleProvider wrapper
     - Add client-side script to update HTML attributes from localStorage before hydration
     - Add meta tags for SEO and alternate language links
     - _Requirements: 1.1, 1.2, 1.3, 19.1_
 
-  - [ ] 4.2 Create Header component with navigation
+  - [x] 4.2 Create Header component with navigation
     - Implement components/layout/Header.tsx with logo, navigation links, and LanguageToggle
     - Add responsive mobile menu with hamburger icon
     - Add authentication state display (login button or user menu)
     - Implement sticky header behavior
     - _Requirements: 16.1, 16.2, 16.3, 16.4_
 
-  - [ ] 4.3 Create Footer component
+  - [x] 4.3 Create Footer component
     - Implement components/layout/Footer.tsx with links and contact information
     - Add multi-language support for footer content
     - Add responsive layout for mobile/tablet/desktop
     - _Requirements: 16.1, 16.2, 16.3_
 
-  - [ ] 4.4 Create navigation components
+  - [x] 4.4 Create navigation components
     - Implement components/layout/Navigation.tsx for main navigation
     - Implement components/layout/Sidebar.tsx for dashboard navigation
     - Add active link highlighting
     - _Requirements: 17.2, 22.1_
 
-- [ ] 5. Implement authentication service and UI
-  - [ ] 5.1 Create authentication service interface and Firebase adapter
+- [x] 5. Implement authentication service and UI
+  - [x] 5.1 Create authentication service interface and Firebase adapter
     - Implement lib/services/auth/IAuthService.ts interface with dual auth methods
     - Implement lib/services/auth/FirebaseAuthAdapter.ts with phone/OTP AND email/password methods
     - Implement sendOTP, verifyOTP, signInWithEmail, registerWithEmail, resetPassword, linkPhoneToAccount, linkEmailToAccount, getCurrentUser, signOut, onAuthStateChanged methods
     - _Requirements: 5.1, 5.2, 5.6, 5.9, 5.12, 23.2_
 
-  - [ ] 5.2 Create AuthContext and provider
+  - [x] 5.2 Create AuthContext and provider
     - Implement lib/contexts/AuthContext.tsx with user state and auth methods
     - Implement loginWithOTP, loginWithEmail, register, logout, updateProfile, hasRole functions
     - Support multi-role users (roles array instead of single role)
     - Add auth state persistence and session management
     - _Requirements: 5.10, 5.11_
 
-  - [ ] 5.3 Create login page with dual auth support
+  - [x] 5.3 Create login page with dual auth support
     - Implement app/auth/login/page.tsx with tabs or toggle for phone/OTP vs email/password
     - Implement OTP input component with auto-focus and validation
     - Implement email/password form with validation
@@ -122,13 +122,13 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Add error handling for invalid OTP, expired codes, and wrong credentials
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6_
 
-  - [ ] 5.3b Create registration page
+  - [x] 5.3b Create registration page
     - Implement app/auth/register/page.tsx with phone/OTP or email/password registration
     - Collect name, email/phone based on chosen method
     - Enforce password complexity for email registration (min 8 chars, letters + numbers)
     - _Requirements: 5.7, 5.8_
 
-  - [ ] 5.4 Create password reset page
+  - [x] 5.4 Create password reset page
     - Implement app/auth/reset-password/page.tsx with email input
     - Send password reset link via email (Firebase)
     - Implement new password form with complexity validation
@@ -143,35 +143,35 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Test multi-role user detection (hasRole)
     - _Requirements: 5.1, 5.2, 5.3, 5.6_
 
-- [ ] 6. Implement API client and service layer
-  - [ ] 6.1 Create base API client
+- [x] 6. Implement API client and service layer
+  - [x] 6.1 Create base API client
     - Implement lib/api/client.ts with fetch wrapper
     - Add request/response interceptors for auth tokens and error handling
     - Implement standardized error handling with APIError class
     - Add retry logic for failed requests
     - _Requirements: 18.1, 18.2, 18.3, 18.4, 18.5_
 
-  - [ ] 6.2 Implement property API endpoints
+  - [x] 6.2 Implement property API endpoints
     - Add searchProperties, getProperty, getPropertyAvailability methods to API client
     - Implement request/response type definitions
     - _Requirements: 18.1, 3.1, 4.1_
 
-  - [ ] 6.3 Implement booking API endpoints
+  - [x] 6.3 Implement booking API endpoints
     - Add createBooking, getBooking, updateBooking, cancelBooking, getUserBookings methods
     - Implement booking data validation
     - _Requirements: 18.1, 7.4, 8.1, 8.4_
 
-  - [ ] 6.4 Implement maintenance API endpoints
+  - [x] 6.4 Implement maintenance API endpoints
     - Add createMaintenanceTicket, getMaintenanceTicket, updateMaintenanceTicket, addTicketComment methods
     - _Requirements: 18.1, 12.5, 13.1, 13.4_
 
-  - [ ] 6.5 Implement user, review, and inquiry API endpoints
+  - [x] 6.5 Implement user, review, and inquiry API endpoints
     - Add getUserProfile, updateUserProfile, createReview, getPropertyReviews methods
     - Add getUserNotifications, markNotificationRead methods
     - Add createInquiry, getUserInquiries, getPropertyInquiries, updateInquiryStatus methods
     - _Requirements: 18.1, 25.4, 28.1, 31.2, 31.5, 31.6_
 
-  - [ ] 6.6 Implement mock API layer
+  - [x] 6.6 Implement mock API layer
     - Create lib/api/mock/MockAPIClient.ts implementing all APIClient methods
     - Create lib/api/mock/seedData.ts with realistic sample data for all categories and roles
     - Implement in-memory data store with CRUD operations
@@ -179,44 +179,44 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Create lib/api/index.ts factory that switches between mock and real client based on env
     - _Requirements: 33.1, 33.2, 33.3, 33.4, 33.5, 33.6_
 
-- [ ] 7. Implement payment service integration
-  - [ ] 7.1 Create payment service interface and Stripe adapter
+- [x] 7. Implement payment service integration
+  - [x] 7.1 Create payment service interface and Stripe adapter
     - Implement lib/services/payment/IPaymentService.ts interface
     - Implement lib/services/payment/StripePaymentAdapter.ts
     - Implement createPaymentIntent, confirmPayment, refundPayment methods
     - _Requirements: 14.1, 14.2, 14.4, 23.3_
 
-  - [ ] 7.2 Create payment form component
+  - [x] 7.2 Create payment form component
     - Implement components/features/booking/PaymentForm.tsx with Stripe Elements
     - Add card input with validation
     - Add payment error handling and retry logic
     - Implement secure payment data handling (no storage of full card numbers)
     - _Requirements: 14.2, 14.3, 14.5, 14.6_
 
-- [ ] 8. Implement map service integration
-  - [ ] 8.1 Create map service interface and Mapbox adapter
+- [x] 8. Implement map service integration
+  - [x] 8.1 Create map service interface and Mapbox adapter
     - Implement lib/services/map/IMapService.ts interface
     - Implement lib/services/map/MapboxAdapter.ts
     - Implement initialize, createMap, addMarker, setCenter methods
     - _Requirements: 15.1, 23.4_
 
-  - [ ] 8.2 Create PropertyMap component
+  - [x] 8.2 Create PropertyMap component
     - Implement components/features/properties/PropertyMap.tsx with dynamic import
     - Add map initialization with property coordinates
     - Add marker with property information
     - Add zoom and pan controls
     - _Requirements: 15.2, 15.3, 15.4_
 
-- [ ] 8b. Implement file storage service
-  - [ ] 8b.1 Create file storage service interface and Firebase Storage adapter
+- [x] 8b. Implement file storage service
+  - [x] 8b.1 Create file storage service interface and Firebase Storage adapter
     - Implement lib/services/storage/IFileStorageService.ts interface
     - Implement lib/services/storage/FirebaseStorageAdapter.ts
     - Implement uploadFile, deleteFile, getFileUrl methods
     - Add file type validation (JPEG, PNG, WebP) and size limit (5MB)
     - _Requirements: 32.1, 32.4, 32.5_
 
-- [ ] 9. Implement home page
-  - [ ] 9.1 Create home page with SSR
+- [x] 9. Implement home page
+  - [x] 9.1 Create home page with SSR
     - Implement app/page.tsx with server-side data fetching
     - Add hero section with search functionality
     - Add "Browse by Property Type" section with category cards
@@ -225,7 +225,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Add advertisement sections
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 19.1_
 
-  - [ ] 9.2 Create SearchBar component
+  - [x] 9.2 Create SearchBar component
     - Implement components/features/search/SearchBar.tsx with category tabs
     - Add location input with autocomplete
     - Add date range picker for check-in/check-out
@@ -233,14 +233,14 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Add search button that navigates to search results page
     - _Requirements: 2.1, 29.1_
 
-  - [ ] 9.3 Create PropertyCard component
+  - [x] 9.3 Create PropertyCard component
     - Implement components/features/properties/PropertyCard.tsx with grid and list variants
     - Display property image, title, location, price, and rating
     - Add favorite/save button
     - Implement responsive layout
     - _Requirements: 3.7, 16.1, 16.2, 16.3_
 
-- [ ] 10. Checkpoint - Ensure all tests pass
+- [x] 10. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 11. Implement property search and filtering
