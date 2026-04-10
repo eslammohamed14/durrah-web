@@ -9,20 +9,20 @@ The implementation follows an incremental approach: foundation → core UI → f
 ## Tasks
 
 - [-] 1. Project setup and foundation
-  - [-] 1.1 Initialize Next.js project with TypeScript and Tailwind CSS
+  - [x] 1.1 Initialize Next.js project with TypeScript and Tailwind CSS
     - Create Next.js 14+ project with App Router
     - Configure TypeScript with strict mode
     - Set up Tailwind CSS with custom theme configuration
     - Create directory structure (app, components, lib, config, public)
     - _Requirements: 17.1, 17.2, 17.5_
 
-  - [ ] 1.2 Configure environment variables and service configuration
+  - [x] 1.2 Configure environment variables and service configuration
     - Create .env.example with all required variables (including NEXT_PUBLIC_USE_MOCK_API, storage, email provider)
     - Implement config/env.ts for environment variable validation (include defaultCurrency: SAR)
     - Implement config/services.ts for service provider configuration
     - _Requirements: 23.1, 23.5, 33.2_
 
-  - [ ] 1.3 Set up TypeScript type definitions
+  - [x] 1.3 Set up TypeScript type definitions
     - Create lib/types/index.ts with core domain models (User, Property, Booking, MaintenanceTicket, Inquiry, CancellationPolicy)
     - User model must support multi-role (roles array) and dual auth (authMethod field)
     - Property model must support ownerId + investorIds, maxGuests, structured CancellationPolicy
