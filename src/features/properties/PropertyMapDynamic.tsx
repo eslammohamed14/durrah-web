@@ -4,7 +4,7 @@
  * included in the server bundle.
  *
  * Usage:
- *   import PropertyMapDynamic from '@/components/features/properties/PropertyMapDynamic';
+ *   import PropertyMapDynamic from '@/features/properties/PropertyMapDynamic';
  *   <PropertyMapDynamic coordinates={{ lat: 24.7, lng: 46.7 }} title="My Property" />
  */
 
