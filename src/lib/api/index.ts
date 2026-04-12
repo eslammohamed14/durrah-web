@@ -1,10 +1,11 @@
 /**
  * API client factory.
- * Returns MockAPIClient when NEXT_PUBLIC_USE_MOCK_API=true,
+ * Returns MockAPIClient when NEXT_PUBLIC_USE_MOCK_API=true or when
+ * NEXT_PUBLIC_API_BASE_URL is unset (local dev without a backend),
  * otherwise returns the real API client composed from endpoint modules.
  */
 
-import { env } from '@/config/env';
+import { env, usesMockApi } from '@/config/env';
 import { BaseAPIClient } from './client';
 import { PropertiesAPI } from './properties';
 import { BookingsAPI } from './bookings';
@@ -90,7 +91,7 @@ let _client: APIClient | null = null;
 
 export function getAPIClient(): APIClient {
   if (!_client) {
-    _client = env.useMockAPI ? new MockAPIClient() : new RealAPIClient();
+    _client = usesMockApi() ? new MockAPIClient() : new RealAPIClient();
   }
   return _client;
 }

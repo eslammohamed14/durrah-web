@@ -21,6 +21,11 @@ export async function getAuthService(): Promise<IAuthService> {
   if (_authService) return _authService;
 
   switch (env.authProvider) {
+    case 'mock': {
+      const { MockAuthAdapter } = await import('@/lib/services/auth/MockAuthAdapter');
+      _authService = new MockAuthAdapter();
+      break;
+    }
     case 'firebase': {
       const { FirebaseAuthAdapter } = await import('@/lib/services/auth/FirebaseAuthAdapter');
       _authService = new FirebaseAuthAdapter(env.firebase);
