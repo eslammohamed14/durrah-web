@@ -4,9 +4,19 @@
 
 import type { Locale } from '@/lib/types';
 import { DEFAULT_LOCALE, isValidLocale, LOCALE_STORAGE_KEY } from '@/config/i18n';
+import enBundled from '../../../public/locales/en.json';
+import arBundled from '../../../public/locales/ar.json';
 
 // Lazily loaded translation dictionaries
-const translationCache: Partial<Record<Locale, Record<string, unknown>>> = {};
+const translationCache: Partial<Record<Locale, Record<string, unknown>>> = {
+  en: enBundled as Record<string, unknown>,
+  ar: arBundled as Record<string, unknown>,
+};
+
+/** Synchronous access to bundled locale JSON (used for first paint and after bfcache). */
+export function getBundledTranslations(locale: Locale): Record<string, unknown> {
+  return translationCache[locale] ?? translationCache[DEFAULT_LOCALE]!;
+}
 
 /**
  * Load translations for a given locale.
