@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
 
 :root {
   --background: #fafafa;
@@ -20,4 +23,60 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-poppins), 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+/* ImageSwiper — pagination dots + nav pills */
+.image-swiper {
+  min-width: 0;
+  max-width: 100%;
+  --swiper-navigation-size: 12px;
+  --swiper-navigation-color: #fff;
+  --swiper-pagination-color: #fff;
+  --swiper-pagination-bullet-inactive-color: #fff;
+  --swiper-pagination-bullet-inactive-opacity: 0.45;
+  --swiper-pagination-bullet-opacity: 1;
+  --swiper-pagination-bottom: 10px;
+  --swiper-pagination-bullet-size: 8px;
+  --swiper-pagination-bullet-horizontal-gap: 5px;
+}
+
+.image-swiper .swiper-wrapper {
+  min-width: 0;
+}
+
+.image-swiper .swiper-slide {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.image-swiper .swiper-button-prev,
+.image-swiper .swiper-button-next {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-top: -1rem;
+  padding: 0.5rem;
+  color: #fff;
+  top: 50%;
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  border-radius: 9999px;
+  z-index: 5;
+}
+
+.image-swiper .swiper-button-prev {
+  left: 8px;
+}
+
+.image-swiper .swiper-button-next {
+  right: 8px;
+}
+
+.image-swiper .swiper-button-prev::after,
+.image-swiper .swiper-button-next::after {
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.image-swiper .swiper-pagination-bullet-active {
+  background: #fff;
 }
