@@ -8,6 +8,7 @@ import { CompanyMetricsSection } from "@/features/home/components/companyMetrics
 import { PropertiesSection } from "@/features/home/components/PropertiesSection";
 import { ActivitiesSection } from "@/features/home/components/activitiesSection";
 import { CtaBannerSection } from "@/features/home/components/ctaBannerSection";
+import { BeachesSection } from "@/features/home/components/beachesSection";
 import { CtaNavigateButton } from "@/components/ui/CtaNavigateButton";
 import { SectionTag } from "@/features/home/components/sectionTag";
 import { ArrowRightIcon } from "@/assets/icons";
@@ -41,74 +42,7 @@ export function HomeContent({ featuredForGrid }: HomeContentProps) {
       <CtaBannerSection />
 
       {/* ── Beaches Section ──────────────────────────────────────────────── */}
-      <section
-        aria-labelledby="beaches-heading"
-        className="bg-[#E8E8FF] px-[120px] py-[100px]"
-      >
-        <div className="mx-auto flex max-w-[1200px] flex-col gap-6">
-          {/* Header */}
-          <div className="flex items-end gap-4">
-            <div className="flex flex-1 flex-col gap-4">
-              <SectionTag
-                icon={
-                  <svg
-                    className="h-7 w-7 text-[#363C88]"
-                    viewBox="0 0 28 28"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M4 20c4-8 16-8 20 0M14 4v4M6 8l2 2M22 8l-2 2"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                }
-                label={t("home.beachesTag")}
-              />
-              <h2
-                id="beaches-heading"
-                className="text-2xl font-medium leading-[1.5] text-[#2A2F73]"
-              >
-                {t("home.beachesHeadline")}
-              </h2>
-              <p className="max-w-[875px] text-base text-[#5A5A5A]">
-                {t("home.beachesSubtitle")}
-              </p>
-            </div>
-          </div>
-
-          {/* Beach gallery — overlapping cards */}
-          <div className="relative h-[475px] w-full">
-            {/* Background blurred cards */}
-            <div className="absolute left-0 top-7 h-[383px] w-[274px] overflow-hidden rounded-lg bg-gradient-to-br from-blue-300 to-cyan-400 opacity-30 blur-[5px]" />
-            <div className="absolute right-0 top-7 h-[383px] w-[274px] overflow-hidden rounded-lg bg-gradient-to-br from-teal-300 to-blue-400 opacity-30 blur-[5px]" />
-            {/* Side cards */}
-            <div className="absolute left-[179px] top-3.5 h-[383px] w-[296px] overflow-hidden rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 opacity-30 blur-[4px]" />
-            <div className="absolute right-[179px] top-3.5 h-[383px] w-[296px] overflow-hidden rounded-lg bg-gradient-to-br from-blue-400 to-indigo-500 opacity-30 blur-[4px]" />
-            {/* Center featured card */}
-            <div className="absolute left-[441px] top-0 h-[411px] w-[318px] overflow-hidden rounded-lg bg-gradient-to-br from-blue-500 to-cyan-600">
-              <div className="absolute bottom-0 left-0 right-0 h-[294px] bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-3 left-3 right-3 rounded-2xl bg-white/10 p-3 backdrop-blur-[18px]">
-                <p className="text-base font-semibold text-white">
-                  {t("home.beachName")}
-                </p>
-                <p className="mt-1 text-xs text-white/90">
-                  {t("home.beachDesc")}
-                </p>
-                <button
-                  type="button"
-                  className="mt-2 flex items-center gap-2 text-sm text-white"
-                >
-                  {t("home.explore")} <ArrowRightIcon className="h-6 w-6" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <BeachesSection />
 
       {/* ── Shops Section ────────────────────────────────────────────────── */}
       <section

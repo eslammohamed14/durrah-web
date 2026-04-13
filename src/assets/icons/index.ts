@@ -18,6 +18,10 @@ export {
   BuildingColoredIcon,
   type BuildingColoredIconProps,
 } from "./BuildingColoredIcon";
+export {
+  BeachesSectionIcon,
+  type BeachesSectionIconProps,
+} from "./BeachesSectionIcon";
 export { CalendarIcon, type CalendarIconProps } from "./CalendarIcon";
 export { PeopleIcon, type PeopleIconProps } from "./PeopleIcon";
 export {
