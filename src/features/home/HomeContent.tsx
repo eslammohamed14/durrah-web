@@ -10,6 +10,7 @@ import { ActivitiesSection } from "@/features/home/components/activitiesSection"
 import { CtaBannerSection } from "@/features/home/components/ctaBannerSection";
 import { BeachesSection } from "@/features/home/components/beachesSection";
 import { ShopsSection } from "@/features/home/components/shopsSection";
+import { YachtSection } from "@/features/home/components/yachtSection";
 import { CtaNavigateButton } from "@/components/ui/CtaNavigateButton";
 import { SectionTag } from "@/features/home/components/sectionTag";
 import { ArrowRightIcon } from "@/assets/icons";
@@ -49,51 +50,7 @@ export function HomeContent({ featuredForGrid }: HomeContentProps) {
       <ShopsSection />
 
       {/* ── Yacht Parking ────────────────────────────────────────────────── */}
-      <section
-        aria-labelledby="yacht-heading"
-        className="flex h-[650px] items-stretch bg-[#FAFAFA]"
-      >
-        {/* Left: image/color block */}
-        <div className="relative w-[708px] shrink-0 overflow-hidden bg-[#E8E8FF]">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-200 to-indigo-300 opacity-50" />
-        </div>
-
-        {/* Right: content */}
-        <div className="flex flex-1 flex-col justify-end gap-6 px-[120px] py-[147px]">
-          <SectionTag
-            icon={
-              <svg
-                className="h-7 w-7 text-[#363C88]"
-                viewBox="0 0 28 28"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M4 20l6-12 4 8 4-6 6 10H4z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            }
-            label={t("home.yachtTag")}
-          />
-          <h2
-            id="yacht-heading"
-            className="text-2xl font-medium leading-[1.5] text-[#2A2F73]"
-          >
-            {t("home.yachtHeadline")}
-          </h2>
-          <p className="text-base text-[#5A5A5A]">{t("home.yachtSubtitle")}</p>
-          <CtaNavigateButton
-            href="/search"
-            rightIcon={<ArrowRightIcon className="h-6 w-6" />}
-          >
-            {t("home.exploreMarina")}
-          </CtaNavigateButton>
-        </div>
-      </section>
+      <YachtSection />
 
       {/* ── Blogs Section ────────────────────────────────────────────────── */}
       <section
