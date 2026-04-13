@@ -11,6 +11,10 @@ export {
 } from "./BlogsSectionIcon";
 export { DimensionIcon, type DimensionIconProps } from "./DimensionIcon";
 export {
+  InstagramSectionIcon,
+  type InstagramSectionIconProps,
+} from "./InstagramSectionIcon";
+export {
   ArrowSolidDownIcon,
   type ArrowSolidDownIconProps,
 } from "./ArrowSolidDownIcon";
