@@ -9,6 +9,7 @@ import { PropertiesSection } from "@/features/home/components/PropertiesSection"
 import { ActivitiesSection } from "@/features/home/components/activitiesSection";
 import { CtaBannerSection } from "@/features/home/components/ctaBannerSection";
 import { BeachesSection } from "@/features/home/components/beachesSection";
+import { ShopsSection } from "@/features/home/components/shopsSection";
 import { CtaNavigateButton } from "@/components/ui/CtaNavigateButton";
 import { SectionTag } from "@/features/home/components/sectionTag";
 import { ArrowRightIcon } from "@/assets/icons";
@@ -45,69 +46,7 @@ export function HomeContent({ featuredForGrid }: HomeContentProps) {
       <BeachesSection />
 
       {/* ── Shops Section ────────────────────────────────────────────────── */}
-      <section
-        aria-labelledby="shops-heading"
-        className="bg-[#FAFAFA] px-[120px] py-[100px]"
-      >
-        <div className="mx-auto flex max-w-[1440px] items-center gap-12">
-          {/* Image grid */}
-          <div className="relative h-[450px] w-[583px] shrink-0">
-            <div className="absolute left-[13px] top-0 h-full w-[570px] overflow-hidden rounded-2xl">
-              <div className="flex h-full flex-col gap-2">
-                <div className="flex flex-1 gap-2">
-                  <div className="w-[308px] overflow-hidden rounded-tl-2xl bg-gradient-to-br from-amber-300 to-orange-400" />
-                  <div className="flex-1 overflow-hidden rounded-tr-2xl bg-gradient-to-br from-rose-300 to-pink-400" />
-                </div>
-                <div className="flex flex-1 gap-2">
-                  <div className="w-[176px] overflow-hidden rounded-bl-2xl bg-gradient-to-br from-purple-300 to-indigo-400" />
-                  <div className="flex-1 overflow-hidden rounded-br-2xl bg-gradient-to-br from-teal-300 to-cyan-400" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Text content */}
-          <div className="flex flex-col gap-6">
-            <SectionTag
-              icon={
-                <svg
-                  className="h-7 w-7 text-[#363C88]"
-                  viewBox="0 0 28 28"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M4 7h20M4 7v14a1 1 0 001 1h14a1 1 0 001-1V7M4 7l2-4h16l2 4M10 11v6M14 11v6M18 11v6"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              }
-              label={t("home.shopsTag")}
-            />
-            <h2
-              id="shops-heading"
-              className="text-2xl font-medium leading-[1.5] text-[#2A2F73]"
-            >
-              {t("home.shopsHeadline")}
-            </h2>
-            <p className="text-base text-[#727272]">
-              {t("home.shopsSubtitle1")}
-            </p>
-            <p className="text-base text-[#727272]">
-              {t("home.shopsSubtitle2")}
-            </p>
-            <CtaNavigateButton
-              href="/search?category=shop"
-              rightIcon={<ArrowRightIcon className="h-6 w-6" />}
-            >
-              {t("home.browseShops")}
-            </CtaNavigateButton>
-          </div>
-        </div>
-      </section>
+      <ShopsSection />
 
       {/* ── Yacht Parking ────────────────────────────────────────────────── */}
       <section

@@ -31,3 +31,4 @@ export {
 export { SearchIcon, type SearchIconProps } from "./SearchIcon";
 export { StarColoredIcon, type StarColoredIconProps } from "./StarColoredIcon";
 export { WorkBagIcon, type WorkBagIconProps } from "./WorkBagIcon";
+export { Xshap, type XshapProps } from "./xshap";
