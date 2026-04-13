@@ -6,6 +6,7 @@ import { useLocale } from "@/lib/contexts/LocaleContext";
 import { HeroSection } from "@/features/home/components/heroSection";
 import { CompanyMetricsSection } from "@/features/home/components/companyMetrics";
 import { PropertiesSection } from "@/features/home/components/PropertiesSection";
+import { ActivitiesSection } from "@/features/home/components/activitiesSection";
 import { CtaNavigateButton } from "@/components/ui/CtaNavigateButton";
 import { SectionTag } from "@/features/home/components/sectionTag";
 import { ArrowRightIcon } from "@/assets/icons";
@@ -33,78 +34,7 @@ export function HomeContent({ featuredForGrid }: HomeContentProps) {
       <PropertiesSection properties={featuredForGrid} />
 
       {/* ── Activities Section ────────────────────────────────────────────── */}
-      <section
-        aria-labelledby="activities-heading"
-        className="bg-[#F0E9E4] px-[120px] py-[100px]"
-      >
-        <div className="mx-auto flex max-w-[1200px] flex-col gap-10">
-          {/* Header */}
-          <div className="flex items-end gap-4">
-            <div className="flex flex-1 flex-col gap-4">
-              <SectionTag
-                icon={
-                  <svg
-                    className="h-7 w-7 text-[#363C88]"
-                    viewBox="0 0 28 28"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M14 4L4 14l10 10 10-10L14 4z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                }
-                label={t("home.activitiesTag")}
-              />
-              <h2
-                id="activities-heading"
-                className="text-2xl font-medium leading-[1.5] text-[#2A2F73]"
-              >
-                {t("home.activitiesHeadline")}
-              </h2>
-              <p className="max-w-[875px] text-base text-[#5A5A5A]">
-                {t("home.activitiesSubtitle")}
-              </p>
-            </div>
-            <CtaNavigateButton
-              href="/search?category=activity"
-              className="shrink-0"
-              rightIcon={<ArrowRightIcon className="h-6 w-6" />}
-            >
-              {t("home.viewAllActivities")}
-            </CtaNavigateButton>
-          </div>
-
-          {/* Activity image layout */}
-          <div className="relative h-[411px] w-full overflow-hidden rounded-xl">
-            {/* Main large image */}
-            <div className="absolute left-0 top-0 h-full w-[765px] overflow-hidden rounded-xl bg-gradient-to-br from-blue-400 to-cyan-600">
-              <div className="absolute bottom-0 left-0 right-0 h-[294px] bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-6 left-6">
-                <p className="text-xl font-medium text-white">
-                  {t("home.activityCompanyName")}
-                </p>
-                <p className="mt-2 max-w-[409px] text-sm text-white/90">
-                  {t("home.activityCompanyDesc")}
-                </p>
-                <Link
-                  href="/search?category=activity"
-                  className="mt-4 inline-flex items-center gap-2 rounded-lg border border-white px-6 py-4 text-base font-medium text-white transition-colors hover:bg-white/10"
-                >
-                  {t("home.explore")}
-                  <ArrowRightIcon className="h-6 w-6" />
-                </Link>
-              </div>
-            </div>
-            {/* Side image */}
-            <div className="absolute right-0 top-0 h-full w-[410px] overflow-hidden rounded-xl bg-gradient-to-br from-teal-400 to-blue-500" />
-          </div>
-        </div>
-      </section>
+      <ActivitiesSection />
 
       {/* ── CTA Banner ───────────────────────────────────────────────────── */}
       <section
