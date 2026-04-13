@@ -7,6 +7,7 @@ import { HeroSection } from "@/features/home/components/heroSection";
 import { CompanyMetricsSection } from "@/features/home/components/companyMetrics";
 import { PropertiesSection } from "@/features/home/components/PropertiesSection";
 import { ActivitiesSection } from "@/features/home/components/activitiesSection";
+import { CtaBannerSection } from "@/features/home/components/ctaBannerSection";
 import { CtaNavigateButton } from "@/components/ui/CtaNavigateButton";
 import { SectionTag } from "@/features/home/components/sectionTag";
 import { ArrowRightIcon } from "@/assets/icons";
@@ -37,36 +38,7 @@ export function HomeContent({ featuredForGrid }: HomeContentProps) {
       <ActivitiesSection />
 
       {/* ── CTA Banner ───────────────────────────────────────────────────── */}
-      <section
-        aria-label="Browse all properties"
-        className="relative h-[800px] overflow-hidden bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1440&q=80')",
-        }}
-      >
-        <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
-        <div className="relative flex h-full items-center justify-center">
-          <div className="flex flex-col items-center gap-8 text-center">
-            <h2
-              className="text-xl font-medium leading-[1.3] text-white"
-              style={{ textTransform: "capitalize" }}
-            >
-              {t("home.ctaHeadline")}
-            </h2>
-            <p className="max-w-[486px] text-base text-[#F0F1F3]">
-              {t("home.ctaSubtitle")}
-            </p>
-            <Link
-              href="/search"
-              className="flex items-center gap-6 rounded-2xl bg-white/10 px-3 py-4 text-sm text-white backdrop-blur-[18px] transition-colors hover:bg-white/20"
-            >
-              <span>{t("home.browseAllProperties")}</span>
-              <ArrowRightIcon className="h-6 w-6" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CtaBannerSection />
 
       {/* ── Beaches Section ──────────────────────────────────────────────── */}
       <section
