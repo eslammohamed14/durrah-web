@@ -14,7 +14,7 @@ interface FilterContainerProps {
 }
 
 export function FilterContainer({ allProperties }: FilterContainerProps) {
-  const { t } = useLocale();
+  const { t, dir } = useLocale();
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -64,6 +64,7 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
     <div
       ref={wrapperRef}
       className="rounded-2xl bg-white/10 backdrop-blur-[8px] px-4 py-5 flex flex-col gap-6"
+      dir={dir}
     >
       {/* Title + Rent/Buy tabs */}
       <div className="flex flex-col gap-3">
@@ -91,7 +92,7 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
 
       {/* Fields row */}
       <div className="flex items-end gap-4">
-        <div className="flex flex-1 items-end gap-3">
+        <div className="flex flex-1 items-end gap-3" dir={dir}>
           {/* ── Unit Type ── */}
           <div className="relative flex-1">
             <FilterField
@@ -132,7 +133,7 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
                         {selectedType === value && (
                           <CheckIcon className="h-3.5 w-3.5 shrink-0 text-[#FF765E]" />
                         )}
-                        <span className={selectedType === value ? "" : "ml-5"}>
+                        <span className={selectedType === value ? "" : "ps-5"}>
                           {t(labelKey)}
                         </span>
                       </button>
@@ -222,7 +223,7 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
                           className={
                             selectedPriceRange.label === range.label
                               ? ""
-                              : "ml-5"
+                              : "ps-5"
                           }
                         >
                           {range.label}

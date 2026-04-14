@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
-import Script from "next/script";
+import { cookies } from "next/headers";
 import "./globals.css";
 import { LocaleProvider } from "@/lib/contexts/LocaleContext";
 import { AuthProvider } from "@/lib/contexts/AuthContext";
+import { DEFAULT_LOCALE, isValidLocale, NEXT_LOCALE_COOKIE } from "@/config/i18n";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,30 +42,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const localeCookie = cookieStore.get(NEXT_LOCALE_COOKIE)?.value;
+  const locale = isValidLocale(localeCookie) ? localeCookie : DEFAULT_LOCALE;
+  const dir = locale === "ar" ? "rtl" : "ltr";
+
   return (
     <html
-      lang="en"
-      dir="ltr"
-      suppressHydrationWarning
+      lang={locale}
+      dir={dir}
       className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} h-full antialiased`}
     >
-      <head>
-        {/* Update lang/dir from localStorage before React hydration to avoid flash */}
-        <Script
-          id="locale-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var l=localStorage.getItem('locale')||'en';document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';}catch(e){}})();`,
-          }}
-        />
-      </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <LocaleProvider>
+        <LocaleProvider initialLocale={locale}>
           <AuthProvider>{children}</AuthProvider>
         </LocaleProvider>
       </body>

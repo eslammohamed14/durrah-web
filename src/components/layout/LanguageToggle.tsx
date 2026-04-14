@@ -1,17 +1,32 @@
 'use client';
 
-import { useLocale } from '@/lib/contexts/LocaleContext';
+import { NEXT_LOCALE_COOKIE } from '@/config/i18n';
+import type { Locale } from '@/lib/types';
+
+function getCurrentLocale(): Locale {
+  if (typeof document === 'undefined') return 'en';
+  const cookie = document.cookie
+    .split('; ')
+    .find((entry) => entry.startsWith(`${NEXT_LOCALE_COOKIE}=`));
+  const value = cookie?.split('=')[1];
+  return value === 'ar' ? 'ar' : 'en';
+}
 
 export function LanguageToggle() {
-  const { locale, setLocale } = useLocale();
+  const locale = getCurrentLocale();
 
   const isArabic = locale === 'ar';
   const nextLocale = isArabic ? 'en' : 'ar';
   const label = isArabic ? 'English' : 'العربية';
 
+  const handleToggle = () => {
+    document.cookie = `${NEXT_LOCALE_COOKIE}=${nextLocale}; path=/; max-age=31536000; samesite=lax`;
+    window.location.reload();
+  };
+
   return (
     <button
-      onClick={() => setLocale(nextLocale)}
+      onClick={handleToggle}
       aria-label={`Switch to ${isArabic ? 'English' : 'Arabic'}`}
       className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
     >

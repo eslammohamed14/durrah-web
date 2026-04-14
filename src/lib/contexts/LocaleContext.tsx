@@ -21,20 +21,18 @@ interface LocaleContextValue {
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
-function initialLocale(): Locale {
-  if (typeof window === 'undefined') return DEFAULT_LOCALE;
-  return getStoredLocale();
+interface LocaleProviderProps {
+  children: React.ReactNode;
+  initialLocale?: Locale;
 }
 
-function initialTranslator() {
-  const loc = initialLocale();
-  return createTranslator(loc, getBundledTranslations(loc));
-}
-
-export function LocaleProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(initialLocale);
-  const [t, setT] = useState<(key: string, params?: Record<string, string | number>) => string>(
-    initialTranslator
+export function LocaleProvider({
+  children,
+  initialLocale: serverLocale = DEFAULT_LOCALE,
+}: LocaleProviderProps) {
+  const [locale, setLocaleState] = useState<Locale>(serverLocale);
+  const [t, setT] = useState<(key: string, params?: Record<string, string | number>) => string>(() =>
+    createTranslator(serverLocale, getBundledTranslations(serverLocale))
   );
 
   // Sync locale + translator after navigation (incl. bfcache restore after 404 → back)

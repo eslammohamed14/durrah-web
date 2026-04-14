@@ -3,7 +3,7 @@
  */
 
 import type { Locale } from '@/lib/types';
-import { DEFAULT_LOCALE, isValidLocale, LOCALE_STORAGE_KEY } from '@/config/i18n';
+import { DEFAULT_LOCALE, isValidLocale, NEXT_LOCALE_COOKIE } from '@/config/i18n';
 import enBundled from '../../../public/locales/en.json';
 import arBundled from '../../../public/locales/ar.json';
 
@@ -95,7 +95,7 @@ export function createTranslator(
 }
 
 /**
- * Get the user's preferred locale from localStorage.
+ * Get the user's preferred locale from cookies.
  * Returns the default locale if none is stored or the stored value is invalid.
  * Safe to call only in browser environments.
  */
@@ -103,7 +103,10 @@ export function getStoredLocale(): Locale {
   if (typeof window === 'undefined') return DEFAULT_LOCALE;
 
   try {
-    const stored = localStorage.getItem(LOCALE_STORAGE_KEY);
+    const cookie = document.cookie
+      .split('; ')
+      .find((entry) => entry.startsWith(`${NEXT_LOCALE_COOKIE}=`));
+    const stored = cookie?.split('=')[1];
     return isValidLocale(stored) ? stored : DEFAULT_LOCALE;
   } catch {
     return DEFAULT_LOCALE;
@@ -111,16 +114,16 @@ export function getStoredLocale(): Locale {
 }
 
 /**
- * Persist the user's locale preference to localStorage.
+ * Persist the user's locale preference to cookies.
  * Safe to call only in browser environments.
  */
 export function storeLocale(locale: Locale): void {
   if (typeof window === 'undefined') return;
 
   try {
-    localStorage.setItem(LOCALE_STORAGE_KEY, locale);
+    document.cookie = `${NEXT_LOCALE_COOKIE}=${locale}; path=/; max-age=31536000; samesite=lax`;
   } catch {
-    // localStorage may be unavailable (e.g. private browsing restrictions)
+    // noop: cookie writes can fail in restricted environments
   }
 }
 

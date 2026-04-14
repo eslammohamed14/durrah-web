@@ -1,16 +1,25 @@
-"use client";
-
-import { useLocale } from "@/lib/contexts/LocaleContext";
+import { cookies } from "next/headers";
 import images from "@/constant/images";
 import { FilterContainer } from "./filter-container";
 import type { Property } from "@/lib/types";
+import {
+  createTranslator,
+  getBundledTranslations,
+} from "@/lib/utils/i18n";
+import {
+  DEFAULT_LOCALE,
+  isValidLocale,
+  NEXT_LOCALE_COOKIE,
+} from "@/config/i18n";
 
 interface HeroSectionProps {
   allProperties: Property[];
 }
 
-export function HeroSection({ allProperties }: HeroSectionProps) {
-  const { t } = useLocale();
+export async function HeroSection({ allProperties }: HeroSectionProps) {
+  const localeCookie = (await cookies()).get(NEXT_LOCALE_COOKIE)?.value;
+  const locale = isValidLocale(localeCookie) ? localeCookie : DEFAULT_LOCALE;
+  const t = createTranslator(locale, getBundledTranslations(locale));
 
   return (
     <section

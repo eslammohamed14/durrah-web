@@ -1,5 +1,3 @@
-"use client";
-
 import type { Property } from "@/lib/types";
 import { HeroSection } from "@/features/home/components/heroSection";
 import { CompanyMetricsSection } from "@/features/home/components/companyMetrics";

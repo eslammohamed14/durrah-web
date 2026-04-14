@@ -25,6 +25,10 @@ body {
   font-family: var(--font-poppins), 'Poppins', Arial, Helvetica, sans-serif;
 }
 
+html[dir="rtl"] .rtl-auto-flip {
+  transform: rotate(180deg);
+}
+
 /* ImageSwiper — pagination dots + nav pills */
 .image-swiper {
   min-width: 0;

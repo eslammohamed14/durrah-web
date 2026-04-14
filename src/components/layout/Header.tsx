@@ -98,7 +98,12 @@ export function Header({ transparent = false }: HeaderProps) {
             >
               <button
                 type="button"
-                onClick={() => setLocale("en")}
+                onClick={() => {
+                  if (locale !== "en") {
+                    setLocale("en");
+                    window.location.reload();
+                  }
+                }}
                 aria-pressed={locale === "en"}
                 className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 ${
                   locale === "en"
@@ -114,7 +119,12 @@ export function Header({ transparent = false }: HeaderProps) {
               </button>
               <button
                 type="button"
-                onClick={() => setLocale("ar")}
+                onClick={() => {
+                  if (locale !== "ar") {
+                    setLocale("ar");
+                    window.location.reload();
+                  }
+                }}
                 aria-pressed={locale === "ar"}
                 className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 ${
                   locale === "ar"

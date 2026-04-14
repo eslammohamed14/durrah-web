@@ -6,6 +6,7 @@ import {
   ArrowSolidUpIcon,
   CalendarIcon,
 } from "@/assets/icons";
+import { useLocale } from "@/lib/contexts/LocaleContext";
 
 export type FilterFieldTrailing = "chevron" | "calendar" | "dualChevron";
 
@@ -42,6 +43,7 @@ export function FilterField({
   decrementDisabled,
   panel,
 }: FilterFieldProps) {
+  const { dir } = useLocale();
   const hasValue = Boolean(value);
 
   // ── Trailing element ───────────────────────────────────────────────────────
@@ -115,9 +117,11 @@ export function FilterField({
         onClick={onClick}
         aria-expanded={isOpen}
         aria-haspopup={trailing !== "dualChevron" ? "listbox" : undefined}
+        dir={dir}
         className={[
-          "flex h-[42px] w-full items-center gap-2.5 rounded-xl bg-white px-3 py-2 text-left transition-shadow",
+          "flex h-[42px] w-full items-center gap-2.5 rounded-xl bg-white px-3 py-2 transition-shadow",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E]",
+          dir === "rtl" ? "flex-row-reverse text-right" : "text-left",
           isOpen ? "ring-2 ring-[#FF765E]" : "",
         ].join(" ")}
       >
@@ -135,7 +139,10 @@ export function FilterField({
       {/* Panel slot — rendered below the field, absolutely positioned */}
       {isOpen && panel && (
         <div
-          className="absolute left-0 top-full z-50 mt-2 min-w-full"
+          className={[
+            "absolute top-full z-50 mt-2 min-w-full",
+            dir === "rtl" ? "right-0" : "left-0",
+          ].join(" ")}
           role="presentation"
           onClick={(e) => e.stopPropagation()}
         >

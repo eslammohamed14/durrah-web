@@ -7,7 +7,7 @@ import type { Locale } from '@/lib/types';
 
 export const SUPPORTED_LOCALES: Locale[] = ['en', 'ar'];
 export const DEFAULT_LOCALE: Locale = 'en';
-export const LOCALE_STORAGE_KEY = 'locale';
+export const NEXT_LOCALE_COOKIE = 'NEXT_LOCALE';
 
 export interface LocaleConfig {
   code: Locale;
