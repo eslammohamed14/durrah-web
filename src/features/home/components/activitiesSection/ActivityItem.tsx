@@ -12,6 +12,7 @@ export interface ActivityItemProps {
   href?: string;
   exploreLabel?: string;
   className?: string;
+  onClick?: () => void;
 }
 
 export function ActivityItem({
@@ -23,6 +24,7 @@ export function ActivityItem({
   href = "/", //search?category=activity
   exploreLabel = "Explore",
   className = "",
+  onClick,
 }: ActivityItemProps) {
   return (
     <div
@@ -38,6 +40,7 @@ export function ActivityItem({
       }
       role={imageUrl ? "img" : undefined}
       aria-label={imageUrl ? imageAlt : undefined}
+      onClick={onClick}
     >
       {/* Gradient placeholder shown when no real image is supplied */}
       {!imageUrl && (

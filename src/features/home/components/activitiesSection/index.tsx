@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import { ActivitiesSectionIcon, ArrowRightIcon } from "@/assets/icons";
 import { CtaNavigateButton } from "@/components/ui/CtaNavigateButton";
@@ -19,6 +20,25 @@ export function ActivitiesSection({
   plainImageUrl,
 }: ActivitiesSectionProps) {
   const { t } = useLocale();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const activityCards = useMemo(
+    () => [
+      {
+        imageUrl: featuredImageUrl ?? images.activity1,
+        imageAlt: t("home.activityCompanyName"),
+        name: t("home.activityCompanyName"),
+        description: t("home.activityCompanyDesc"),
+      },
+      {
+        imageUrl: plainImageUrl ?? images.activity2,
+        imageAlt: t("home.activityCompanyNameAlt"),
+        name: t("home.activityCompanyNameAlt"),
+        description: t("home.activityCompanyDescAlt"),
+      },
+    ],
+    [featuredImageUrl, plainImageUrl, t],
+  );
 
   return (
     <section
@@ -55,26 +75,30 @@ export function ActivitiesSection({
 
         {/* ── Cards ──────────────────────────────────────────────────────── */}
         <div className="flex h-[411px] gap-4">
-          {/* Featured card — wider, shows text + explore button overlay */}
-          <div className="flex-[1.85]">
-            <ActivityItem
-              featured
-              imageUrl={featuredImageUrl ?? images.activity1}
-              imageAlt={t("home.activityCompanyName")}
-              name={t("home.activityCompanyName")}
-              description={t("home.activityCompanyDesc")}
-              href="/search?category=activity"
-              exploreLabel={t("home.explore")}
-            />
-          </div>
-
-          {/* Plain card — narrower, image only */}
-          <div className="flex-1">
-            <ActivityItem
-              imageUrl={plainImageUrl ?? images.activity2}
-              imageAlt={t("home.activitiesTag")}
-            />
-          </div>
+          {activityCards.map((card, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <div
+                key={card.imageAlt}
+                className={[
+                  "h-full transition-all duration-300 ease-in-out",
+                  isActive ? "flex-[1.85]" : "flex-1",
+                ].join(" ")}
+              >
+                <ActivityItem
+                  featured={isActive}
+                  imageUrl={card.imageUrl}
+                  imageAlt={card.imageAlt}
+                  name={card.name}
+                  description={card.description}
+                  href="/search?category=activity"
+                  exploreLabel={t("home.explore")}
+                  onClick={() => setActiveIndex(index)}
+                  className="cursor-pointer"
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
