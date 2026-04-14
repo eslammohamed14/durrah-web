@@ -54,7 +54,10 @@ export function CompanyMetricsSection() {
   const { t } = useLocale();
 
   return (
-    <section aria-label="Company metrics" className="bg-white px-[120px] py-20">
+    <section
+      aria-label="Company metrics"
+      className="bg-[#FAFAFA] px-[100px] py-20"
+    >
       <div className="mx-auto flex max-w-[1200px] items-center justify-between">
         {COMPANY_METRICS.map(({ id, value, labelKey, Icon }) => (
           <MetricItem key={id} value={value} label={t(labelKey)} Icon={Icon} />

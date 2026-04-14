@@ -35,7 +35,7 @@ export function Header({ transparent = false }: HeaderProps) {
   return (
     <header className={baseClasses}>
       <div className={`${bgClasses} w-full`}>
-        <div className="mx-auto flex h-[90px] max-w-[1540px] pt-[20px] items-center justify-between ">
+        <div className="mx-auto flex h-[90px] w-full max-w-[1540px] items-center justify-between px-4 pt-[20px] sm:px-6 lg:px-8 xl:px-10">
           {/* Logo */}
           <Link
             href="/"

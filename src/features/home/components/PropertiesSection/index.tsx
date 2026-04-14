@@ -17,7 +17,7 @@ export function PropertiesSection({ properties }: PropertiesSectionProps) {
   return (
     <section
       aria-labelledby="properties-heading"
-      className="bg-[#FAFAFA] px-[120px] py-[100px]"
+      className="bg-[#FAFAFA] px-[120px] py-[40px]"
     >
       <div className="mx-auto flex min-w-0 max-w-[1300px] flex-col gap-10">
         <div className="flex min-w-0 items-end gap-4">

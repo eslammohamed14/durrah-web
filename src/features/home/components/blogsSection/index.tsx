@@ -16,7 +16,7 @@ export function BlogsSection() {
   return (
     <section
       aria-labelledby="blogs-heading"
-      className="bg-[#FAFAFA] px-[120px] py-[100px]"
+      className="bg-[#FAFAFA] px-[30px] py-[100px]"
     >
       <div className="mx-auto flex max-w-[1200px] flex-col gap-10">
         <header className="flex items-end gap-10">

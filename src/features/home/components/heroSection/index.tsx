@@ -2,10 +2,7 @@ import { cookies } from "next/headers";
 import images from "@/constant/images";
 import { FilterContainer } from "./filter-container";
 import type { Property } from "@/lib/types";
-import {
-  createTranslator,
-  getBundledTranslations,
-} from "@/lib/utils/i18n";
+import { createTranslator, getBundledTranslations } from "@/lib/utils/i18n";
 import {
   DEFAULT_LOCALE,
   isValidLocale,
@@ -24,24 +21,24 @@ export async function HeroSection({ allProperties }: HeroSectionProps) {
   return (
     <section
       aria-label="Hero"
-      className="relative flex min-h-[948px] flex-col bg-cover bg-no-repeat bg-[50%_25%] pb-[30px]"
+      className="relative flex min-h-[760px] flex-col bg-cover bg-no-repeat bg-center pb-6 md:min-h-[840px] md:pb-8 lg:min-h-[928px]"
       style={{ backgroundImage: `url('${images.durrahHomeHero}')` }}
     >
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
 
       {/* Content — positioned at bottom */}
-      <div className="relative mt-auto px-[120px] pb-0">
+      <div className="relative mx-auto mt-auto w-full max-w-[1540px] px-4 pb-0 sm:px-6 lg:px-8 xl:px-10">
         <div className="flex flex-col gap-4">
           {/* Headline row */}
-          <div className="flex items-end justify-between ">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <h1
-              className="w-[747px] text-[55px] font-medium leading-[1.3] text-white"
+              className="w-full max-w-[747px] text-4xl font-medium leading-[1.2] text-white md:text-5xl lg:text-[55px] lg:leading-[1.3]"
               style={{ textTransform: "capitalize" }}
             >
               {t("home.heroHeadline")}
             </h1>
-            <p className="w-[384px] text-xl font-medium leading-[1.3] text-white">
+            <p className="w-full max-w-[384px] text-lg font-medium leading-[1.3] text-white md:text-xl">
               {t("home.heroSubheadline")}
             </p>
           </div>

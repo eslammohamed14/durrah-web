@@ -48,7 +48,7 @@ export function CtaBannerSection() {
     <section
       ref={sectionRef}
       aria-label="Browse all properties"
-      className="bg-[#FAFAFA] px-[40px] py-[100px]"
+      className="bg-[#FAFAFA] px-[40px] py-[50px]"
     >
       <div className="mx-auto ">
         <div className="relative h-[730px] overflow-hidden rounded-[24px]">
