@@ -1,41 +1,71 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useLocale } from '@/lib/contexts/LocaleContext';
+import Link from "next/link";
+import images from "@/constant/images";
+import { useLocale } from "@/lib/contexts/LocaleContext";
+import Image from "next/image";
+import {
+  FacebookIcon,
+  LinkedinIcon,
+  NormalInstagramIcon,
+  XSocialIcon,
+} from "@/assets/icons";
 
 const NAV_LINK_KEYS = [
-  { key: 'home', href: '/' },
-  { key: 'properties', href: '/search' },
-  { key: 'activities', href: '/search?category=activity' },
-  { key: 'shops', href: '/search?category=shop' },
-  { key: 'about', href: '/about' },
-  { key: 'contactUs', href: '/contact' },
+  { key: "home", href: "/" },
+  { key: "properties", href: "/search" },
+  { key: "activities", href: "/search?category=activity" },
+  { key: "shops", href: "/search?category=shop" },
+  { key: "about", href: "/about" },
+  { key: "contactUs", href: "/contact" },
 ] as const;
 
 export function Footer() {
   const { t } = useLocale();
+
   return (
-    <footer className="relative overflow-hidden bg-[#F0E9E4]" style={{ height: 344 }}>
-      {/* Decorative background pattern (low opacity) */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.08]" aria-hidden="true">
-        <div className="absolute -left-32 -top-40 h-[252px] w-[252px] rounded-full border-[40px] border-[#2A2F73]" />
-        <div className="absolute right-0 bottom-0 h-[252px] w-[252px] rounded-full border-[40px] border-[#2A2F73]" />
+    <footer className="relative overflow-hidden bg-[#F0E9E4] px-[120px] py-8">
+      <div
+        className="pointer-events-none absolute left-0 top-0 opacity-30"
+        aria-hidden="true"
+      >
+        <img
+          src={images.yachtShape}
+          alt=""
+          className="h-[160px] w-[140px] object-cover"
+        />
+      </div>
+      <div
+        className="pointer-events-none absolute bottom-0 right-0 opacity-20"
+        aria-hidden="true"
+      >
+        <img
+          src={images.yachtShape}
+          alt=""
+          className="h-[120px] w-[90px] object-cover"
+        />
       </div>
 
-      <div className="relative mx-auto flex h-full max-w-[1440px] flex-col justify-between px-[120px] py-8">
-        {/* Top row: logo + nav links */}
+      <div className="relative mx-auto flex max-w-[1200px] flex-col gap-4">
         <div className="flex flex-col items-center gap-5">
-          {/* Logo */}
-          <Link href="/" aria-label="Durrah — home" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2A2F73] focus-visible:ring-offset-2">
-            <span className="text-2xl font-bold tracking-tight text-[#2A2F73]">DURRAT</span>
+          <Link
+            href="/"
+            aria-label="Durrah — home"
+            className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2A2F73] focus-visible:ring-offset-2"
+          >
+            <Image
+              src={images.durrahLogoBlue}
+              alt="Durrat Al Arous"
+              width={132}
+              height={42}
+              className="object-contain"
+            />
           </Link>
 
-          {/* Divider */}
           <div className="h-px w-full bg-[#BFBFBF]" />
 
-          {/* Nav links */}
           <nav aria-label="Footer navigation">
-            <ul className="flex flex-wrap items-center justify-center gap-12" role="list">
+            <ul className="flex flex-wrap items-center justify-center gap-12">
               {NAV_LINK_KEYS.map(({ key, href }) => (
                 <li key={key}>
                   <Link
@@ -50,62 +80,82 @@ export function Footer() {
           </nav>
         </div>
 
-        {/* Email subscribe */}
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center gap-5">
           <div className="flex w-[471px] items-center gap-6 rounded-lg border border-[#2A2F73] px-2 py-2">
             <input
               type="email"
-              placeholder={t('footer.emailPlaceholder')}
-              aria-label={t('footer.emailSubscribeLabel')}
+              placeholder={t("footer.emailPlaceholder")}
+              aria-label={t("footer.emailSubscribeLabel")}
               className="flex-1 bg-transparent text-xs text-[#727272] placeholder-[#727272] outline-none"
             />
             <button
               type="button"
-              aria-label={t('footer.subscribeLabel')}
-              className="flex h-8 w-8 items-center justify-center rounded text-[#2A2F73] transition-colors hover:text-[#FF765E]"
+              aria-label={t("footer.subscribeLabel")}
+              className="flex h-6 w-6 items-center justify-center rounded text-[#2A2F73] transition-colors hover:text-[#FF765E]"
             >
-              <svg className="h-[18px] w-[18px]" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                <path d="M3.75 9H14.25M14.25 9L10.5 5.25M14.25 9L10.5 12.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <svg
+                className="h-6 w-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M5 12H19M19 12L13 6M19 12L13 18"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </button>
           </div>
+
+          <div className="flex items-center gap-6">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="text-[#2A2F73] transition-colors hover:text-[#FF765E]"
+            >
+              <FacebookIcon className="h-6 w-6" />
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="text-[#2A2F73] transition-colors hover:text-[#FF765E]"
+            >
+              <LinkedinIcon className="h-6 w-6" />
+            </a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="text-[#2A2F73] transition-colors hover:text-[#FF765E]"
+            >
+              <NormalInstagramIcon className="h-6 w-6" />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="X (Twitter)"
+              className="text-[#2A2F73] transition-colors hover:text-[#FF765E]"
+            >
+              <XSocialIcon className="h-6 w-6" />
+            </a>
+          </div>
+
+          <div className="h-px w-full bg-[#BFBFBF]" />
         </div>
 
-        {/* Bottom row: social icons + divider + copyright */}
-        <div className="flex flex-col items-center gap-5">
-          {/* Social icons */}
-          <div className="flex items-center gap-6">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-[#2A2F73] transition-colors hover:text-[#FF765E]">
-              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
-            </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-[#2A2F73] transition-colors hover:text-[#FF765E]">
-              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="text-[#2A2F73] transition-colors hover:text-[#FF765E]">
-              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-[#2A2F73] transition-colors hover:text-[#FF765E]">
-              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-              </svg>
-            </a>
-          </div>
-
-          {/* Divider */}
-          <div className="h-px w-full bg-[#BFBFBF]" />
-
-          {/* Copyright row */}
-          <div className="flex w-full max-w-[1200px] items-center justify-between">
-            <span className="text-xs text-[#727272]">{t('footer.termsAndConditions')}</span>
-            <span className="text-xs text-[#727272]">{t('footer.copyright')}</span>
-            <span className="text-xs text-[#727272]">{t('footer.privacyPolicy')}</span>
-          </div>
+        <div className="flex w-full items-center justify-between text-xs text-[#727272]">
+          <span>{t("footer.termsAndConditions")}</span>
+          <span>{t("footer.copyright")}</span>
+          <span>{t("footer.privacyPolicy")}</span>
         </div>
       </div>
     </footer>
