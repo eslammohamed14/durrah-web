@@ -6,6 +6,7 @@ import { DEFAULT_LOCALE } from '@/config/i18n';
 import {
   applyLocaleToDocument,
   createTranslator,
+  getBundledTranslations,
   getStoredLocale,
   loadTranslations,
   storeLocale,
@@ -20,25 +21,40 @@ interface LocaleContextValue {
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
-// Fallback no-op translator used before translations are loaded
-const fallbackT = (key: string) => key;
+function initialLocale(): Locale {
+  if (typeof window === 'undefined') return DEFAULT_LOCALE;
+  return getStoredLocale();
+}
+
+function initialTranslator() {
+  const loc = initialLocale();
+  return createTranslator(loc, getBundledTranslations(loc));
+}
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
   const [t, setT] = useState<(key: string, params?: Record<string, string | number>) => string>(
-    () => fallbackT
+    initialTranslator
   );
 
-  // On mount: read stored locale and load its translations
+  // Sync locale + translator after navigation (incl. bfcache restore after 404 → back)
   useEffect(() => {
-    const stored = getStoredLocale();
-    applyLocaleToDocument(stored);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLocaleState(stored);
+    const sync = () => {
+      const stored = getStoredLocale();
+      applyLocaleToDocument(stored);
+      setLocaleState(stored);
+      void loadTranslations(stored).then((translations) => {
+        setT(() => createTranslator(stored, translations));
+      });
+    };
 
-    loadTranslations(stored).then((translations) => {
-      setT(() => createTranslator(stored, translations));
-    });
+    sync();
+
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) sync();
+    };
+    window.addEventListener('pageshow', onPageShow);
+    return () => window.removeEventListener('pageshow', onPageShow);
   }, []);
 
   const setLocale = (newLocale: Locale) => {
