@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/contexts/AuthContext';
 import { useLocale } from '@/lib/contexts/LocaleContext';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { OTPInput } from '@/components/features/auth/OTPInput';
+import { OTPInput } from '@/features/auth/OTPInput';
 
 type RegMethod = 'email' | 'phone';
 type PhoneStep = 'enter_phone' | 'enter_otp';

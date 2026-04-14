@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getAPIClient } from '@/lib/api';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { HomeContent } from '@/components/features/home/HomeContent';
+import { HomeContent } from '@/features/home/HomeContent';
 import type { Property } from '@/lib/types';
 
 export const metadata: Metadata = {
