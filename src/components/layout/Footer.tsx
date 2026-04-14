@@ -13,11 +13,11 @@ import {
 
 const NAV_LINK_KEYS = [
   { key: "home", href: "/" },
-  { key: "properties", href: "/search" },
-  { key: "activities", href: "/search?category=activity" },
-  { key: "shops", href: "/search?category=shop" },
-  { key: "about", href: "/about" },
-  { key: "contactUs", href: "/contact" },
+  { key: "properties", href: "/" }, //"/search"
+  { key: "activities", href: "/" }, //"search?category=activity"
+  { key: "shops", href: "/" }, //"/search?category=shop"
+  { key: "about", href: "/" }, //"about"
+  { key: "contactUs", href: "/" }, //"contact"
 ] as const;
 
 export function Footer() {

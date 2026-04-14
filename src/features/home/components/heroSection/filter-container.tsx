@@ -240,7 +240,7 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
         <Button
           size="md"
           backgroundColor="#FF765E"
-          onClick={handleSearch}
+          onClick={() => {}} //handleSearch
           className="flex h-12 w-[152px] shrink-0 items-center justify-center gap-2.5 rounded-lg text-base font-medium text-white transition-colors hover:bg-[#e8614a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E] focus-visible:ring-offset-2"
           leftIcon={<SearchIcon size={24} />}
         >

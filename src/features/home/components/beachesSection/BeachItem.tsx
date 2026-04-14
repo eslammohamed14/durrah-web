@@ -53,7 +53,7 @@ export function BeachItem({
               </p>
             </div>
             <Link
-              href={item.href}
+              href={"/"} //item.href
               className="mt-2 inline-flex items-center gap-2 text-xs font-medium text-white"
             >
               <ArrowRightIcon className="h-[24px] w-[24px]" />

@@ -52,7 +52,7 @@ export function YachtSection() {
             type="button"
             variant="primary"
             backgroundColor="#FF765E"
-            onClick={() => router.push("/search")}
+            onClick={() => {}} //router.push("/search")
             className="h-12 w-fit rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-[#FF765E]"
             leftIcon={<SearchIcon className="h-6 w-6" />}
             rightIcon={<ArrowRightIcon className="h-6 w-6" />}

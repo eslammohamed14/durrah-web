@@ -72,7 +72,7 @@ export function CtaBannerSection() {
                 {t("home.ctaSubtitle")}
               </p>
               <Link
-                href="/search"
+                href="/"
                 className="inline-flex min-w-[486px] items-center justify-between rounded-2xl bg-white/10 px-5 py-4 text-xl font-normal text-white backdrop-blur-[18px] transition-colors hover:bg-white/20"
               >
                 <span>{t("home.browseAllProperties")}</span>

@@ -20,7 +20,7 @@ export function ActivityItem({
   featured = false,
   name,
   description,
-  href = "/search?category=activity",
+  href = "/", //search?category=activity
   exploreLabel = "Explore",
   className = "",
 }: ActivityItemProps) {

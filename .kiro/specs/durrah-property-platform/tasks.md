@@ -269,14 +269,14 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Add sort options (price, rating, newest)
     - _Requirements: 3.8_
 
-- [ ] 12. Implement property details page
-  - [ ] 12.1 Create property details page with SSR and dynamic metadata
+- [x] 12. Implement property details page
+  - [x] 12.1 Create property details page with SSR and dynamic metadata
     - Implement app/properties/[id]/page.tsx with server-side property fetching
     - Implement generateMetadata for dynamic SEO meta tags
     - Add structured data (JSON-LD) for property listings
     - _Requirements: 4.10, 19.1, 19.2, 19.3_
 
-  - [ ] 12.2 Create PropertyGallery component
+  - [x] 12.2 Create PropertyGallery component
     - Implement components/features/properties/PropertyGallery.tsx with image grid
     - Add lightbox view with full-screen image display
     - Add navigation arrows and thumbnail strip
@@ -284,7 +284,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Add swipe gestures for mobile
     - _Requirements: 24.1, 24.2, 24.3, 24.4, 24.5, 24.6_
 
-  - [ ] 12.3 Create PropertyDetails component
+  - [x] 12.3 Create PropertyDetails component
     - Implement components/features/properties/PropertyDetails.tsx
     - Display property specifications (size, rooms, bathrooms, features)
     - Display pricing information with fee breakdown
@@ -294,7 +294,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Display booking policies (cancellation, house rules, min/max stay)
     - _Requirements: 4.2, 4.3, 4.4, 4.5, 4.7, 4.9_
 
-  - [ ] 12.4 Create PropertyReviews component
+  - [x] 12.4 Create PropertyReviews component
     - Implement components/features/properties/PropertyReviews.tsx
     - Display average rating and review count
     - Display individual reviews with rating, date, and reviewer name
@@ -302,7 +302,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Sort reviews by most recent first
     - _Requirements: 4.8, 25.1, 25.2, 25.5_
 
-  - [ ] 12.5 Integrate PropertyMap into property details
+  - [x] 12.5 Integrate PropertyMap into property details
     - Add PropertyMap component to property details page
     - Display property location marker
     - Add nearby points of interest

@@ -43,7 +43,7 @@ export function PropertiesSection({ properties }: PropertiesSectionProps) {
             </p>
           </div>
           <CtaNavigateButton
-            href="/search"
+            href="/" // "search"
             className="shrink-0"
             rightIcon={<ArrowRightIcon className="h-6 w-6" />}
           >

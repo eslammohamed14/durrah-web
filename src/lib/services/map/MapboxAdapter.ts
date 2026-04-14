@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
 /**
  * Mapbox GL JS adapter implementing IMapService.
  * Only runs in the browser — never import this in Server Components.
  */
 
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 import type {
   IMapService,
   MapConfig,
@@ -15,7 +15,7 @@ import type {
   MarkerOptions,
   MapMarker,
   MapInstance,
-} from './IMapService';
+} from "./IMapService";
 
 interface MapboxConfig {
   accessToken: string;
@@ -23,7 +23,7 @@ interface MapboxConfig {
 }
 
 export class MapboxAdapter implements IMapService {
-  private defaultStyle = 'mapbox://styles/mapbox/streets-v12';
+  private defaultStyle = "mapbox://styles/mapbox/streets-v12";
 
   constructor(private config: MapboxConfig) {}
 
@@ -32,6 +32,11 @@ export class MapboxAdapter implements IMapService {
   }
 
   createMap(container: HTMLElement, options: MapOptions): MapInstance {
+    if (!this.config.accessToken) {
+      throw new Error(
+        "Mapbox access token is not configured. Set NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN in your .env.local file.",
+      );
+    }
     mapboxgl.accessToken = this.config.accessToken;
 
     const map = new mapboxgl.Map({
@@ -43,16 +48,21 @@ export class MapboxAdapter implements IMapService {
     });
 
     // Add zoom + pan controls
-    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    map.addControl(new mapboxgl.NavigationControl(), "top-right");
 
     return map as unknown as MapInstance;
   }
 
-  addMarker(map: MapInstance, coordinates: MapCoordinates, options?: MarkerOptions): MapMarker {
+  addMarker(
+    map: MapInstance,
+    coordinates: MapCoordinates,
+    options?: MarkerOptions,
+  ): MapMarker {
     const mbMap = map as unknown as mapboxgl.Map;
 
-    const markerEl = new mapboxgl.Marker({ color: options?.color ?? '#E63946' })
-      .setLngLat([coordinates.lng, coordinates.lat]);
+    const markerEl = new mapboxgl.Marker({
+      color: options?.color ?? "#E63946",
+    }).setLngLat([coordinates.lng, coordinates.lat]);
 
     if (options?.popup) {
       const popup = new mapboxgl.Popup({ offset: 25 }).setText(options.popup);
@@ -70,7 +80,11 @@ export class MapboxAdapter implements IMapService {
     };
   }
 
-  setCenter(map: MapInstance, coordinates: MapCoordinates, zoom?: number): void {
+  setCenter(
+    map: MapInstance,
+    coordinates: MapCoordinates,
+    zoom?: number,
+  ): void {
     const mbMap = map as unknown as mapboxgl.Map;
     mbMap.flyTo({
       center: [coordinates.lng, coordinates.lat],

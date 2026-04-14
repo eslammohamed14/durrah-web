@@ -8,10 +8,10 @@ import Image from "next/image";
 
 const NAV_LINKS = [
   { key: "home", href: "/" },
-  { key: "thingsToDo", href: "/search?category=activity", hasDropdown: true },
-  { key: "stay", href: "/search?category=rent" },
-  { key: "offers", href: "/search?category=rent&offers=true" },
-  { key: "company", href: "/about", hasDropdown: true },
+  { key: "thingsToDo", href: "/", hasDropdown: true }, ///search?category=activity
+  { key: "stay", href: "/" }, //search?category=rent
+  { key: "offers", href: "/" }, //search?category=rent&offers=true
+  { key: "company", href: "/", hasDropdown: true }, //about
 ] as const;
 
 interface HeaderProps {

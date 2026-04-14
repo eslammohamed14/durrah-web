@@ -39,7 +39,7 @@ export function FeaturedBlogCard({
           </div>
 
           <Link
-            href="/blogs"
+            href="/" //blogs
             className="inline-flex h-12 w-[185px] items-center justify-center gap-2.5 rounded-lg border border-white px-4 text-base font-medium text-white transition-colors hover:bg-white/10"
           >
             <span>{discoverLabel}</span>

@@ -3,16 +3,20 @@
 import type { Property, PropertyImage } from "@/lib/types";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import {
   ArrowRightIcon,
   BathroomIcon,
   BedIcon,
   DimensionIcon,
 } from "@/assets/icons";
-import {
-  DEFAULT_IMAGE_SWIPER_SIZES,
-  ImageSwiper,
-} from "@/components/ui/ImageSwiper";
+import { DEFAULT_IMAGE_SWIPER_SIZES } from "@/components/ui/ImageSwiper";
+
+// Swiper has DOM-dependent initialization — must be client-only
+const ImageSwiper = dynamic(
+  () => import("@/components/ui/ImageSwiper").then((m) => m.ImageSwiper),
+  { ssr: false },
+);
 
 const SQ_M_TO_SQ_FT = 10.7639;
 
