@@ -17,39 +17,39 @@ function optionalEnv(key: string, fallback: string): string {
 
 export const env = {
   // API
-  apiBaseURL: optionalEnv('NEXT_PUBLIC_API_BASE_URL', 'http://localhost:3001/api'),
-  useMockAPI: optionalEnv('NEXT_PUBLIC_USE_MOCK_API', 'true') === 'true',
+  apiBaseURL: process.env.NEXT_PUBLIC_API_BASE_URL as string,
+  useMockAPI: process.env.NEXT_PUBLIC_USE_MOCK_API as string,
 
   // Service providers
-  authProvider: optionalEnv('NEXT_PUBLIC_AUTH_PROVIDER', 'firebase'),
-  paymentProvider: optionalEnv('NEXT_PUBLIC_PAYMENT_PROVIDER', 'stripe'),
-  mapProvider: optionalEnv('NEXT_PUBLIC_MAP_PROVIDER', 'mapbox'),
-  storageProvider: optionalEnv('NEXT_PUBLIC_STORAGE_PROVIDER', 'firebase'),
-  emailProvider: optionalEnv('NEXT_PUBLIC_EMAIL_PROVIDER', 'mock'),
+  authProvider: process.env.NEXT_PUBLIC_AUTH_PROVIDER as string,
+  paymentProvider: process.env.NEXT_PUBLIC_PAYMENT_PROVIDER as string,
+  mapProvider: process.env.NEXT_PUBLIC_MAP_PROVIDER as string,
+  storageProvider: process.env.NEXT_PUBLIC_STORAGE_PROVIDER as string,
+  emailProvider: process.env.NEXT_PUBLIC_EMAIL_PROVIDER as string,
 
   // Firebase
   firebase: {
-    apiKey: optionalEnv('NEXT_PUBLIC_FIREBASE_API_KEY', ''),
-    authDomain: optionalEnv('NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN', ''),
-    projectId: optionalEnv('NEXT_PUBLIC_FIREBASE_PROJECT_ID', ''),
-    storageBucket: optionalEnv('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET', ''),
-    messagingSenderId: optionalEnv('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID', ''),
-    appId: optionalEnv('NEXT_PUBLIC_FIREBASE_APP_ID', ''),
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY as string,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN as string,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID as string,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET as string,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID as string,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID as string,
   },
 
   // Stripe (rent & activity payments only)
   stripe: {
-    publishableKey: optionalEnv('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY', ''),
-    secretKey: optionalEnv('STRIPE_SECRET_KEY', ''),
+    publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
+    secretKey: process.env.STRIPE_SECRET_KEY as string,
   },
 
   // Mapbox
   mapbox: {
-    accessToken: optionalEnv('NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN', ''),
+    accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN as string,
   },
 
   // Locale & currency
-  defaultCurrency: optionalEnv('NEXT_PUBLIC_DEFAULT_CURRENCY', 'SAR'),
+  defaultCurrency: process.env.NEXT_PUBLIC_DEFAULT_CURRENCY as string,
 } as const;
 
 /**
