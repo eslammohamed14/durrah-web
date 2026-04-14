@@ -5,248 +5,21 @@ import type { Property } from "@/lib/types";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import { HeroSection } from "@/features/home/components/heroSection";
 import { CompanyMetricsSection } from "@/features/home/components/companyMetrics";
-
-// ─── Icons ────────────────────────────────────────────────────────────────────
-
-function ArrowRightIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M5 12H19M19 12L13 6M19 12L13 18"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function StarIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-    </svg>
-  );
-}
-
-// ─── Section Tag ──────────────────────────────────────────────────────────────
-
-function SectionTag({ icon, label }: { icon: React.ReactNode; label: string }) {
-  return (
-    <div className="inline-flex items-center gap-2 rounded-[80px] border border-[#C4C7EB] px-4 py-2.5">
-      <span className="flex h-7 w-7 items-center justify-center">{icon}</span>
-      <span className="text-sm font-normal text-[#363C88]/90 uppercase tracking-wide">
-        {label}
-      </span>
-    </div>
-  );
-}
-
-// ─── Primary Button ───────────────────────────────────────────────────────────
-
-function PrimaryBtn({
-  href,
-  children,
-  className = "",
-}: {
-  href: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className={`inline-flex h-12 items-center gap-2.5 rounded-lg bg-[#FF765E] px-4 text-base font-medium text-white transition-colors hover:bg-[#e8614a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E] focus-visible:ring-offset-2 ${className}`}
-    >
-      {children}
-    </Link>
-  );
-}
-
-// ─── Property Card ────────────────────────────────────────────────────────────
-
-function PropertyCardFigma({ property }: { property: Property }) {
-  const { t, locale } = useLocale();
-  const title = property.title[locale] || property.title.en;
-  const isForSale = property.category === "buy";
-  const badgeLabel = isForSale ? t("home.forSale") : t("home.forRent");
-  const badgeBg = isForSale ? "bg-[#2A2F73]" : "bg-[#FF765E]";
-  const typeLabel = property.type
-    .split("_")
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
-  const price = new Intl.NumberFormat(
-    locale === "ar" ? "ar-SA" : "en-SA",
-  ).format(property.pricing.basePrice);
-  const originalPrice = new Intl.NumberFormat(
-    locale === "ar" ? "ar-SA" : "en-SA",
-  ).format(Math.round(property.pricing.basePrice * 1.27));
-
-  return (
-    <article className="flex flex-col overflow-hidden rounded-2xl border border-[#F1F1F2] bg-white pb-4 shadow-[0_0_24px_0_rgba(0,0,0,0.06)]">
-      {/* Image area */}
-      <div className="relative h-[216px] rounded-t-xl bg-gradient-to-br from-slate-300 to-slate-400">
-        {/* Top badges row */}
-        <div className="absolute left-2.5 top-2.5 flex items-center justify-between w-[calc(100%-20px)]">
-          <div className="flex items-center gap-2">
-            <span className="rounded-full bg-white px-2 py-1 text-xs font-medium text-[#404040]">
-              {typeLabel}
-            </span>
-            <span className="flex items-center gap-1 rounded-full bg-white px-2 py-1 text-xs font-medium text-[#FF765E]">
-              {t("home.offer")}
-              <svg
-                className="h-[18px] w-[18px]"
-                viewBox="0 0 18 18"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M9 3.75V14.25M3.75 9H14.25"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </span>
-          </div>
-          <span
-            className={`rounded-lg px-2 py-1 text-xs font-medium text-white ${badgeBg}`}
-          >
-            {badgeLabel}
-          </span>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-col gap-3 px-3 pt-3">
-        {/* Title + rating */}
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl font-semibold text-[#262626] leading-tight">
-            {title}
-          </h3>
-          <div className="flex items-center gap-1">
-            <StarIcon className="h-4 w-4 text-[#FFCC00]" />
-            <span className="text-xs text-[#8B8B8C]">
-              {property.ratings.average.toFixed(1)}
-            </span>
-          </div>
-        </div>
-
-        {/* Specs row */}
-        <div className="flex items-center gap-3.5 text-xs text-[#727272]">
-          <div className="flex items-center gap-1.5 border-r border-[#D9D9D9] pr-2">
-            <svg
-              className="h-4 w-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M4 8h16M4 8v10a1 1 0 001 1h14a1 1 0 001-1V8M4 8V6a1 1 0 011-1h14a1 1 0 011 1v2"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-            <span>4,200 sq.ft.</span>
-          </div>
-          <div className="flex items-center gap-1.5 border-r border-[#D9D9D9] pr-2">
-            <svg
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M3 12h18M3 12V8a2 2 0 012-2h14a2 2 0 012 2v4M3 12v6h18v-6"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-            <span>5 Bed</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <svg
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M4 12h16M4 12V8a2 2 0 012-2h12a2 2 0 012 2v4M4 12v6a1 1 0 001 1h14a1 1 0 001-1v-6"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-            <span>5 Bath</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Price row */}
-      <div className="mt-3 flex items-center justify-between px-3">
-        <div className="flex items-center gap-2">
-          <span className="text-[22px] font-semibold text-[#2A2F73]">
-            {price} SAR
-          </span>
-          <span className="text-sm text-[#A6A6A6] line-through">
-            {originalPrice} SAR
-          </span>
-        </div>
-        <button
-          type="button"
-          aria-label={t("home.saveProperty")}
-          className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#F4F4F4] text-[#2A2F73] transition-colors hover:bg-[#e8e8e8]"
-        >
-          <svg
-            className="h-5 w-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-      </div>
-    </article>
-  );
-}
+import { PropertiesSection } from "@/features/home/components/PropertiesSection";
+import { CtaNavigateButton } from "@/components/ui/CtaNavigateButton";
+import { SectionTag } from "@/features/home/components/sectionTag";
+import { ArrowRightIcon } from "@/assets/icons";
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 interface HomeContentProps {
-  topRated: Property[];
-  distinguishedOffers: Property[];
+  featuredForGrid: Property[];
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export function HomeContent({
-  topRated,
-  distinguishedOffers,
-}: HomeContentProps) {
+export function HomeContent({ featuredForGrid }: HomeContentProps) {
   const { t } = useLocale();
-  // Combine for the properties grid (up to 6)
-  const propertiesGrid = [...topRated, ...distinguishedOffers].slice(0, 6);
 
   return (
     <main id="main-content">
@@ -257,78 +30,7 @@ export function HomeContent({
       <CompanyMetricsSection />
 
       {/* ── Properties Section ────────────────────────────────────────────── */}
-      <section
-        aria-labelledby="properties-heading"
-        className="bg-[#FAFAFA] px-[120px] py-[100px]"
-      >
-        <div className="mx-auto flex max-w-[1200px] flex-col gap-10">
-          {/* Header row */}
-          <div className="flex items-end gap-4">
-            <div className="flex flex-1 flex-col gap-4">
-              <div className="flex items-end justify-between">
-                <div className="flex flex-col gap-4">
-                  <SectionTag
-                    icon={
-                      <svg
-                        className="h-7 w-7 text-[#363C88]"
-                        viewBox="0 0 28 28"
-                        fill="none"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M14 3.5L3.5 12.25V24.5H10.5V17.5H17.5V24.5H24.5V12.25L14 3.5Z"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    }
-                    label={t("home.findYourSpace")}
-                  />
-                  <div className="flex items-end justify-between w-[1200px]">
-                    <h2
-                      id="properties-heading"
-                      className="text-2xl font-medium text-[#2A2F73]"
-                    >
-                      {t("home.propertiesHeadline")}
-                    </h2>
-                  </div>
-                </div>
-              </div>
-              <p className="max-w-[875px] text-base font-normal text-[#5A5A5A]">
-                {t("home.propertiesSubtitle")}
-              </p>
-            </div>
-            <PrimaryBtn href="/search" className="shrink-0">
-              {t("home.viewAllProperties")}
-              <ArrowRightIcon className="h-6 w-6" />
-            </PrimaryBtn>
-          </div>
-
-          {/* Cards grid */}
-          <div className="flex flex-col gap-6">
-            {/* Row 1 */}
-            <div className="flex gap-6">
-              {propertiesGrid.slice(0, 3).map((p) => (
-                <div key={p.id} className="flex-1">
-                  <PropertyCardFigma property={p} />
-                </div>
-              ))}
-            </div>
-            {/* Row 2 */}
-            {propertiesGrid.length > 3 && (
-              <div className="flex gap-6">
-                {propertiesGrid.slice(3, 6).map((p) => (
-                  <div key={p.id} className="flex-1">
-                    <PropertyCardFigma property={p} />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
+      <PropertiesSection properties={featuredForGrid} />
 
       {/* ── Activities Section ────────────────────────────────────────────── */}
       <section
@@ -368,10 +70,13 @@ export function HomeContent({
                 {t("home.activitiesSubtitle")}
               </p>
             </div>
-            <PrimaryBtn href="/search?category=activity" className="shrink-0">
+            <CtaNavigateButton
+              href="/search?category=activity"
+              className="shrink-0"
+              rightIcon={<ArrowRightIcon className="h-6 w-6" />}
+            >
               {t("home.viewAllActivities")}
-              <ArrowRightIcon className="h-6 w-6" />
-            </PrimaryBtn>
+            </CtaNavigateButton>
           </div>
 
           {/* Activity image layout */}
@@ -558,10 +263,12 @@ export function HomeContent({
             <p className="text-base text-[#727272]">
               {t("home.shopsSubtitle2")}
             </p>
-            <PrimaryBtn href="/search?category=shop">
+            <CtaNavigateButton
+              href="/search?category=shop"
+              rightIcon={<ArrowRightIcon className="h-6 w-6" />}
+            >
               {t("home.browseShops")}
-              <ArrowRightIcon className="h-6 w-6" />
-            </PrimaryBtn>
+            </CtaNavigateButton>
           </div>
         </div>
       </section>
@@ -604,10 +311,12 @@ export function HomeContent({
             {t("home.yachtHeadline")}
           </h2>
           <p className="text-base text-[#5A5A5A]">{t("home.yachtSubtitle")}</p>
-          <PrimaryBtn href="/search">
+          <CtaNavigateButton
+            href="/search"
+            rightIcon={<ArrowRightIcon className="h-6 w-6" />}
+          >
             {t("home.exploreMarina")}
-            <ArrowRightIcon className="h-6 w-6" />
-          </PrimaryBtn>
+          </CtaNavigateButton>
         </div>
       </section>
 
@@ -646,10 +355,13 @@ export function HomeContent({
                 {t("home.blogsHeadline")}
               </h2>
             </div>
-            <PrimaryBtn href="/blogs" className="shrink-0">
+            <CtaNavigateButton
+              href="/blogs"
+              className="shrink-0"
+              rightIcon={<ArrowRightIcon className="h-6 w-6" />}
+            >
               {t("home.viewAllBlogs")}
-              <ArrowRightIcon className="h-6 w-6" />
-            </PrimaryBtn>
+            </CtaNavigateButton>
           </div>
 
           {/* Blog grid */}

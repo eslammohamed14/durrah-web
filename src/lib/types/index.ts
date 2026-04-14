@@ -103,6 +103,12 @@ export interface Property {
   amenities: string[];
   images: PropertyImage[];
   floorPlans?: string[];
+  /**
+   * Listing card extras (Figma). `card.status` is Single vs Family — not the same as lifecycle `status`.
+   */
+  card?: {
+    status: 'single' | 'family';
+  };
   availability?: AvailabilityCalendar;
   ratings: {
     average: number;
