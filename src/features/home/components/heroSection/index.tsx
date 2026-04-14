@@ -3,8 +3,13 @@
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import images from "@/constant/images";
 import { FilterContainer } from "./filter-container";
+import type { Property } from "@/lib/types";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  allProperties: Property[];
+}
+
+export function HeroSection({ allProperties }: HeroSectionProps) {
   const { t } = useLocale();
 
   return (
@@ -33,7 +38,7 @@ export function HeroSection() {
           </div>
 
           {/* Search widget */}
-          <FilterContainer />
+          <FilterContainer allProperties={allProperties} />
         </div>
       </div>
     </section>

@@ -66,7 +66,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Implement components/ui/Spinner.tsx for loading states
     - _Requirements: 17.2, 22.1, 22.4_
 
-  - [ ]* 3.2 Write unit tests for UI components
+  - [ ]\* 3.2 Write unit tests for UI components
     - Test Button component variants and click handlers
     - Test Input component validation and onChange behavior
     - Test Modal component open/close functionality
@@ -135,7 +135,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Only available to users who registered with email/password
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
 
-  - [ ]* 5.5 Write integration tests for authentication flow
+  - [ ]\* 5.5 Write integration tests for authentication flow
     - Test phone/OTP sign-in flow (send, verify, retry, expire)
     - Test email/password sign-in flow (success, wrong password)
     - Test registration with both methods
@@ -243,15 +243,15 @@ The implementation follows an incremental approach: foundation → core UI → f
 - [x] 10. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 11. Implement property search and filtering
-  - [ ] 11.1 Create search results page with SSR
+- [x] 11. Implement property search and filtering
+  - [x] 11.1 Create search results page with SSR
     - Implement app/search/page.tsx with server-side property fetching
     - Parse URL search params for filters
     - Display search results in grid layout
     - Add pagination or infinite scroll
     - _Requirements: 3.7, 3.8, 19.1_
 
-  - [ ] 11.2 Create SearchFilters component
+  - [x] 11.2 Create SearchFilters component
     - Implement components/features/search/SearchFilters.tsx with all filter options
     - Add property type filter (apartment, villa, townhouse, shop, activity)
     - Add price range slider
@@ -262,7 +262,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Update URL params when filters change
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6_
 
-  - [ ] 11.3 Implement dynamic filter updates
+  - [x] 11.3 Implement dynamic filter updates
     - Add real-time search results update as filters are applied
     - Add loading states during filter changes
     - Add result count display
@@ -339,7 +339,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Send confirmation email
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9_
 
-  - [ ]* 13.4 Write integration tests for booking flow
+  - [ ]\* 13.4 Write integration tests for booking flow
     - Test date selection and availability checking
     - Test price calculation with different date ranges
     - Test guest information validation
@@ -631,33 +631,33 @@ The implementation follows an incremental approach: foundation → core UI → f
     - _Requirements: 16.1, 16.5_
 
 - [ ] 25. Testing and quality assurance
-  - [ ]* 25.1 Write unit tests for utility functions
+  - [ ]\* 25.1 Write unit tests for utility functions
     - Test i18n translation functions
     - Test date formatting and calculation utilities
     - Test price calculation functions
     - Test validation functions
     - _Requirements: 17.4_
 
-  - [ ]* 25.2 Write integration tests for critical flows
+  - [ ]\* 25.2 Write integration tests for critical flows
     - Test authentication flow (login, logout, password reset)
     - Test booking flow (search, select dates, checkout, payment)
     - Test maintenance ticket creation and management
     - Test review submission
     - _Requirements: 5.1, 7.1, 12.1, 25.4_
 
-  - [ ]* 25.3 Write E2E tests for user journeys
+  - [ ]\* 25.3 Write E2E tests for user journeys
     - Test guest user journey (search → view property → book → manage booking)
     - Test investor user journey (view dashboard → manage properties → view bookings)
     - Test owner user journey (view dashboard → manage maintenance tickets)
     - _Requirements: 9.1, 10.1, 11.1_
 
-  - [ ]* 25.4 Perform accessibility testing
+  - [ ]\* 25.4 Perform accessibility testing
     - Run automated accessibility tests with axe-core
     - Test keyboard navigation manually
     - Test with screen readers (NVDA, JAWS, VoiceOver)
     - _Requirements: 22.1, 22.2, 22.5_
 
-  - [ ]* 25.5 Perform performance testing
+  - [ ]\* 25.5 Perform performance testing
     - Run Lighthouse audits on all major pages
     - Measure and optimize Core Web Vitals (LCP, FID, CLS)
     - Test on slow network connections

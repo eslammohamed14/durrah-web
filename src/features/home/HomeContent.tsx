@@ -16,15 +16,19 @@ import { InstagramSection } from "@/features/home/components/instagramSection";
 
 interface HomeContentProps {
   featuredForGrid: Property[];
+  allProperties: Property[];
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export function HomeContent({ featuredForGrid }: HomeContentProps) {
+export function HomeContent({
+  featuredForGrid,
+  allProperties,
+}: HomeContentProps) {
   return (
     <main id="main-content">
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <HeroSection />
+      <HeroSection allProperties={allProperties} />
 
       {/* ── Company Metrics ───────────────────────────────────────────────── */}
       <CompanyMetricsSection />

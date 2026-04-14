@@ -341,5 +341,30 @@
   },
   "currency": {
     "SAR": "SAR"
+  },
+  "categories": {
+    "rent": "Rent",
+    "buy": "Buy",
+    "shop": "Shops",
+    "activity": "Activities"
+  },
+  "propertyType": {
+    "apartment": "Apartment",
+    "villa": "Villa",
+    "townhouse": "Townhouse",
+    "shop": "Shop",
+    "activity_venue": "Activity Venue"
+  },
+  "amenity": {
+    "wifi": "WiFi",
+    "parking": "Parking",
+    "pool": "Swimming Pool",
+    "gym": "Gym",
+    "air_conditioning": "Air Conditioning",
+    "kitchen": "Kitchen",
+    "washer": "Washer",
+    "balcony": "Balcony",
+    "sea_view": "Sea View",
+    "elevator": "Elevator"
   }
 }

@@ -341,5 +341,30 @@
   },
   "currency": {
     "SAR": "ر.س"
+  },
+  "categories": {
+    "rent": "إيجار",
+    "buy": "شراء",
+    "shop": "محلات",
+    "activity": "أنشطة"
+  },
+  "propertyType": {
+    "apartment": "شقة",
+    "villa": "فيلا",
+    "townhouse": "تاون هاوس",
+    "shop": "محل",
+    "activity_venue": "مكان نشاط"
+  },
+  "amenity": {
+    "wifi": "واي فاي",
+    "parking": "موقف سيارات",
+    "pool": "مسبح",
+    "gym": "صالة رياضية",
+    "air_conditioning": "تكييف هواء",
+    "kitchen": "مطبخ",
+    "washer": "غسالة",
+    "balcony": "شرفة",
+    "sea_view": "إطلالة بحرية",
+    "elevator": "مصعد"
   }
 }

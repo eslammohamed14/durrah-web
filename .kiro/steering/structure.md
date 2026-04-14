@@ -7,67 +7,30 @@ src/
 ├── app/                          # Next.js App Router (pages + layouts)
 │   ├── page.tsx                  # Home page (SSR)
 │   ├── layout.tsx                # Root layout with LocaleProvider
-│   ├── search/                   # Search results (SSR)
-│   ├── properties/[id]/          # Property details (SSR)
-│   ├── activities/[id]/          # Activity details (SSR)
-│   ├── shops/[id]/               # Shop details (SSR)
-│   ├── auth/                     # Authentication pages
-│   │   ├── login/
-│   │   └── reset-password/
-│   ├── checkout/[propertyId]/    # Checkout flow
-│   ├── dashboard/                # User dashboards (CSR)
-│   │   ├── guest/
-│   │   ├── investor/
-│   │   ├── owner/
-│   │   ├── bookings/
-│   │   ├── maintenance/
-│   │   └── profile/
-│   ├── api/                      # API routes (if needed)
-│   ├── error.tsx                 # Global error boundary
-│   ├── not-found.tsx             # 404 page
-│   └── sitemap.ts                # Dynamic sitemap generation
+│   ├── globals.css               # Global styles
+│   ├── favicon.ico
+│   └── auth/                     # Authentication pages
+│       ├── login/
+│       │   └── page.tsx
+│       ├── register/
+│       │   └── page.tsx
+│       └── reset-password/
+│           └── page.tsx
+│
+├── assets/                       # Static assets
+│   ├── icons/                    # SVG icon components
+│   └── images/                   # Image assets
 │
 ├── components/
-│   ├── layout/                   # Structural components
+│   ├── layout/                   # Structural layout components
 │   │   ├── Header.tsx
 │   │   ├── Footer.tsx
 │   │   ├── Navigation.tsx
 │   │   ├── Sidebar.tsx
-│   │   ├── LanguageToggle.tsx
-│   │   └── NotificationBell.tsx
-│   │
-│   ├── features/                 # Feature-specific components
-│   │   ├── properties/
-│   │   │   ├── PropertyCard.tsx
-│   │   │   ├── PropertyDetails.tsx
-│   │   │   ├── PropertyGallery.tsx
-│   │   │   ├── PropertyMap.tsx
-│   │   │   └── PropertyReviews.tsx
-│   │   ├── search/
-│   │   │   ├── SearchBar.tsx
-│   │   │   └── SearchFilters.tsx
-│   │   ├── booking/
-│   │   │   ├── BookingForm.tsx
-│   │   │   ├── BookingList.tsx
-│   │   │   ├── AvailabilityCalendar.tsx
-│   │   │   └── PaymentForm.tsx
-│   │   ├── maintenance/
-│   │   │   ├── MaintenanceTicketForm.tsx
-│   │   │   └── MaintenanceTicketList.tsx
-│   │   ├── auth/
-│   │   │   ├── LoginForm.tsx
-│   │   │   └── OTPInput.tsx
-│   │   ├── dashboard/
-│   │   │   ├── GuestDashboard.tsx
-│   │   │   ├── InvestorDashboard.tsx
-│   │   │   └── OwnerDashboard.tsx
-│   │   └── reviews/
-│   │       └── ReviewForm.tsx
+│   │   └── LanguageToggle.tsx
 │   │
 │   ├── shared/                   # Shared business components
-│   │   ├── ClientOnly.tsx
-│   │   ├── DatePicker.tsx
-│   │   └── UserAvatar.tsx
+│   │   └── ClientOnly.tsx
 │   │
 │   └── ui/                       # Reusable UI primitives
 │       ├── Button.tsx
@@ -77,94 +40,181 @@ src/
 │       ├── Dropdown.tsx
 │       ├── Badge.tsx
 │       ├── Spinner.tsx
-│       └── Toast.tsx
+│       ├── ImageSwiper.tsx
+│       ├── PropertyCard.tsx
+│       └── CtaNavigateButton.tsx
+│
+├── config/                       # App configuration
+│   ├── i18n.ts                   # i18n configuration
+│   ├── env.ts                    # Environment variable validation
+│   └── services.ts               # Service factory and configuration
+│
+├── constant/                     # Application constants
+│   ├── index.ts
+│   ├── images.ts
+│   └── videos.ts
+│
+├── features/                     # Feature modules (co-located by domain)
+│   ├── auth/
+│   │   ├── components/           # Auth-specific components
+│   │   │   ├── LoginForm.tsx
+│   │   │   └── OTPInput.tsx
+│   │   ├── hooks/                # Auth-specific hooks (e.g., useOTP.ts)
+│   │   ├── utils/                # Auth-specific utilities
+│   │   └── types/                # Auth-specific types
+│   │
+│   ├── home/
+│   │   ├── components/           # Home section components
+│   │   │   ├── heroSection/
+│   │   │   ├── PropertiesSection/
+│   │   │   ├── activitiesSection/
+│   │   │   ├── beachesSection/
+│   │   │   ├── blogsSection/
+│   │   │   ├── companyMetrics/
+│   │   │   ├── ctaBannerSection/
+│   │   │   ├── instagramSection/
+│   │   │   ├── shopsSection/
+│   │   │   ├── yachtSection/
+│   │   │   └── sectionTag/
+│   │   ├── hooks/                # Home-specific hooks
+│   │   ├── utils/                # Home-specific utilities
+│   │   ├── types/                # Home-specific types
+│   │   └── HomeContent.tsx       # Home page entry component
+│   │
+│   ├── properties/
+│   │   ├── components/           # Property-specific components
+│   │   │   ├── PropertyCard.tsx
+│   │   │   ├── PropertyMap.tsx
+│   │   │   └── PropertyMapDynamic.tsx
+│   │   ├── hooks/                # e.g., useProperty.ts, usePropertyFilters.ts
+│   │   ├── utils/                # e.g., formatPropertyPrice.ts
+│   │   └── types/                # e.g., Property, PropertyFilter types
+│   │
+│   ├── search/
+│   │   ├── components/           # Search-specific components
+│   │   │   └── SearchBar.tsx
+│   │   ├── hooks/                # e.g., useSearch.ts, useSearchFilters.ts
+│   │   ├── utils/                # e.g., buildSearchQuery.ts
+│   │   └── types/                # e.g., SearchFilters, SearchResult types
+│   │
+│   ├── booking/
+│   │   ├── components/           # Booking-specific components
+│   │   │   └── PaymentForm.tsx
+│   │   ├── hooks/                # e.g., useBooking.ts, useAvailability.ts
+│   │   ├── utils/                # e.g., calculateBookingPrice.ts
+│   │   └── types/                # e.g., Booking, BookingStatus types
+│   │
+│   ├── maintenance/              # (planned)
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── utils/
+│   │   └── types/
+│   │
+│   └── dashboard/                # (planned)
+│       ├── components/
+│       ├── hooks/
+│       ├── utils/
+│       └── types/
 │
 ├── lib/
-│   ├── api/                      # API client and endpoints
+│   ├── api/                      # API client and endpoint modules
 │   │   ├── client.ts             # Base API client with interceptors
-│   │   ├── properties.ts         # Property endpoints
-│   │   ├── bookings.ts           # Booking endpoints
-│   │   ├── maintenance.ts        # Maintenance endpoints
-│   │   ├── users.ts              # User endpoints
-│   │   └── reviews.ts            # Review endpoints
+│   │   ├── index.ts              # Re-exports
+│   │   ├── properties.ts
+│   │   ├── bookings.ts
+│   │   ├── maintenance.ts
+│   │   ├── users.ts
+│   │   └── mock/                 # Mock API for development
+│   │       ├── MockAPIClient.ts
+│   │       └── seedData.ts
 │   │
-│   ├── services/                 # Service adapters (external integrations)
+│   ├── services/                 # External service adapters
 │   │   ├── auth/
 │   │   │   ├── IAuthService.ts
-│   │   │   └── FirebaseAuthAdapter.ts
+│   │   │   ├── FirebaseAuthAdapter.ts
+│   │   │   └── MockAuthAdapter.ts
 │   │   ├── payment/
 │   │   │   ├── IPaymentService.ts
 │   │   │   └── StripePaymentAdapter.ts
 │   │   ├── map/
 │   │   │   ├── IMapService.ts
 │   │   │   └── MapboxAdapter.ts
-│   │   └── email/
-│   │       └── sendEmail.ts
+│   │   └── storage/
+│   │       ├── IFileStorageService.ts
+│   │       └── FirebaseStorageAdapter.ts
 │   │
 │   ├── contexts/                 # React contexts
 │   │   ├── AuthContext.tsx
-│   │   ├── LocaleContext.tsx
-│   │   └── NotificationContext.tsx
+│   │   └── LocaleContext.tsx
 │   │
-│   ├── hooks/                    # Custom React hooks
-│   │   ├── useAuth.ts
-│   │   ├── useLocale.ts
-│   │   ├── useNotifications.ts
-│   │   └── useBooking.ts
-│   │
-│   ├── utils/                    # Utility functions
-│   │   ├── i18n.ts               # Translation helpers
-│   │   ├── date.ts               # Date formatting
-│   │   ├── price.ts              # Price calculations
-│   │   ├── validation.ts         # Form validation
-│   │   └── booking.ts            # Booking logic (cancellation, etc.)
-│   │
-│   ├── types/                    # TypeScript type definitions
+│   ├── types/                    # Shared TypeScript type definitions
 │   │   ├── index.ts              # Core domain models
-│   │   ├── api.ts                # API types
+│   │   ├── api.ts                # API request/response types
 │   │   └── services.ts           # Service interface types
 │   │
-│   └── constants/                # Application constants
-│       ├── routes.ts
-│       ├── categories.ts
-│       └── config.ts
+│   └── utils/                    # Shared utility functions
+│       └── i18n.ts               # Translation helpers
 │
-├── config/                       # Configuration files
-│   ├── i18n.ts                   # i18n configuration
-│   ├── env.ts                    # Environment variable validation
-│   └── services.ts               # Service factory and configuration
+├── types/                        # Global type declarations
+│   └── assets.d.ts               # Asset module declarations
 │
 └── public/
     ├── locales/                  # Translation files
     │   ├── en.json
     │   └── ar.json
-    └── assets/                   # Static assets (images, icons)
+    └── videos/
+        └── discover_video.mp4
 ```
+
+## Feature Module Structure
+
+Each feature under `src/features/` follows this internal structure:
+
+```
+features/{feature-name}/
+├── components/       # UI components specific to this feature
+├── hooks/            # Custom hooks (data fetching, local state, side effects)
+├── utils/            # Pure utility/helper functions for this feature
+├── types/            # TypeScript interfaces and types scoped to this feature
+└── index.tsx         # (optional) Main entry component or barrel export
+```
+
+**Rules:**
+
+- Feature-scoped hooks, utils, and types live inside the feature folder
+- Shared hooks/utils/types that are used by 2+ features go in `lib/`
+- Components inside a feature should not import from other feature folders directly — use `lib/` for shared logic
+- each feature should have a single entry component that render other modular components
+- a component should be as small as possible
 
 ## Component Organization Principles
 
 ### 1. Layout Components (`components/layout/`)
+
 Structural elements that define the page layout and navigation.
 
 **Examples**: Header, Footer, Sidebar, Navigation, LanguageToggle
 
-### 2. Feature Components (`components/features/`)
-Domain-specific components organized by feature area. Each feature has its own subdirectory.
+### 2. Feature Components (`features/{name}/components/`)
 
-**Examples**: 
-- `properties/` - Property-related components
-- `booking/` - Booking flow components
-- `maintenance/` - Maintenance ticket components
+Domain-specific components co-located with their feature's hooks, utils, and types.
+
+**Examples**:
+
+- `features/properties/components/` - Property-related components
+- `features/booking/components/` - Booking flow components
 
 ### 3. Shared Components (`components/shared/`)
+
 Reusable business components used across multiple features.
 
 **Examples**: ClientOnly, DatePicker, UserAvatar
 
 ### 4. UI Components (`components/ui/`)
+
 Primitive, reusable UI elements with no business logic.
 
-**Examples**: Button, Input, Card, Modal, Dropdown
+**Examples**: Button, Input, Card, Modal, Dropdown, Badge, Spinner
 
 ## Service Layer Pattern
 
@@ -179,6 +229,7 @@ This allows swapping providers (Firebase → Custom Auth, Stripe → PayPal, etc
 ## Routing Conventions
 
 ### Public Routes (SSR)
+
 - `/` - Home page
 - `/search?category=rent&type=apartment&...` - Search with URL params
 - `/properties/[id]` - Property details
@@ -186,10 +237,13 @@ This allows swapping providers (Firebase → Custom Auth, Stripe → PayPal, etc
 - `/shops/[id]` - Shop details
 
 ### Auth Routes
+
 - `/auth/login` - Login with phone/OTP
+- `/auth/register` - Registration
 - `/auth/reset-password` - Password reset
 
 ### Protected Routes (CSR)
+
 - `/dashboard/guest` - Guest dashboard
 - `/dashboard/investor` - Investor dashboard
 - `/dashboard/owner` - Owner dashboard
@@ -198,6 +252,7 @@ This allows swapping providers (Firebase → Custom Auth, Stripe → PayPal, etc
 - `/dashboard/profile` - User profile
 
 ### Checkout Flow
+
 - `/checkout/[propertyId]` - Multi-step checkout
 
 ## File Naming Conventions
@@ -211,7 +266,7 @@ This allows swapping providers (Firebase → Custom Auth, Stripe → PayPal, etc
 ## Import Order
 
 1. External dependencies (React, Next.js, third-party)
-2. Internal absolute imports (`@/components`, `@/lib`)
+2. Internal absolute imports (`@/components`, `@/lib`, `@/features`)
 3. Relative imports (`./`, `../`)
 4. Type imports (if separated)
 5. Styles/CSS imports
@@ -219,8 +274,9 @@ This allows swapping providers (Firebase → Custom Auth, Stripe → PayPal, etc
 ## Key Architectural Rules
 
 1. **Separation of Concerns**: Keep presentation, business logic, and data access separate
-2. **Feature-Based Organization**: Group related components by feature, not by type
+2. **Feature-Based Organization**: Co-locate components, hooks, utils, and types by feature
 3. **Dependency Inversion**: External services accessed through abstract interfaces
 4. **SSR for Public Pages**: Use SSR for SEO-critical pages
 5. **Type Safety**: TypeScript strict mode throughout
 6. **No Business Logic in UI Components**: Keep UI components pure and reusable
+7. **Feature Isolation**: Features should not import directly from each other — share via `lib/`
