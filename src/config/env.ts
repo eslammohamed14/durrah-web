@@ -11,17 +11,20 @@ function requireEnv(key: string): string {
   return value;
 }
 
-function optionalEnv(key: string, fallback: string): string {
-  return process.env[key] || fallback;
+function isEnvTrue(value: string | undefined): boolean {
+  return value === "true" || value === "1";
 }
+
+const apiBaseURL = (process.env.NEXT_PUBLIC_API_BASE_URL ?? "").trim();
 
 export const env = {
   // API
-  apiBaseURL: process.env.NEXT_PUBLIC_API_BASE_URL as string,
-  useMockAPI: process.env.NEXT_PUBLIC_USE_MOCK_API as string,
+  apiBaseURL,
+  /** Explicit opt-in: NEXT_PUBLIC_USE_MOCK_API=true */
+  useMockAPI: isEnvTrue(process.env.NEXT_PUBLIC_USE_MOCK_API),
 
-  // Service providers
-  authProvider: process.env.NEXT_PUBLIC_AUTH_PROVIDER as string,
+  // Service providers (default auth: mock when unset — no Firebase required for local dev)
+  authProvider: (process.env.NEXT_PUBLIC_AUTH_PROVIDER ?? "").trim() || "mock",
   paymentProvider: process.env.NEXT_PUBLIC_PAYMENT_PROVIDER as string,
   mapProvider: process.env.NEXT_PUBLIC_MAP_PROVIDER as string,
   storageProvider: process.env.NEXT_PUBLIC_STORAGE_PROVIDER as string,
@@ -53,11 +56,19 @@ export const env = {
 } as const;
 
 /**
+ * Use the in-process mock API when explicitly enabled, or when no backend base URL is set
+ * (local dev without a separate API server).
+ */
+export function usesMockApi(): boolean {
+  return env.useMockAPI || env.apiBaseURL === "";
+}
+
+/**
  * Validates that all required env vars are present for production.
  * Call this during app initialization when not using the mock API.
  */
 export function validateProductionEnv(): void {
-  if (env.useMockAPI) return;
+  if (usesMockApi()) return;
 
   const required: string[] = [
     'NEXT_PUBLIC_API_BASE_URL',

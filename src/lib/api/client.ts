@@ -2,8 +2,6 @@
  * Base API client with fetch wrapper, interceptors, error handling, and retry logic.
  */
 
-import { env } from '@/config/env';
-
 // ─── Error Types ──────────────────────────────────────────────────────────────
 
 export class APIError extends Error {
@@ -11,11 +9,45 @@ export class APIError extends Error {
     public readonly statusCode: number,
     message: string,
     public readonly code: string,
-    public readonly details?: unknown
+    public readonly details?: unknown,
   ) {
     super(message);
-    this.name = 'APIError';
+    this.name = "APIError";
   }
+}
+
+/** True when the string is usable as fetch input in Node (absolute http(s) URL). */
+function isAbsoluteHttpUrl(url: string): boolean {
+  return /^https?:\/\//i.test(url);
+}
+
+/**
+ * Node's fetch rejects relative URLs (e.g. `/properties`). Browsers resolve them
+ * against the document origin. On the server, resolve against the app origin.
+ */
+function resolveFetchUrl(urlString: string): string {
+  if (isAbsoluteHttpUrl(urlString)) return urlString;
+  if (typeof window !== "undefined") return urlString;
+
+  const explicit = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
+  if (explicit && isAbsoluteHttpUrl(explicit)) {
+    return new URL(
+      urlString.startsWith("/") ? urlString : `/${urlString}`,
+      explicit.endsWith("/") ? explicit : `${explicit}/`,
+    ).href;
+  }
+  if (process.env.VERCEL_URL) {
+    const host = process.env.VERCEL_URL.replace(/\/$/, "");
+    return new URL(
+      urlString.startsWith("/") ? urlString : `/${urlString}`,
+      `https://${host}/`,
+    ).href;
+  }
+  const port = process.env.PORT ?? "3000";
+  return new URL(
+    urlString.startsWith("/") ? urlString : `/${urlString}`,
+    `http://127.0.0.1:${port}/`,
+  ).href;
 }
 
 // ─── Config ───────────────────────────────────────────────────────────────────
@@ -42,7 +74,7 @@ export class BaseAPIClient {
   private maxRetries: number;
 
   constructor(config: APIConfig) {
-    this.baseURL = config.baseURL.replace(/\/$/, '');
+    this.baseURL = config.baseURL?.replace(/\/$/, "") ?? "";
     this.timeout = config.timeout ?? 10_000;
     this.maxRetries = config.maxRetries ?? 1;
   }
@@ -59,11 +91,11 @@ export class BaseAPIClient {
 
   protected buildHeaders(): Record<string, string> {
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
     };
     if (this.authToken) {
-      headers['Authorization'] = `Bearer ${this.authToken}`;
+      headers["Authorization"] = `Bearer ${this.authToken}`;
     }
     return headers;
   }
@@ -74,18 +106,23 @@ export class BaseAPIClient {
       if (response.status === 204) return undefined as T;
       const json = await response.json();
       // Unwrap { data: T } envelope if present
-      return ('data' in json ? json.data : json) as T;
+      return ("data" in json ? json.data : json) as T;
     }
 
-    let errorBody: { error?: { code?: string; message?: string; details?: unknown } } = {};
+    let errorBody: {
+      error?: { code?: string; message?: string; details?: unknown };
+    } = {};
     try {
       errorBody = await response.json();
     } catch {
       // ignore parse errors
     }
 
-    const code = errorBody.error?.code ?? 'UNKNOWN_ERROR';
-    const message = errorBody.error?.message ?? response.statusText ?? 'An unexpected error occurred';
+    const code = errorBody.error?.code ?? "UNKNOWN_ERROR";
+    const message =
+      errorBody.error?.message ??
+      response.statusText ??
+      "An unexpected error occurred";
     const details = errorBody.error?.details;
 
     throw new APIError(response.status, message, code, details);
@@ -96,13 +133,14 @@ export class BaseAPIClient {
   protected async request<T>(
     path: string,
     config: RequestConfig,
-    attempt = 0
+    attempt = 0,
   ): Promise<T> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
 
     try {
-      const response = await fetch(`${this.baseURL}${path}`, {
+      const urlString = `${this.baseURL}${path}`;
+      const response = await fetch(resolveFetchUrl(urlString), {
         ...config,
         signal: config.signal ?? controller.signal,
       });
@@ -124,7 +162,12 @@ export class BaseAPIClient {
         return this.request<T>(path, config, attempt + 1);
       }
 
-      throw new APIError(0, 'Network error. Please check your connection.', 'NETWORK_ERROR', err);
+      throw new APIError(
+        0,
+        "Network error. Please check your connection.",
+        "NETWORK_ERROR",
+        err,
+      );
     } finally {
       clearTimeout(timeoutId);
     }
@@ -133,12 +176,15 @@ export class BaseAPIClient {
   // ─── HTTP Helpers ────────────────────────────────────────────────────────────
 
   protected get<T>(path: string): Promise<T> {
-    return this.request<T>(path, { method: 'GET', headers: this.buildHeaders() });
+    return this.request<T>(path, {
+      method: "GET",
+      headers: this.buildHeaders(),
+    });
   }
 
   protected post<T>(path: string, body?: unknown): Promise<T> {
     return this.request<T>(path, {
-      method: 'POST',
+      method: "POST",
       headers: this.buildHeaders(),
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
@@ -146,7 +192,7 @@ export class BaseAPIClient {
 
   protected put<T>(path: string, body?: unknown): Promise<T> {
     return this.request<T>(path, {
-      method: 'PUT',
+      method: "PUT",
       headers: this.buildHeaders(),
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
@@ -154,14 +200,17 @@ export class BaseAPIClient {
 
   protected patch<T>(path: string, body?: unknown): Promise<T> {
     return this.request<T>(path, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: this.buildHeaders(),
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   }
 
   protected delete<T>(path: string): Promise<T> {
-    return this.request<T>(path, { method: 'DELETE', headers: this.buildHeaders() });
+    return this.request<T>(path, {
+      method: "DELETE",
+      headers: this.buildHeaders(),
+    });
   }
 }
 
@@ -172,13 +221,21 @@ export function delay(ms: number): Promise<void> {
 }
 
 export function buildQueryString(params: Record<string, unknown>): string {
-  const entries = Object.entries(params).filter(([, v]) => v !== undefined && v !== null && v !== '');
-  if (entries.length === 0) return '';
+  const entries = Object.entries(params).filter(
+    ([, v]) => v !== undefined && v !== null && v !== "",
+  );
+  if (entries.length === 0) return "";
   const qs = entries
     .map(([k, v]) => {
-      if (Array.isArray(v)) return v.map((item) => `${encodeURIComponent(k)}=${encodeURIComponent(String(item))}`).join('&');
+      if (Array.isArray(v))
+        return v
+          .map(
+            (item) =>
+              `${encodeURIComponent(k)}=${encodeURIComponent(String(item))}`,
+          )
+          .join("&");
       return `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`;
     })
-    .join('&');
+    .join("&");
   return `?${qs}`;
 }
