@@ -1,11 +1,19 @@
 import type { SVGProps } from "react";
 
-export interface XshapProps extends Omit<SVGProps<SVGSVGElement>, "width" | "height"> {
+export interface XshapProps extends Omit<
+  SVGProps<SVGSVGElement>,
+  "width" | "height"
+> {
   size?: number;
   color?: string;
 }
 
-export function Xshap({ size = 59, color = "#2A2F73", className, ...rest }: XshapProps) {
+export function Xshap({
+  size = 59,
+  color = "#2A2F73",
+  className,
+  ...rest
+}: XshapProps) {
   return (
     <svg
       width={size}

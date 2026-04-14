@@ -8,6 +8,7 @@ import property5 from "@/assets/images/property5.jpg";
 import property6 from "@/assets/images/property6.jpg";
 import activity1 from "@/assets/images/activity1.png";
 import activity2 from "@/assets/images/activity2.png";
+import yachtShape from "@/assets/images/yacht_shape.png";
 
 const images = {
   durrahHomeHero: durrahHomeJpg.src,
@@ -20,6 +21,7 @@ const images = {
   property6: property6.src,
   activity1: activity1.src,
   activity2: activity2.src,
+  yachtShape: yachtShape.src,
 } as const;
 
 export default images;
