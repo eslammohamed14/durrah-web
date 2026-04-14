@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { DEFAULT_LOCALE, isValidLocale, NEXT_LOCALE_COOKIE } from "@/config/i18n";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const localeCookie = request.cookies.get(NEXT_LOCALE_COOKIE)?.value;
   const locale = isValidLocale(localeCookie) ? localeCookie : DEFAULT_LOCALE;
 
