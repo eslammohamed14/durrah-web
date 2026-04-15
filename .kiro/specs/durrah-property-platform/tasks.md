@@ -308,8 +308,8 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Add nearby points of interest
     - _Requirements: 4.6, 15.2, 15.3, 15.4_
 
-- [ ] 13. Implement booking flow
-  - [ ] 13.1 Create AvailabilityCalendar component
+- [x] 13. Implement booking flow
+  - [x] 13.1 Create AvailabilityCalendar component
     - Implement components/features/booking/AvailabilityCalendar.tsx
     - Display available and booked dates
     - Disable unavailable dates
@@ -318,7 +318,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Display minimum/maximum stay requirements
     - _Requirements: 29.1, 29.2, 29.3, 29.5, 29.6, 30.1, 30.3_
 
-  - [ ] 13.2 Create BookingForm component
+  - [x] 13.2 Create BookingForm component
     - Implement components/features/booking/BookingForm.tsx
     - Add date range selection with AvailabilityCalendar
     - Add guest count input (adults, children)
@@ -327,7 +327,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Add form validation
     - _Requirements: 7.1, 7.2, 7.7, 29.4_
 
-  - [ ] 13.3 Create checkout page (Rent & Activities only)
+  - [x] 13.3 Create checkout page (Rent & Activities only)
     - Implement app/checkout/[propertyId]/page.tsx
     - Guard: redirect to inquiry form if property category is 'buy' or 'shop'
     - Display booking summary with property details and dates
