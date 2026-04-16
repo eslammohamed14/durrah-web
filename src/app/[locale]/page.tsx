@@ -44,12 +44,10 @@ async function getHomeData(): Promise<{
 
   const allProperties = await api.searchProperties({});
 
-  // Top rated: sort by rating desc, take top 3
   const topRated = [...allProperties]
     .sort((a, b) => b.ratings.average - a.ratings.average)
     .slice(0, 3);
 
-  // Distinguished offers: rent/activity only
   const distinguishedOffers = allProperties
     .filter((p) => p.category === "rent" || p.category === "activity")
     .sort((a, b) => b.ratings.count - a.ratings.count)
@@ -70,11 +68,9 @@ export default async function HomePage() {
   return (
     <>
       <Header transparent />
-      <HomeContent
-        featuredForGrid={featuredForGrid}
-        allProperties={allProperties}
-      />
+      <HomeContent featuredForGrid={featuredForGrid} allProperties={allProperties} />
       <Footer />
     </>
   );
 }
+

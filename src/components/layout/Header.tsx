@@ -19,7 +19,7 @@ interface HeaderProps {
 }
 
 export function Header({ transparent = false }: HeaderProps) {
-  const { locale, setLocale, t, dir } = useLocale();
+  const { locale, setLocale, t, dir, isPending } = useLocale();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const baseClasses = transparent
@@ -94,18 +94,14 @@ export function Header({ transparent = false }: HeaderProps) {
           <div className="flex items-center gap-6">
             {/* Language toggle */}
             <div
-              className={`flex items-center gap-1 rounded-full h-[52px] w-[98px] px-2 py-1 ${transparent ? "bg-white/10 backdrop-blur-[18px]" : "bg-gray-100"}`}
+              className={`flex items-center gap-1 rounded-full h-[52px] w-[98px] px-2 py-1 ${transparent ? "bg-white/10 backdrop-blur-[18px]" : "bg-gray-100"} ${isPending ? "opacity-50 pointer-events-none" : ""}`}
             >
               <button
                 type="button"
-                onClick={() => {
-                  if (locale !== "en") {
-                    setLocale("en");
-                    window.location.reload();
-                  }
-                }}
+                onClick={() => setLocale("en")}
+                disabled={locale === "en" || isPending}
                 aria-pressed={locale === "en"}
-                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 ${
+                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 ${
                   locale === "en"
                     ? transparent
                       ? "bg-white text-[#FF765E]"
@@ -119,14 +115,10 @@ export function Header({ transparent = false }: HeaderProps) {
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  if (locale !== "ar") {
-                    setLocale("ar");
-                    window.location.reload();
-                  }
-                }}
+                onClick={() => setLocale("ar")}
+                disabled={locale === "ar" || isPending}
                 aria-pressed={locale === "ar"}
-                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 ${
+                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 ${
                   locale === "ar"
                     ? transparent
                       ? "bg-white text-[#FF765E]"
