@@ -22,8 +22,7 @@ interface Props {
 }
 
 export function CheckoutPageClient({ property }: Props) {
-  const { locale } = useLocale();
-  const isAr = locale === "ar";
+  const { locale, t } = useLocale();
 
   const [bookingData, setBookingData] = useState<BookingFormData | null>(null);
 
@@ -35,12 +34,8 @@ export function CheckoutPageClient({ property }: Props) {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">
           {bookingData
-            ? isAr
-              ? "إتمام الحجز"
-              : "Complete your booking"
-            : isAr
-              ? "احجز الآن"
-              : "Book your stay"}
+            ? t("checkoutClient.completeBooking")
+            : t("checkoutClient.bookYourStay")}
         </h1>
         <p className="mt-1 text-sm text-gray-500">{propertyTitle}</p>
       </div>
@@ -75,7 +70,7 @@ export function CheckoutPageClient({ property }: Props) {
                 clipRule="evenodd"
               />
             </svg>
-            {isAr ? "تعديل التواريخ" : "Edit dates"}
+            {t("checkoutClient.editDates")}
           </button>
 
           <CheckoutContent

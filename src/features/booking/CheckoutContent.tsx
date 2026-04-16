@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/Input";
 import { Spinner } from "@/components/ui/Spinner";
 import { createPaymentIntent } from "@/app/checkout/[propertyId]/actions";
 import { getAPIClient } from "@/lib/api";
+import { useLocale } from "@/lib/contexts/LocaleContext";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -38,6 +39,8 @@ export interface CheckoutContentProps {
   bookingData: BookingFormData;
   locale?: string;
 }
+
+type TFn = (key: string, params?: Record<string, string | number>) => string;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -66,10 +69,7 @@ function formatCurrency(
   }
 }
 
-function validateGuestInfo(
-  info: GuestInfo,
-  isAr: boolean,
-): Record<keyof GuestInfo, string> {
+function validateGuestInfo(info: GuestInfo, t: TFn): Record<keyof GuestInfo, string> {
   const errors: Record<keyof GuestInfo, string> = {
     name: "",
     email: "",
@@ -77,18 +77,31 @@ function validateGuestInfo(
   };
 
   if (!info.name.trim()) {
-    errors.name = isAr ? "الاسم مطلوب" : "Name is required";
+    errors.name = t("checkout.nameRequired");
   }
   if (!info.email.trim()) {
-    errors.email = isAr ? "البريد الإلكتروني مطلوب" : "Email is required";
+    errors.email = t("checkout.emailRequired");
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(info.email)) {
-    errors.email = isAr ? "بريد إلكتروني غير صالح" : "Invalid email address";
+    errors.email = t("checkout.invalidEmail");
   }
   if (!info.phone.trim()) {
-    errors.phone = isAr ? "رقم الهاتف مطلوب" : "Phone number is required";
+    errors.phone = t("checkout.phoneRequired");
   }
 
   return errors;
+}
+
+function guestSummaryLine(t: TFn, adults: number, children: number) {
+  const adultPart =
+    adults === 1
+      ? t("booking.guestsOneAdult", { count: 1 })
+      : t("booking.guestsManyAdults", { count: adults });
+  if (!children) return adultPart;
+  const childPart =
+    children === 1
+      ? t("booking.guestsOneChild", { count: 1 })
+      : t("booking.guestsManyChildren", { count: children });
+  return `${adultPart} · ${childPart}`;
 }
 
 // ── Booking summary ───────────────────────────────────────────────────────────
@@ -102,17 +115,18 @@ function BookingSummary({
   bookingData: BookingFormData;
   locale: string;
 }) {
-  const isAr = locale === "ar";
+  const { t } = useLocale();
   const { pricing, checkIn, checkOut, guests } = bookingData;
   const fmt = (n: number) => formatCurrency(n, pricing.currency, locale);
+  const nightsWord =
+    pricing.nights === 1 ? t("checkout.night") : t("checkout.night_plural");
 
   return (
     <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm">
       <h3 className="mb-3 font-semibold text-gray-900">
-        {isAr ? "ملخص الحجز" : "Booking summary"}
+        {t("checkout.summaryTitle")}
       </h3>
 
-      {/* Property */}
       <p className="mb-1 font-medium text-gray-800">
         {property.title[locale === "ar" ? "ar" : "en"]}
       </p>
@@ -120,37 +134,29 @@ function BookingSummary({
         {property.location.address[locale === "ar" ? "ar" : "en"]}
       </p>
 
-      {/* Dates */}
       <div className="mb-3 grid grid-cols-2 gap-2 text-xs">
         <div>
-          <p className="text-gray-400">{isAr ? "تسجيل الوصول" : "Check-in"}</p>
+          <p className="text-gray-400">{t("booking.checkIn")}</p>
           <p className="font-medium text-gray-700">
             {formatDate(checkIn, locale)}
           </p>
         </div>
         <div>
-          <p className="text-gray-400">
-            {isAr ? "تسجيل المغادرة" : "Check-out"}
-          </p>
+          <p className="text-gray-400">{t("booking.checkOut")}</p>
           <p className="font-medium text-gray-700">
             {formatDate(checkOut, locale)}
           </p>
         </div>
       </div>
 
-      {/* Guests */}
       <p className="mb-3 text-xs text-gray-600">
-        {isAr
-          ? `${guests.adults} بالغ${guests.children > 0 ? `، ${guests.children} طفل` : ""}`
-          : `${guests.adults} adult${guests.adults !== 1 ? "s" : ""}${guests.children > 0 ? `, ${guests.children} child${guests.children !== 1 ? "ren" : ""}` : ""}`}
+        {guestSummaryLine(t, guests.adults, guests.children)}
       </p>
 
-      {/* Price breakdown */}
       <div className="space-y-1 border-t border-gray-200 pt-3">
         <div className="flex justify-between text-gray-600">
           <span>
-            {fmt(property.pricing.basePrice)} × {pricing.nights}{" "}
-            {isAr ? "ليلة" : `night${pricing.nights !== 1 ? "s" : ""}`}
+            {fmt(property.pricing.basePrice)} × {pricing.nights} {nightsWord}
           </span>
           <span>{fmt(pricing.basePrice)}</span>
         </div>
@@ -161,11 +167,11 @@ function BookingSummary({
           </div>
         ))}
         <div className="flex justify-between text-gray-600">
-          <span>{isAr ? "الضريبة (15%)" : "Taxes (15%)"}</span>
+          <span>{t("checkout.taxesPercent")}</span>
           <span>{fmt(pricing.taxes)}</span>
         </div>
         <div className="flex justify-between border-t border-gray-200 pt-2 font-semibold text-gray-900">
-          <span>{isAr ? "الإجمالي" : "Total"}</span>
+          <span>{t("checkout.total")}</span>
           <span>{fmt(pricing.total)}</span>
         </div>
       </div>
@@ -182,16 +188,16 @@ function CancellationPolicyDisplay({
   property: Property;
   locale: string;
 }) {
+  const { t } = useLocale();
   const policy = property.policies.cancellation;
   if (!policy) return null;
 
-  const isAr = locale === "ar";
   const desc = policy.description[locale === "ar" ? "ar" : "en"];
 
   return (
     <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800">
       <p className="mb-1 font-semibold">
-        {isAr ? "سياسة الإلغاء" : "Cancellation policy"}
+        {t("checkout.cancellationPolicyTitle")}
       </p>
       <p>{desc}</p>
     </div>
@@ -207,15 +213,14 @@ function HouseRulesDisplay({
   property: Property;
   locale: string;
 }) {
+  const { t } = useLocale();
   const rules = property.policies.houseRules[locale === "ar" ? "ar" : "en"];
   if (!rules) return null;
-
-  const isAr = locale === "ar";
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-3 text-xs text-gray-700">
       <p className="mb-1 font-semibold text-gray-800">
-        {isAr ? "قواعد المنزل" : "House rules"}
+        {t("checkout.houseRulesTitle")}
       </p>
       <p>{rules}</p>
     </div>
@@ -230,7 +235,7 @@ export function CheckoutContent({
   locale = "en",
 }: CheckoutContentProps) {
   const router = useRouter();
-  const isAr = locale === "ar";
+  const { t } = useLocale();
 
   const [step, setStep] = useState<CheckoutStep>("guest-info");
   const [guestInfo, setGuestInfo] = useState<GuestInfo>({
@@ -257,22 +262,16 @@ export function CheckoutContent({
   const [errorMessage, setErrorMessage] = useState("");
   const [bookingId, setBookingId] = useState<string | null>(null);
 
-  // ── Step 1: validate guest info and proceed to payment ────────────────────
-
   const handleGuestInfoSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
 
-      const errors = validateGuestInfo(guestInfo, isAr);
+      const errors = validateGuestInfo(guestInfo, t);
       setFieldErrors(errors);
       if (Object.values(errors).some(Boolean)) return;
 
       if (!acknowledged) {
-        setAckError(
-          isAr
-            ? "يجب الموافقة على سياسات الحجز للمتابعة"
-            : "You must acknowledge the booking policies to continue",
-        );
+        setAckError(t("checkout.mustAcknowledgePolicies"));
         return;
       }
       setAckError("");
@@ -286,19 +285,15 @@ export function CheckoutContent({
         setErrorMessage(
           err instanceof Error
             ? err.message
-            : isAr
-              ? "فشل في تهيئة الدفع. يرجى المحاولة مرة أخرى."
-              : "Failed to initialize payment. Please try again.",
+            : t("checkout.paymentInitFailed"),
         );
         setStep("error");
       } finally {
         setLoadingPayment(false);
       }
     },
-    [guestInfo, acknowledged, bookingData.pricing.total, isAr],
+    [guestInfo, acknowledged, bookingData.pricing.total, t],
   );
-
-  // ── Step 2: payment success ───────────────────────────────────────────────
 
   const handlePaymentSuccess = useCallback(
     async (transactionId: string) => {
@@ -319,21 +314,17 @@ export function CheckoutContent({
         setErrorMessage(
           err instanceof Error
             ? err.message
-            : isAr
-              ? "تم الدفع ولكن فشل إنشاء الحجز. يرجى التواصل مع الدعم."
-              : "Payment succeeded but booking creation failed. Please contact support.",
+            : t("checkout.paidButBookingFailed"),
         );
         setStep("error");
       }
     },
-    [property.id, bookingData, guestInfo, isAr],
+    [property.id, bookingData, guestInfo, t],
   );
 
   const handlePaymentError = useCallback((message: string) => {
     setErrorMessage(message);
   }, []);
-
-  // ── Render ────────────────────────────────────────────────────────────────
 
   if (step === "success") {
     return (
@@ -342,16 +333,14 @@ export function CheckoutContent({
           <CheckIcon className="h-8 w-8 text-green-600" />
         </div>
         <h2 className="text-xl font-bold text-gray-900">
-          {isAr ? "تم تأكيد الحجز!" : "Booking confirmed!"}
+          {t("checkout.bookingConfirmed")}
         </h2>
         <p className="text-sm text-gray-500">
-          {isAr
-            ? "تم إرسال تأكيد الحجز إلى بريدك الإلكتروني."
-            : "A confirmation has been sent to your email."}
+          {t("checkout.confirmationEmailBody")}
         </p>
         {bookingId && (
           <p className="text-xs text-gray-400">
-            {isAr ? `رقم الحجز: ${bookingId}` : `Booking ID: ${bookingId}`}
+            {t("checkout.bookingIdLine", { id: bookingId })}
           </p>
         )}
         <Button
@@ -359,7 +348,7 @@ export function CheckoutContent({
           size="md"
           onClick={() => router.push("/dashboard/guest")}
         >
-          {isAr ? "عرض حجوزاتي" : "View my bookings"}
+          {t("checkout.viewMyBookings")}
         </Button>
       </div>
     );
@@ -372,7 +361,7 @@ export function CheckoutContent({
           <XIcon className="h-8 w-8 text-red-600" />
         </div>
         <h2 className="text-xl font-bold text-gray-900">
-          {isAr ? "حدث خطأ" : "Something went wrong"}
+          {t("checkout.somethingWrong")}
         </h2>
         <p className="max-w-sm text-sm text-gray-500">{errorMessage}</p>
         <Button
@@ -383,7 +372,7 @@ export function CheckoutContent({
             setErrorMessage("");
           }}
         >
-          {isAr ? "حاول مرة أخرى" : "Try again"}
+          {t("checkout.tryAgain")}
         </Button>
       </div>
     );
@@ -391,7 +380,6 @@ export function CheckoutContent({
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
-      {/* Left: form */}
       <div className="space-y-6">
         {step === "guest-info" && (
           <form
@@ -400,11 +388,11 @@ export function CheckoutContent({
             className="space-y-5"
           >
             <h2 className="text-lg font-bold text-gray-900">
-              {isAr ? "معلومات الضيف" : "Guest information"}
+              {t("checkout.guestInformation")}
             </h2>
 
             <Input
-              label={isAr ? "الاسم الكامل" : "Full name"}
+              label={t("checkout.fullName")}
               type="text"
               autoComplete="name"
               value={guestInfo.name}
@@ -417,7 +405,7 @@ export function CheckoutContent({
             />
 
             <Input
-              label={isAr ? "البريد الإلكتروني" : "Email address"}
+              label={t("checkout.emailAddress")}
               type="email"
               autoComplete="email"
               value={guestInfo.email}
@@ -430,7 +418,7 @@ export function CheckoutContent({
             />
 
             <Input
-              label={isAr ? "رقم الهاتف" : "Phone number"}
+              label={t("checkout.phoneNumber")}
               type="tel"
               autoComplete="tel"
               value={guestInfo.phone}
@@ -442,13 +430,11 @@ export function CheckoutContent({
               required
             />
 
-            {/* Policies */}
             <div className="space-y-3">
               <CancellationPolicyDisplay property={property} locale={locale} />
               <HouseRulesDisplay property={property} locale={locale} />
             </div>
 
-            {/* Acknowledgment */}
             <label className="flex cursor-pointer items-start gap-3">
               <input
                 type="checkbox"
@@ -460,9 +446,7 @@ export function CheckoutContent({
                 className="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
               <span className="text-sm text-gray-700">
-                {isAr
-                  ? "أوافق على سياسات الحجز وقواعد المنزل"
-                  : "I agree to the booking policies and house rules"}
+                {t("checkout.acknowledgePolicies")}
               </span>
             </label>
             {ackError && (
@@ -480,12 +464,8 @@ export function CheckoutContent({
               disabled={loadingPayment}
             >
               {loadingPayment
-                ? isAr
-                  ? "جارٍ التحضير…"
-                  : "Preparing…"
-                : isAr
-                  ? "المتابعة للدفع"
-                  : "Continue to payment"}
+                ? t("checkout.preparing")
+                : t("checkout.continueToPayment")}
             </Button>
           </form>
         )}
@@ -497,13 +477,13 @@ export function CheckoutContent({
                 type="button"
                 onClick={() => setStep("guest-info")}
                 className="flex items-center gap-1 text-sm text-blue-600 hover:underline"
-                aria-label={isAr ? "رجوع" : "Back"}
+                aria-label={t("checkout.backAria")}
               >
                 <ChevronLeftIcon />
-                {isAr ? "رجوع" : "Back"}
+                {t("common.back")}
               </button>
               <h2 className="text-lg font-bold text-gray-900">
-                {isAr ? "الدفع" : "Payment"}
+                {t("checkout.payment")}
               </h2>
             </div>
 
@@ -531,7 +511,6 @@ export function CheckoutContent({
         )}
       </div>
 
-      {/* Right: summary */}
       <div className="space-y-4">
         <BookingSummary
           property={property}

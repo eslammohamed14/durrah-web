@@ -18,14 +18,14 @@ import type { UserRole } from "@/lib/types";
 
 // ── Role card data ────────────────────────────────────────────────────────────
 
-function getRoleConfig(locale: string) {
-  const isAr = locale === "ar";
+function getRoleConfig(
+  locale: string,
+  t: (key: string, params?: Record<string, string | number>) => string,
+) {
   return {
     guest: {
-      label: isAr ? "الضيف" : "Guest",
-      description: isAr
-        ? "إدارة حجوزاتك واستفساراتك وطلبات الصيانة"
-        : "Manage your bookings, inquiries, and maintenance requests",
+      label: t("dashboard.roleGuest"),
+      description: t("dashboard.pickerGuestDescription"),
       href: `/${locale}/dashboard/guest`,
       icon: (
         <svg
@@ -45,10 +45,8 @@ function getRoleConfig(locale: string) {
       ),
     },
     investor: {
-      label: isAr ? "المستثمر" : "Investor",
-      description: isAr
-        ? "عرض أداء استثماراتك والإيرادات ومعدلات الإشغال"
-        : "View investment performance, revenue, and occupancy rates",
+      label: t("dashboard.roleInvestor"),
+      description: t("dashboard.pickerInvestorDescription"),
       href: `/${locale}/dashboard/investor`,
       icon: (
         <svg
@@ -68,10 +66,8 @@ function getRoleConfig(locale: string) {
       ),
     },
     owner: {
-      label: isAr ? "المالك" : "Owner",
-      description: isAr
-        ? "إدارة عقاراتك وطلبات الصيانة وتوقعات الحجز"
-        : "Manage your properties, maintenance tickets, and booking requests",
+      label: t("dashboard.roleOwner"),
+      description: t("dashboard.pickerOwnerDescription"),
       href: `/${locale}/dashboard/owner`,
       icon: (
         <svg
@@ -99,10 +95,9 @@ function getRoleConfig(locale: string) {
 // ── DashboardHub ──────────────────────────────────────────────────────────────
 
 export default function DashboardHubPage() {
-  const { locale } = useLocale();
+  const { locale, t } = useLocale();
   const { user, loading } = useAuth();
   const router = useRouter();
-  const isAr = locale === "ar";
 
   // Redirect to login if not authenticated
   React.useEffect(() => {
@@ -137,19 +132,17 @@ export default function DashboardHubPage() {
   }
 
   // Multiple roles — show selector
-  const roleConfig = getRoleConfig(locale);
+  const roleConfig = getRoleConfig(locale, t);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 py-16">
       <div className="w-full max-w-2xl">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-gray-900">
-            {isAr ? `مرحباً، ${user.name}` : `Welcome, ${user.name}`}
+            {t("dashboard.welcome", { name: user.name })}
           </h1>
           <p className="mt-2 text-gray-500 text-sm">
-            {isAr
-              ? "اختر لوحة التحكم التي تريد الوصول إليها"
-              : "Choose which dashboard you'd like to access"}
+            {t("dashboard.chooseDashboardHint")}
           </p>
         </div>
 
@@ -180,7 +173,7 @@ export default function DashboardHubPage() {
             size="sm"
             onClick={() => router.push(`/${locale}/dashboard/profile`)}
           >
-            {isAr ? "الملف الشخصي" : "Profile Settings"}
+            {t("dashboard.profileSettings")}
           </Button>
         </div>
       </div>

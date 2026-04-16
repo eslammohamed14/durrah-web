@@ -4,11 +4,12 @@ import type { Locale } from "@/lib/types";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 
 export function LanguageToggle() {
-  const { locale, setLocale, isPending } = useLocale();
+  const { locale, setLocale, isPending, t } = useLocale();
 
   const isArabic = locale === "ar";
   const nextLocale: Locale = isArabic ? "en" : "ar";
-  const label = isArabic ? "English" : "العربية";
+  const label = isArabic ? t("common.languageEnglish") : t("common.languageArabic");
+  const ariaLabel = isArabic ? t("common.switchToEnglish") : t("common.switchToArabic");
 
   const handleToggle = () => {
     setLocale(nextLocale);
@@ -18,7 +19,7 @@ export function LanguageToggle() {
     <button
       onClick={handleToggle}
       disabled={isPending}
-      aria-label={`Switch to ${isArabic ? "English" : "Arabic"}`}
+      aria-label={ariaLabel}
       className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
     >
       <svg

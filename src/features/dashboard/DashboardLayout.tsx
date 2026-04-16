@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/lib/contexts/AuthContext";
+import { useLocale } from "@/lib/contexts/LocaleContext";
 import { Spinner } from "@/components/ui/Spinner";
 
 interface NavItem {
@@ -70,8 +71,9 @@ export function DashboardLayout({
 }: DashboardLayoutProps) {
   const pathname = usePathname();
   const { user, loading } = useAuth();
+  const { t } = useLocale();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isAr = locale === "ar";
+  const isRtl = locale === "ar";
 
   if (loading) {
     return (
@@ -142,10 +144,10 @@ export function DashboardLayout({
       <aside
         className={[
           "fixed inset-y-0 z-50 w-64 bg-white shadow-xl transition-transform duration-300 lg:hidden",
-          isAr ? "right-0" : "left-0",
+          isRtl ? "right-0" : "left-0",
           mobileOpen
             ? "translate-x-0"
-            : isAr
+            : isRtl
               ? "translate-x-full"
               : "-translate-x-full",
         ].join(" ")}
@@ -155,7 +157,7 @@ export function DashboardLayout({
           <button
             onClick={() => setMobileOpen(false)}
             className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100"
-            aria-label={isAr ? "إغلاق القائمة" : "Close menu"}
+            aria-label={t("dashboard.layout.closeMenu")}
           >
             <XIcon />
           </button>
@@ -170,7 +172,7 @@ export function DashboardLayout({
           <button
             onClick={() => setMobileOpen(true)}
             className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100"
-            aria-label={isAr ? "فتح القائمة" : "Open menu"}
+            aria-label={t("dashboard.layout.openMenu")}
           >
             <MenuIcon />
           </button>

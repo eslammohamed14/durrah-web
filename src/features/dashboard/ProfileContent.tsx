@@ -7,8 +7,9 @@
  */
 
 import React, { useState, useEffect, useCallback } from "react";
-import type { User, NotificationPreferences } from "@/lib/types";
+import type { NotificationPreferences } from "@/lib/types";
 import { useAuth } from "@/lib/contexts/AuthContext";
+import { useLocale } from "@/lib/contexts/LocaleContext";
 import { getAPIClient } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -26,7 +27,7 @@ export function ProfileContent({
   onLocaleChange,
 }: ProfileContentProps) {
   const { user } = useAuth();
-  const isAr = locale === "ar";
+  const { t } = useLocale();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -63,14 +64,14 @@ export function ProfileContent({
   const validate = useCallback((): boolean => {
     const errs: typeof fieldErrors = {};
     if (!name.trim()) {
-      errs.name = isAr ? "الاسم مطلوب" : "Name is required";
+      errs.name = t("dashboard.profile.nameRequired");
     }
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errs.email = isAr ? "بريد إلكتروني غير صالح" : "Invalid email address";
+      errs.email = t("dashboard.profile.invalidEmail");
     }
     setFieldErrors(errs);
     return Object.keys(errs).length === 0;
-  }, [name, email, isAr]);
+  }, [name, email, t]);
 
   const handleSave = useCallback(async () => {
     if (!user) return;
@@ -101,9 +102,7 @@ export function ProfileContent({
       setErrorMsg(
         err instanceof Error
           ? err.message
-          : isAr
-            ? "فشل حفظ الملف الشخصي"
-            : "Failed to save profile",
+          : t("dashboard.profile.saveFailed"),
       );
       setSaveState("error");
     }
@@ -117,7 +116,7 @@ export function ProfileContent({
     locale,
     onLocaleChange,
     validate,
-    isAr,
+    t,
   ]);
 
   if (!user) {
@@ -130,27 +129,34 @@ export function ProfileContent({
 
   const isSaving = saveState === "saving";
 
+  const notificationRows: [keyof NotificationPreferences, string][] = [
+    ["email", t("dashboard.profile.emailNotifications")],
+    ["inApp", t("dashboard.profile.inAppNotifications")],
+    ["bookingUpdates", t("dashboard.profile.bookingUpdates")],
+    ["maintenanceUpdates", t("dashboard.profile.maintenanceUpdates")],
+    ["reviewAlerts", t("dashboard.profile.reviewAlerts")],
+    ["systemAlerts", t("dashboard.profile.systemAlerts")],
+  ];
+
   return (
     <div className="max-w-xl space-y-8">
       <div>
         <h2 className="text-2xl font-bold text-gray-900">
-          {isAr ? "الملف الشخصي" : "Profile"}
+          {t("dashboard.profile.title")}
         </h2>
         <p className="text-sm text-gray-500 mt-1">
-          {isAr
-            ? "تحديث معلوماتك الشخصية وتفضيلاتك"
-            : "Update your personal information and preferences"}
+          {t("dashboard.profile.subtitle")}
         </p>
       </div>
 
       {/* Personal info */}
       <section className="rounded-xl border border-gray-200 bg-white p-6 space-y-4">
         <h3 className="font-semibold text-gray-900 text-sm">
-          {isAr ? "المعلومات الشخصية" : "Personal Information"}
+          {t("dashboard.profile.personalInfo")}
         </h3>
 
         <Input
-          label={isAr ? "الاسم الكامل" : "Full Name"}
+          label={t("auth.name")}
           type="text"
           autoComplete="name"
           value={name}
@@ -164,7 +170,7 @@ export function ProfileContent({
         />
 
         <Input
-          label={isAr ? "البريد الإلكتروني" : "Email Address"}
+          label={t("auth.email")}
           type="email"
           autoComplete="email"
           value={email}
@@ -177,7 +183,7 @@ export function ProfileContent({
         />
 
         <Input
-          label={isAr ? "رقم الهاتف" : "Phone Number"}
+          label={t("auth.phoneNumber")}
           type="tel"
           autoComplete="tel"
           value={phone}
@@ -188,7 +194,7 @@ export function ProfileContent({
       {/* Language preference */}
       <section className="rounded-xl border border-gray-200 bg-white p-6 space-y-4">
         <h3 className="font-semibold text-gray-900 text-sm">
-          {isAr ? "اللغة المفضلة" : "Language Preference"}
+          {t("dashboard.profile.languagePreference")}
         </h3>
         <div className="flex gap-3">
           {(["en", "ar"] as const).map((lang) => (
@@ -203,7 +209,9 @@ export function ProfileContent({
                   : "border-gray-200 text-gray-600 hover:border-gray-300",
               ].join(" ")}
             >
-              {lang === "en" ? "English" : "العربية"}
+              {lang === "en"
+                ? t("dashboard.profile.langEnglish")
+                : t("dashboard.profile.langArabic")}
             </button>
           ))}
         </div>
@@ -212,28 +220,10 @@ export function ProfileContent({
       {/* Notification preferences */}
       <section className="rounded-xl border border-gray-200 bg-white p-6 space-y-4">
         <h3 className="font-semibold text-gray-900 text-sm">
-          {isAr ? "تفضيلات الإشعارات" : "Notification Preferences"}
+          {t("dashboard.profile.notificationPreferences")}
         </h3>
         <div className="space-y-3">
-          {(
-            [
-              [
-                "email",
-                isAr ? "إشعارات البريد الإلكتروني" : "Email Notifications",
-              ],
-              [
-                "inApp",
-                isAr ? "الإشعارات داخل التطبيق" : "In-App Notifications",
-              ],
-              ["bookingUpdates", isAr ? "تحديثات الحجز" : "Booking Updates"],
-              [
-                "maintenanceUpdates",
-                isAr ? "تحديثات الصيانة" : "Maintenance Updates",
-              ],
-              ["reviewAlerts", isAr ? "تنبيهات التقييمات" : "Review Alerts"],
-              ["systemAlerts", isAr ? "التنبيهات العامة" : "System Alerts"],
-            ] as [keyof NotificationPreferences, string][]
-          ).map(([key, label]) => (
+          {notificationRows.map(([key, label]) => (
             <label
               key={key}
               className="flex cursor-pointer items-center justify-between gap-4"
@@ -280,16 +270,12 @@ export function ProfileContent({
           onClick={handleSave}
         >
           {isSaving
-            ? isAr
-              ? "جارٍ الحفظ..."
-              : "Saving..."
-            : isAr
-              ? "حفظ التغييرات"
-              : "Save Changes"}
+            ? t("dashboard.profile.saving")
+            : t("dashboard.profile.saveChanges")}
         </Button>
         {saveState === "saved" && (
           <p className="text-sm text-green-600">
-            {isAr ? "تم الحفظ بنجاح" : "Saved successfully"}
+            {t("dashboard.profile.savedSuccess")}
           </p>
         )}
       </div>

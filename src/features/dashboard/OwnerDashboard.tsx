@@ -16,6 +16,7 @@ import type {
   InquiryStatus,
 } from "@/lib/types";
 import { useAuth } from "@/lib/contexts/AuthContext";
+import { useLocale } from "@/lib/contexts/LocaleContext";
 import { getAPIClient } from "@/lib/api";
 import { BookingList } from "@/features/booking/BookingList";
 import { Badge } from "@/components/ui/Badge";
@@ -53,6 +54,44 @@ function formatDate(d: Date | string, locale: string) {
   });
 }
 
+function ticketStatusT(
+  tr: (key: string, params?: Record<string, string | number>) => string,
+  s: TicketStatus,
+) {
+  const map: Record<TicketStatus, string> = {
+    open: "maintenance.status_open",
+    in_progress: "maintenance.status_in_progress",
+    resolved: "maintenance.status_resolved",
+    closed: "maintenance.status_closed",
+  };
+  return tr(map[s]);
+}
+
+function ticketPriorityT(
+  tr: (key: string, params?: Record<string, string | number>) => string,
+  p: MaintenanceTicket["priority"],
+) {
+  const map: Record<MaintenanceTicket["priority"], string> = {
+    low: "maintenance.priority_low",
+    medium: "maintenance.priority_medium",
+    high: "maintenance.priority_high",
+    emergency: "maintenance.priority_emergency",
+  };
+  return tr(map[p]);
+}
+
+function inquiryStatusT(
+  tr: (key: string, params?: Record<string, string | number>) => string,
+  s: InquiryStatus,
+) {
+  const map: Record<InquiryStatus, string> = {
+    new: "inquiry.status_new",
+    contacted: "inquiry.status_contacted",
+    closed: "inquiry.status_closed",
+  };
+  return tr(map[s]);
+}
+
 // ── Ticket Management ─────────────────────────────────────────────────────────
 
 function TicketsManagement({
@@ -66,7 +105,7 @@ function TicketsManagement({
   onStatusChange: (ticketId: string, status: TicketStatus) => Promise<void>;
   locale: string;
 }) {
-  const isAr = locale === "ar";
+  const { t } = useLocale();
   const [updating, setUpdating] = useState<string | null>(null);
 
   const statusBadge = {
@@ -75,26 +114,6 @@ function TicketsManagement({
     resolved: "success",
     closed: "default",
   } as const;
-
-  const statusLabel = (s: TicketStatus) => {
-    const m: Record<TicketStatus, [string, string]> = {
-      open: ["Open", "مفتوح"],
-      in_progress: ["In Progress", "قيد التنفيذ"],
-      resolved: ["Resolved", "تم الحل"],
-      closed: ["Closed", "مغلق"],
-    };
-    return m[s][isAr ? 1 : 0];
-  };
-
-  const priorityLabel = (p: MaintenanceTicket["priority"]) => {
-    const m: Record<typeof p, [string, string]> = {
-      low: ["Low", "منخفضة"],
-      medium: ["Medium", "متوسطة"],
-      high: ["High", "عالية"],
-      emergency: ["Emergency", "طارئة"],
-    };
-    return m[p][isAr ? 1 : 0];
-  };
 
   const nextStatus: Record<TicketStatus, TicketStatus | null> = {
     open: "in_progress",
@@ -107,7 +126,7 @@ function TicketsManagement({
     return (
       <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center">
         <p className="text-gray-400 text-sm">
-          {isAr ? "لا توجد طلبات صيانة" : "No maintenance tickets"}
+          {t("dashboard.owner.noTickets")}
         </p>
       </div>
     );
@@ -136,7 +155,7 @@ function TicketsManagement({
                 </p>
               </div>
               <Badge variant={statusBadge[ticket.status]} size="sm">
-                {statusLabel(ticket.status)}
+                {ticketStatusT(t, ticket.status)}
               </Badge>
             </div>
 
@@ -147,13 +166,13 @@ function TicketsManagement({
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
               <div className="flex gap-3 text-gray-400">
                 <span>
-                  {isAr ? "الأولوية:" : "Priority:"}{" "}
-                  {priorityLabel(ticket.priority)}
+                  {t("dashboard.owner.priority")}{" "}
+                  {ticketPriorityT(t, ticket.priority)}
                 </span>
                 <span>{formatDate(ticket.createdAt, locale)}</span>
                 {ticket.resolution?.cost !== undefined && (
                   <span className="text-orange-500">
-                    {isAr ? "التكلفة:" : "Cost:"}{" "}
+                    {t("dashboard.owner.cost")}{" "}
                     {formatCurrency(ticket.resolution.cost, "SAR", locale)}
                   </span>
                 )}
@@ -173,7 +192,7 @@ function TicketsManagement({
                     }
                   }}
                 >
-                  {statusLabel(next)}
+                  {ticketStatusT(t, next)}
                 </Button>
               )}
             </div>
@@ -195,13 +214,13 @@ function PropertiesManagement({
   bookings: Booking[];
   locale: string;
 }) {
-  const isAr = locale === "ar";
+  const { t } = useLocale();
 
   if (properties.length === 0) {
     return (
       <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center">
         <p className="text-gray-400 text-sm">
-          {isAr ? "لا توجد عقارات" : "No properties"}
+          {t("dashboard.owner.noProperties")}
         </p>
       </div>
     );
@@ -237,28 +256,22 @@ function PropertiesManagement({
                 size="sm"
               >
                 {prop.status === "active"
-                  ? isAr
-                    ? "نشط"
-                    : "Active"
-                  : isAr
-                    ? "غير نشط"
-                    : "Inactive"}
+                  ? t("dashboard.investor.propertyActive")
+                  : t("dashboard.investor.propertyInactive")}
               </Badge>
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-xs mb-3">
               <div className="rounded-lg bg-gray-50 p-2.5">
                 <p className="text-gray-400">
-                  {isAr ? "الحجوزات النشطة" : "Active Bookings"}
+                  {t("dashboard.nav.activeBookings")}
                 </p>
                 <p className="font-bold text-gray-900 text-base mt-0.5">
                   {activeBookings.length}
                 </p>
               </div>
               <div className="rounded-lg bg-gray-50 p-2.5">
-                <p className="text-gray-400">
-                  {isAr ? "الإيرادات" : "Revenue"}
-                </p>
+                <p className="text-gray-400">{t("dashboard.nav.revenue")}</p>
                 <p className="font-bold text-gray-900 text-sm mt-0.5">
                   {formatCurrency(totalRevenue, prop.pricing.currency, locale)}
                 </p>
@@ -267,10 +280,10 @@ function PropertiesManagement({
 
             <div className="flex gap-2 pt-2 border-t border-gray-100">
               <Button variant="outline" size="sm" className="flex-1 text-xs">
-                {isAr ? "تعديل" : "Edit"}
+                {t("dashboard.owner.edit")}
               </Button>
               <Button variant="ghost" size="sm" className="flex-1 text-xs">
-                {isAr ? "حجب التواريخ" : "Block Dates"}
+                {t("dashboard.owner.blockDates")}
               </Button>
             </div>
           </article>
@@ -293,7 +306,7 @@ function InquiriesManagement({
   onStatusChange: (id: string, status: InquiryStatus) => Promise<void>;
   locale: string;
 }) {
-  const isAr = locale === "ar";
+  const { t } = useLocale();
   const [updating, setUpdating] = useState<string | null>(null);
 
   const statusBadge = {
@@ -302,20 +315,11 @@ function InquiriesManagement({
     closed: "default",
   } as const;
 
-  const statusLabel = (s: InquiryStatus) => {
-    const m: Record<InquiryStatus, [string, string]> = {
-      new: ["New", "جديد"],
-      contacted: ["Contacted", "تم التواصل"],
-      closed: ["Closed", "مغلق"],
-    };
-    return m[s][isAr ? 1 : 0];
-  };
-
   if (inquiries.length === 0) {
     return (
       <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center">
         <p className="text-gray-400 text-sm">
-          {isAr ? "لا توجد استفسارات" : "No inquiries"}
+          {t("dashboard.owner.noInquiries")}
         </p>
       </div>
     );
@@ -342,7 +346,7 @@ function InquiriesManagement({
                 </p>
               </div>
               <Badge variant={statusBadge[inq.status]} size="sm">
-                {statusLabel(inq.status)}
+                {inquiryStatusT(t, inq.status)}
               </Badge>
             </div>
 
@@ -372,7 +376,7 @@ function InquiriesManagement({
                       }
                     }}
                   >
-                    {isAr ? "تحديد كـ «تم التواصل»" : "Mark Contacted"}
+                    {t("dashboard.owner.markContacted")}
                   </Button>
                 )}
                 {inq.status !== "closed" && (
@@ -390,7 +394,7 @@ function InquiriesManagement({
                       }
                     }}
                   >
-                    {isAr ? "إغلاق" : "Close"}
+                    {t("dashboard.owner.close")}
                   </Button>
                 )}
               </div>
@@ -406,7 +410,7 @@ function InquiriesManagement({
 
 export function OwnerDashboard({ locale = "en" }: OwnerDashboardProps) {
   const { user } = useAuth();
-  const isAr = locale === "ar";
+  const { t } = useLocale();
 
   const [activeTab, setActiveTab] = useState<Tab>("properties");
   const [ownedProperties, setOwnedProperties] = useState<Property[]>([]);
@@ -429,7 +433,6 @@ export function OwnerDashboard({ locale = "en" }: OwnerDashboardProps) {
       const propMap: Record<string, Property> = {};
       for (const p of owned) propMap[p.id] = p;
 
-      // Load bookings for owned properties
       const bkResults = await Promise.all(
         owned.map((p) =>
           api.getUserBookings(p.ownerId).catch(() => [] as Booking[]),
@@ -439,19 +442,17 @@ export function OwnerDashboard({ locale = "en" }: OwnerDashboardProps) {
         .flat()
         .filter((b) => owned.some((p) => p.id === b.propertyId));
 
-      // Load tickets
       const knownTicketIds = ["ticket-1", "ticket-2"];
       const ticketList: MaintenanceTicket[] = [];
       for (const tid of knownTicketIds) {
         try {
-          const t = await api.getMaintenanceTicket(tid);
-          if (propMap[t.propertyId]) ticketList.push(t);
+          const ticket = await api.getMaintenanceTicket(tid);
+          if (propMap[ticket.propertyId]) ticketList.push(ticket);
         } catch {
           // not found
         }
       }
 
-      // Load inquiries for owned properties
       const inquiryResults = await Promise.all(
         owned.map((p) =>
           api.getPropertyInquiries(p.id).catch(() => [] as Inquiry[]),
@@ -468,14 +469,12 @@ export function OwnerDashboard({ locale = "en" }: OwnerDashboardProps) {
       setError(
         err instanceof Error
           ? err.message
-          : isAr
-            ? "حدث خطأ ما"
-            : "Something went wrong",
+          : t("dashboard.genericError"),
       );
     } finally {
       setLoading(false);
     }
-  }, [user, isAr]);
+  }, [user, t]);
 
   useEffect(() => {
     loadData();
@@ -485,7 +484,9 @@ export function OwnerDashboard({ locale = "en" }: OwnerDashboardProps) {
     async (ticketId: string, status: TicketStatus) => {
       const api = getAPIClient();
       const updated = await api.updateMaintenanceTicket(ticketId, { status });
-      setTickets((prev) => prev.map((t) => (t.id === ticketId ? updated : t)));
+      setTickets((prev) =>
+        prev.map((tk) => (tk.id === ticketId ? updated : tk)),
+      );
     },
     [],
   );
@@ -502,22 +503,22 @@ export function OwnerDashboard({ locale = "en" }: OwnerDashboardProps) {
   const tabs: { id: Tab; label: string; count?: number }[] = [
     {
       id: "properties",
-      label: isAr ? "العقارات" : "Properties",
+      label: t("dashboard.owner.tabProperties"),
       count: ownedProperties.length,
     },
     {
       id: "bookings",
-      label: isAr ? "الحجوزات" : "Bookings",
+      label: t("dashboard.owner.tabBookings"),
       count: allBookings.length,
     },
     {
       id: "tickets",
-      label: isAr ? "الصيانة" : "Maintenance",
-      count: tickets.filter((t) => t.status !== "closed").length,
+      label: t("dashboard.owner.tabMaintenance"),
+      count: tickets.filter((tk) => tk.status !== "closed").length,
     },
     {
       id: "inquiries",
-      label: isAr ? "الاستفسارات" : "Inquiries",
+      label: t("dashboard.owner.tabInquiries"),
       count: inquiries.filter((i) => i.status === "new").length,
     },
   ];
@@ -526,15 +527,12 @@ export function OwnerDashboard({ locale = "en" }: OwnerDashboardProps) {
 
   return (
     <div className="space-y-6">
-      {/* Welcome */}
       <div>
         <h2 className="text-2xl font-bold text-gray-900">
-          {isAr ? `مرحباً، ${user.name}` : `Welcome, ${user.name}`}
+          {t("dashboard.welcome", { name: user.name })}
         </h2>
         <p className="text-sm text-gray-500 mt-1">
-          {isAr
-            ? "إدارة عقاراتك وطلبات الصيانة"
-            : "Manage your properties and maintenance"}
+          {t("dashboard.owner.welcomeSubtitle")}
         </p>
       </div>
 
@@ -542,30 +540,29 @@ export function OwnerDashboard({ locale = "en" }: OwnerDashboardProps) {
         <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-700">
           {error}
           <button className="ml-3 underline" onClick={loadData}>
-            {isAr ? "حاول مجدداً" : "Retry"}
+            {t("dashboard.retry")}
           </button>
         </div>
       )}
 
-      {/* Stats */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
           {
-            label: isAr ? "العقارات" : "Properties",
+            label: t("dashboard.nav.properties"),
             value: ownedProperties.length,
           },
           {
-            label: isAr ? "الحجوزات النشطة" : "Active Bookings",
+            label: t("dashboard.nav.activeBookings"),
             value: allBookings.filter(
               (b) => b.status === "confirmed" || b.status === "active",
             ).length,
           },
           {
-            label: isAr ? "طلبات مفتوحة" : "Open Tickets",
-            value: tickets.filter((t) => t.status === "open").length,
+            label: t("dashboard.nav.openTickets"),
+            value: tickets.filter((tk) => tk.status === "open").length,
           },
           {
-            label: isAr ? "استفسارات جديدة" : "New Inquiries",
+            label: t("dashboard.nav.newInquiries"),
             value: inquiries.filter((i) => i.status === "new").length,
           },
         ].map((stat) => (
@@ -579,7 +576,6 @@ export function OwnerDashboard({ locale = "en" }: OwnerDashboardProps) {
         ))}
       </div>
 
-      {/* Tabs */}
       <div>
         <div
           className="flex gap-1 rounded-xl bg-gray-100 p-1 overflow-x-auto"

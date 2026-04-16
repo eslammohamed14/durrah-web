@@ -12,10 +12,9 @@ import { ProfileContent } from "@/features/dashboard/ProfileContent";
 import { getSharedNavItems } from "@/features/dashboard/dashboardNavItems";
 
 export default function ProfilePage() {
-  const { locale, setLocale } = useLocale();
-  const isAr = locale === "ar";
+  const { locale, setLocale, t } = useLocale();
   const router = useRouter();
-  const navItems = getSharedNavItems(locale, isAr);
+  const navItems = getSharedNavItems(locale, t);
 
   function handleLocaleChange(newLocale: "en" | "ar") {
     setLocale(newLocale);
@@ -26,7 +25,7 @@ export default function ProfilePage() {
   return (
     <DashboardLayout
       navItems={navItems}
-      title={isAr ? "الملف الشخصي" : "Profile"}
+      title={t("dashboard.profilePageTitle")}
       locale={locale}
     >
       <ProfileContent locale={locale} onLocaleChange={handleLocaleChange} />

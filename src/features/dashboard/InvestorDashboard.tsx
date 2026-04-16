@@ -9,6 +9,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import type { Property, Booking, MaintenanceTicket } from "@/lib/types";
 import { useAuth } from "@/lib/contexts/AuthContext";
+import { useLocale } from "@/lib/contexts/LocaleContext";
 import { getAPIClient } from "@/lib/api";
 import { BookingList } from "@/features/booking/BookingList";
 import { Badge } from "@/components/ui/Badge";
@@ -41,7 +42,6 @@ function calcOccupancy(bookings: Booking[], propertyId: string): number {
     (b) => b.propertyId === propertyId && b.status !== "cancelled",
   );
   if (propBookings.length === 0) return 0;
-  // Simple count-based occupancy for demo
   const bookedNights = propBookings.reduce((sum, b) => {
     const ci = new Date(b.checkIn);
     const co = new Date(b.checkOut);
@@ -49,7 +49,7 @@ function calcOccupancy(bookings: Booking[], propertyId: string): number {
       sum + Math.max(0, Math.ceil((co.getTime() - ci.getTime()) / 86400000))
     );
   }, 0);
-  const totalDays = 90; // trailing 90-day window
+  const totalDays = 90;
   return Math.min(100, Math.round((bookedNights / totalDays) * 100));
 }
 
@@ -57,6 +57,19 @@ function calcRevenue(bookings: Booking[], propertyId: string): number {
   return bookings
     .filter((b) => b.propertyId === propertyId && b.status !== "cancelled")
     .reduce((sum, b) => sum + b.pricing.total, 0);
+}
+
+function ticketStatusT(
+  tr: (key: string, params?: Record<string, string | number>) => string,
+  s: MaintenanceTicket["status"],
+) {
+  const map: Record<MaintenanceTicket["status"], string> = {
+    open: "maintenance.status_open",
+    in_progress: "maintenance.status_in_progress",
+    resolved: "maintenance.status_resolved",
+    closed: "maintenance.status_closed",
+  };
+  return tr(map[s]);
 }
 
 // ── PropertyCard ──────────────────────────────────────────────────────────────
@@ -70,10 +83,9 @@ function InvestorPropertyCard({
   bookings: Booking[];
   locale: string;
 }) {
-  const isAr = locale === "ar";
+  const { t } = useLocale();
   const occupancy = calcOccupancy(bookings, property.id);
   const revenue = calcRevenue(bookings, property.id);
-  // Assume equal share among investors + owner
   const investorCount = property.investorIds.length + 1;
   const investorShare = revenue / investorCount;
 
@@ -93,23 +105,17 @@ function InvestorPropertyCard({
           size="sm"
         >
           {property.status === "active"
-            ? isAr
-              ? "نشط"
-              : "Active"
-            : isAr
-              ? "غير نشط"
-              : "Inactive"}
+            ? t("dashboard.investor.propertyActive")
+            : t("dashboard.investor.propertyInactive")}
         </Badge>
       </div>
 
-      {/* Metrics */}
       <div className="grid grid-cols-2 gap-3 text-sm">
         <div className="rounded-lg bg-gray-50 p-3">
           <p className="text-xs text-gray-400 mb-1">
-            {isAr ? "معدل الإشغال" : "Occupancy"}
+            {t("dashboard.investor.occupancy")}
           </p>
           <p className="font-bold text-gray-900">{occupancy}%</p>
-          {/* Progress bar */}
           <div className="mt-1.5 h-1.5 rounded-full bg-gray-200">
             <div
               className="h-1.5 rounded-full bg-blue-500"
@@ -119,7 +125,7 @@ function InvestorPropertyCard({
         </div>
         <div className="rounded-lg bg-gray-50 p-3">
           <p className="text-xs text-gray-400 mb-1">
-            {isAr ? "إجمالي الإيرادات" : "Total Revenue"}
+            {t("dashboard.investor.totalRevenue")}
           </p>
           <p className="font-bold text-gray-900">
             {formatCurrency(revenue, property.pricing.currency, locale)}
@@ -127,7 +133,7 @@ function InvestorPropertyCard({
         </div>
         <div className="rounded-lg bg-blue-50 p-3 col-span-2">
           <p className="text-xs text-blue-600 mb-1">
-            {isAr ? "حصتك" : "Your Share"}
+            {t("dashboard.investor.yourShare")}
           </p>
           <p className="font-bold text-blue-700">
             {formatCurrency(investorShare, property.pricing.currency, locale)}
@@ -149,13 +155,13 @@ function TicketsReadOnly({
   properties: Record<string, Property>;
   locale: string;
 }) {
-  const isAr = locale === "ar";
+  const { t } = useLocale();
 
   if (tickets.length === 0) {
     return (
       <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center">
         <p className="text-gray-400 text-sm">
-          {isAr ? "لا توجد طلبات صيانة" : "No maintenance tickets"}
+          {t("dashboard.investor.noTickets")}
         </p>
       </div>
     );
@@ -168,33 +174,23 @@ function TicketsReadOnly({
     closed: "default",
   } as const;
 
-  const statusLabel = (s: MaintenanceTicket["status"]) => {
-    const m: Record<typeof s, [string, string]> = {
-      open: ["Open", "مفتوح"],
-      in_progress: ["In Progress", "قيد التنفيذ"],
-      resolved: ["Resolved", "تم الحل"],
-      closed: ["Closed", "مغلق"],
-    };
-    return m[s][isAr ? 1 : 0];
-  };
-
   return (
     <div className="space-y-3">
-      {tickets.map((t) => {
-        const prop = properties[t.propertyId];
+      {tickets.map((ticket) => {
+        const prop = properties[ticket.propertyId];
         return (
           <article
-            key={t.id}
+            key={ticket.id}
             className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm"
           >
             <div className="flex items-start justify-between gap-2 mb-1">
-              <p className="font-medium text-gray-900 text-sm">{t.title}</p>
-              <Badge variant={statusVariant[t.status]} size="sm">
-                {statusLabel(t.status)}
+              <p className="font-medium text-gray-900 text-sm">{ticket.title}</p>
+              <Badge variant={statusVariant[ticket.status]} size="sm">
+                {ticketStatusT(t, ticket.status)}
               </Badge>
             </div>
             <p className="text-xs text-gray-400">
-              {prop?.title[locale === "ar" ? "ar" : "en"] ?? t.propertyId}
+              {prop?.title[locale === "ar" ? "ar" : "en"] ?? ticket.propertyId}
             </p>
           </article>
         );
@@ -214,7 +210,7 @@ function RevenueOverview({
   bookings: Booking[];
   locale: string;
 }) {
-  const isAr = locale === "ar";
+  const { t } = useLocale();
   const totalRevenue = bookings
     .filter((b) => b.status !== "cancelled")
     .reduce((sum, b) => sum + b.pricing.total, 0);
@@ -232,20 +228,19 @@ function RevenueOverview({
 
   return (
     <div className="space-y-5">
-      {/* Summary cards */}
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-gray-200 bg-white p-5 text-center shadow-sm">
           <p className="text-2xl font-bold text-blue-600">
             {formatCurrency(totalRevenue, currency, locale)}
           </p>
           <p className="text-xs text-gray-500 mt-1">
-            {isAr ? "إجمالي الإيرادات" : "Total Revenue"}
+            {t("dashboard.investor.totalRevenue")}
           </p>
         </div>
         <div className="rounded-xl border border-gray-200 bg-white p-5 text-center shadow-sm">
           <p className="text-2xl font-bold text-green-600">{avgOccupancy}%</p>
           <p className="text-xs text-gray-500 mt-1">
-            {isAr ? "متوسط الإشغال" : "Avg Occupancy"}
+            {t("dashboard.investor.avgOccupancy")}
           </p>
         </div>
         <div className="rounded-xl border border-gray-200 bg-white p-5 text-center shadow-sm">
@@ -253,16 +248,15 @@ function RevenueOverview({
             {properties.length}
           </p>
           <p className="text-xs text-gray-500 mt-1">
-            {isAr ? "العقارات المستثمرة" : "Invested Properties"}
+            {t("dashboard.investor.investedProperties")}
           </p>
         </div>
       </div>
 
-      {/* Per-property revenue breakdown */}
       <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
         <div className="px-5 py-3 border-b border-gray-100">
           <h3 className="font-semibold text-gray-900 text-sm">
-            {isAr ? "الإيرادات حسب العقار" : "Revenue by Property"}
+            {t("dashboard.investor.revenueByProperty")}
           </h3>
         </div>
         <div className="divide-y divide-gray-100">
@@ -280,7 +274,7 @@ function RevenueOverview({
                     {p.title[locale === "ar" ? "ar" : "en"]}
                   </p>
                   <p className="text-xs text-gray-400">
-                    {occ}% {isAr ? "إشغال" : "occupancy"}
+                    {occ}% {t("dashboard.guest.occupancyShort")}
                   </p>
                 </div>
                 <div className="text-right">
@@ -288,7 +282,7 @@ function RevenueOverview({
                     {formatCurrency(rev, p.pricing.currency, locale)}
                   </p>
                   <p className="text-xs text-blue-600">
-                    {isAr ? "حصتك:" : "Your share:"}{" "}
+                    {t("dashboard.investor.yourShareColon")}{" "}
                     {formatCurrency(share, p.pricing.currency, locale)}
                   </p>
                 </div>
@@ -305,7 +299,7 @@ function RevenueOverview({
 
 export function InvestorDashboard({ locale = "en" }: InvestorDashboardProps) {
   const { user } = useAuth();
-  const isAr = locale === "ar";
+  const { t } = useLocale();
 
   const [activeTab, setActiveTab] = useState<Tab>("properties");
   const [investedProperties, setInvestedProperties] = useState<Property[]>([]);
@@ -323,13 +317,11 @@ export function InvestorDashboard({ locale = "en" }: InvestorDashboardProps) {
       const api = getAPIClient();
       const allProps = await api.searchProperties({});
 
-      // Filter to properties where this user is an investor
       const invested = allProps.filter((p) => p.investorIds.includes(user.id));
 
       const propMap: Record<string, Property> = {};
       for (const p of invested) propMap[p.id] = p;
 
-      // Load bookings for all invested properties
       const bookingResults = await Promise.all(
         invested.map((p) =>
           api.getUserBookings(p.ownerId).catch(() => [] as Booking[]),
@@ -339,13 +331,12 @@ export function InvestorDashboard({ locale = "en" }: InvestorDashboardProps) {
         .flat()
         .filter((b) => invested.some((p) => p.id === b.propertyId));
 
-      // Load tickets
       const knownTicketIds = ["ticket-1", "ticket-2"];
       const ticketList: MaintenanceTicket[] = [];
       for (const tid of knownTicketIds) {
         try {
-          const t = await api.getMaintenanceTicket(tid);
-          if (propMap[t.propertyId]) ticketList.push(t);
+          const ticket = await api.getMaintenanceTicket(tid);
+          if (propMap[ticket.propertyId]) ticketList.push(ticket);
         } catch {
           // not found
         }
@@ -359,37 +350,34 @@ export function InvestorDashboard({ locale = "en" }: InvestorDashboardProps) {
       setError(
         err instanceof Error
           ? err.message
-          : isAr
-            ? "حدث خطأ ما"
-            : "Something went wrong",
+          : t("dashboard.genericError"),
       );
     } finally {
       setLoading(false);
     }
-  }, [user, isAr]);
+  }, [user, t]);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
 
   const tabs: { id: Tab; label: string }[] = [
-    { id: "properties", label: isAr ? "العقارات" : "Properties" },
-    { id: "bookings", label: isAr ? "الحجوزات" : "Bookings" },
-    { id: "revenue", label: isAr ? "الإيرادات" : "Revenue" },
-    { id: "tickets", label: isAr ? "الصيانة" : "Maintenance" },
+    { id: "properties", label: t("dashboard.investor.tabProperties") },
+    { id: "bookings", label: t("dashboard.investor.tabBookings") },
+    { id: "revenue", label: t("dashboard.investor.tabRevenue") },
+    { id: "tickets", label: t("dashboard.investor.tabTickets") },
   ];
 
   if (!user) return null;
 
   return (
     <div className="space-y-6">
-      {/* Welcome */}
       <div>
         <h2 className="text-2xl font-bold text-gray-900">
-          {isAr ? `مرحباً، ${user.name}` : `Welcome, ${user.name}`}
+          {t("dashboard.welcome", { name: user.name })}
         </h2>
         <p className="text-sm text-gray-500 mt-1">
-          {isAr ? "عرض أداء استثماراتك" : "View your investment performance"}
+          {t("dashboard.viewInvestmentSubtitle")}
         </p>
       </div>
 
@@ -397,12 +385,11 @@ export function InvestorDashboard({ locale = "en" }: InvestorDashboardProps) {
         <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-700">
           {error}
           <button className="ml-3 underline" onClick={loadData}>
-            {isAr ? "حاول مجدداً" : "Retry"}
+            {t("dashboard.retry")}
           </button>
         </div>
       )}
 
-      {/* Tabs */}
       <div>
         <div
           className="flex gap-1 rounded-xl bg-gray-100 p-1 overflow-x-auto"
@@ -435,7 +422,7 @@ export function InvestorDashboard({ locale = "en" }: InvestorDashboardProps) {
             investedProperties.length === 0 ? (
               <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center">
                 <p className="text-gray-400 text-sm">
-                  {isAr ? "لا توجد عقارات مستثمرة" : "No invested properties"}
+                  {t("dashboard.investor.noInvestedProperties")}
                 </p>
               </div>
             ) : (

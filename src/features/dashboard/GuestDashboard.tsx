@@ -14,6 +14,7 @@ import type {
   Property,
 } from "@/lib/types";
 import { useAuth } from "@/lib/contexts/AuthContext";
+import { useLocale } from "@/lib/contexts/LocaleContext";
 import { getAPIClient } from "@/lib/api";
 import { BookingList } from "@/features/booking/BookingList";
 import { Badge } from "@/components/ui/Badge";
@@ -52,6 +53,44 @@ function formatDate(d: Date | string, locale: string) {
   });
 }
 
+function inquiryStatusT(
+  t: (key: string, params?: Record<string, string | number>) => string,
+  s: Inquiry["status"],
+) {
+  const map: Record<Inquiry["status"], string> = {
+    new: "inquiry.status_new",
+    contacted: "inquiry.status_contacted",
+    closed: "inquiry.status_closed",
+  };
+  return t(map[s]);
+}
+
+function ticketStatusT(
+  t: (key: string, params?: Record<string, string | number>) => string,
+  s: MaintenanceTicket["status"],
+) {
+  const map: Record<MaintenanceTicket["status"], string> = {
+    open: "maintenance.status_open",
+    in_progress: "maintenance.status_in_progress",
+    resolved: "maintenance.status_resolved",
+    closed: "maintenance.status_closed",
+  };
+  return t(map[s]);
+}
+
+function ticketPriorityT(
+  t: (key: string, params?: Record<string, string | number>) => string,
+  p: MaintenanceTicket["priority"],
+) {
+  const map: Record<MaintenanceTicket["priority"], string> = {
+    low: "maintenance.priority_low",
+    medium: "maintenance.priority_medium",
+    high: "maintenance.priority_high",
+    emergency: "maintenance.priority_emergency",
+  };
+  return t(map[p]);
+}
+
 // ── Sub-components ─────────────────────────────────────────────────────────────
 
 function InquiriesTab({
@@ -63,26 +102,17 @@ function InquiriesTab({
   properties: Record<string, Property>;
   locale: string;
 }) {
-  const isAr = locale === "ar";
+  const { t } = useLocale();
 
   if (inquiries.length === 0) {
     return (
       <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center">
         <p className="text-gray-400 text-sm">
-          {isAr ? "لا توجد استفسارات بعد" : "No inquiries yet"}
+          {t("dashboard.guest.noInquiriesYet")}
         </p>
       </div>
     );
   }
-
-  const statusLabel = (s: Inquiry["status"]) => {
-    const map: Record<Inquiry["status"], [string, string]> = {
-      new: ["New", "جديد"],
-      contacted: ["Contacted", "تم التواصل"],
-      closed: ["Closed", "مغلق"],
-    };
-    return map[s][isAr ? 1 : 0];
-  };
 
   return (
     <div className="space-y-3">
@@ -100,7 +130,7 @@ function InquiriesTab({
                   : inq.propertyId}
               </p>
               <Badge variant={INQUIRY_BADGE[inq.status]} size="sm">
-                {statusLabel(inq.status)}
+                {inquiryStatusT(t, inq.status)}
               </Badge>
             </div>
             <p className="text-xs text-gray-500 line-clamp-2 mb-2">
@@ -125,37 +155,17 @@ function TicketsTab({
   properties: Record<string, Property>;
   locale: string;
 }) {
-  const isAr = locale === "ar";
+  const { t } = useLocale();
 
   if (tickets.length === 0) {
     return (
       <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center">
         <p className="text-gray-400 text-sm">
-          {isAr ? "لا توجد طلبات صيانة" : "No maintenance tickets"}
+          {t("dashboard.guest.noTicketsYet")}
         </p>
       </div>
     );
   }
-
-  const statusLabel = (s: MaintenanceTicket["status"]) => {
-    const map: Record<MaintenanceTicket["status"], [string, string]> = {
-      open: ["Open", "مفتوح"],
-      in_progress: ["In Progress", "قيد التنفيذ"],
-      resolved: ["Resolved", "تم الحل"],
-      closed: ["Closed", "مغلق"],
-    };
-    return map[s][isAr ? 1 : 0];
-  };
-
-  const priorityLabel = (p: MaintenanceTicket["priority"]) => {
-    const map: Record<MaintenanceTicket["priority"], [string, string]> = {
-      low: ["Low", "منخفضة"],
-      medium: ["Medium", "متوسطة"],
-      high: ["High", "عالية"],
-      emergency: ["Emergency", "طارئة"],
-    };
-    return map[p][isAr ? 1 : 0];
-  };
 
   return (
     <div className="space-y-3">
@@ -179,7 +189,7 @@ function TicketsTab({
               </div>
               <div className="flex flex-col gap-1 items-end">
                 <Badge variant={TICKET_BADGE[ticket.status]} size="sm">
-                  {statusLabel(ticket.status)}
+                  {ticketStatusT(t, ticket.status)}
                 </Badge>
               </div>
             </div>
@@ -188,8 +198,8 @@ function TicketsTab({
             </p>
             <div className="flex items-center justify-between text-xs text-gray-400">
               <span>
-                {isAr ? "الأولوية:" : "Priority:"}{" "}
-                {priorityLabel(ticket.priority)}
+                {t("dashboard.guest.priority")}{" "}
+                {ticketPriorityT(t, ticket.priority)}
               </span>
               <span>{formatDate(ticket.createdAt, locale)}</span>
             </div>
@@ -200,13 +210,12 @@ function TicketsTab({
   );
 }
 
-function SavedTab({ locale }: { locale: string }) {
-  const isAr = locale === "ar";
-  // Saved/favorites feature — currently a placeholder; no persistent favorites in mock data
+function SavedTab() {
+  const { t } = useLocale();
   return (
     <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center">
       <p className="text-gray-400 text-sm">
-        {isAr ? "لم تحفظ أي عقارات بعد" : "No saved properties yet"}
+        {t("dashboard.guest.noSavedProperties")}
       </p>
       <Button
         variant="outline"
@@ -214,7 +223,7 @@ function SavedTab({ locale }: { locale: string }) {
         className="mt-4"
         onClick={() => (window.location.href = "/search")}
       >
-        {isAr ? "تصفح العقارات" : "Browse Properties"}
+        {t("dashboard.guest.browseProperties")}
       </Button>
     </div>
   );
@@ -224,8 +233,8 @@ function SavedTab({ locale }: { locale: string }) {
 
 export function GuestDashboard({ locale = "en" }: GuestDashboardProps) {
   const { user } = useAuth();
+  const { t } = useLocale();
   const router = useRouter();
-  const isAr = locale === "ar";
 
   const [activeTab, setActiveTab] = useState<Tab>("bookings");
 
@@ -248,43 +257,15 @@ export function GuestDashboard({ locale = "en" }: GuestDashboardProps) {
         api.searchProperties({}),
       ]);
 
-      // Build a property map for quick lookup
       const propMap: Record<string, Property> = {};
       for (const p of allProps) propMap[p.id] = p;
 
-      // Load tickets for all booked properties
-      const ticketPromises = Object.keys(propMap)
-        .slice(0, 10)
-        .map(async (propId) => {
-          try {
-            // Tickets for user — filter client-side since there's no getUserTickets endpoint
-            return [] as MaintenanceTicket[];
-          } catch {
-            return [] as MaintenanceTicket[];
-          }
-        });
-
-      // Directly get tickets by searching — mock returns all for the user
-      // Since mock only has tickets with userId, we filter by user id
-      const ticketsFromStore: MaintenanceTicket[] = [];
-      for (const propId of Object.keys(propMap)) {
-        try {
-          const ticket = await api.getMaintenanceTicket(`ticket-${propId}`);
-          if (ticket && ticket.userId === user.id)
-            ticketsFromStore.push(ticket);
-        } catch {
-          // not found — ignore
-        }
-      }
-
-      // Better approach: load all known ticket IDs from bookings' properties
-      // For mock, we just try known IDs
       const knownTicketIds = ["ticket-1", "ticket-2"];
       const userTickets: MaintenanceTicket[] = [];
       for (const tid of knownTicketIds) {
         try {
-          const t = await api.getMaintenanceTicket(tid);
-          if (t.userId === user.id) userTickets.push(t);
+          const ticket = await api.getMaintenanceTicket(tid);
+          if (ticket.userId === user.id) userTickets.push(ticket);
         } catch {
           // not found
         }
@@ -298,14 +279,12 @@ export function GuestDashboard({ locale = "en" }: GuestDashboardProps) {
       setError(
         err instanceof Error
           ? err.message
-          : isAr
-            ? "حدث خطأ ما"
-            : "Something went wrong",
+          : t("dashboard.genericError"),
       );
     } finally {
       setLoading(false);
     }
-  }, [user, isAr]);
+  }, [user, t]);
 
   useEffect(() => {
     loadData();
@@ -314,32 +293,28 @@ export function GuestDashboard({ locale = "en" }: GuestDashboardProps) {
   const tabs: { id: Tab; label: string; count?: number }[] = [
     {
       id: "bookings",
-      label: isAr ? "الحجوزات" : "Bookings",
+      label: t("dashboard.nav.bookings"),
       count: bookings.length,
     },
     {
       id: "inquiries",
-      label: isAr ? "الاستفسارات" : "Inquiries",
+      label: t("dashboard.nav.inquiries"),
       count: inquiries.length,
     },
     {
       id: "tickets",
-      label: isAr ? "الصيانة" : "Maintenance",
+      label: t("dashboard.nav.maintenance"),
       count: tickets.length,
     },
-    { id: "saved", label: isAr ? "المحفوظات" : "Saved" },
+    { id: "saved", label: t("dashboard.nav.saved") },
   ];
 
   if (!user) {
     return (
       <div className="flex flex-col items-center gap-4 py-16 text-center">
-        <p className="text-gray-600">
-          {isAr
-            ? "يرجى تسجيل الدخول للوصول إلى لوحة التحكم"
-            : "Please log in to access your dashboard"}
-        </p>
+        <p className="text-gray-600">{t("dashboard.pleaseLogin")}</p>
         <Button variant="primary" onClick={() => router.push("/auth/login")}>
-          {isAr ? "تسجيل الدخول" : "Log In"}
+          {t("dashboard.logIn")}
         </Button>
       </div>
     );
@@ -350,10 +325,10 @@ export function GuestDashboard({ locale = "en" }: GuestDashboardProps) {
       {/* Welcome */}
       <div>
         <h2 className="text-2xl font-bold text-gray-900">
-          {isAr ? `مرحباً، ${user.name}` : `Welcome, ${user.name}`}
+          {t("dashboard.welcome", { name: user.name })}
         </h2>
         <p className="text-sm text-gray-500 mt-1">
-          {isAr ? "إدارة حجوزاتك وطلباتك" : "Manage your bookings and requests"}
+          {t("dashboard.manageBookingsSubtitle")}
         </p>
       </div>
 
@@ -362,7 +337,7 @@ export function GuestDashboard({ locale = "en" }: GuestDashboardProps) {
         <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-700">
           {error}
           <button className="ml-3 underline" onClick={loadData}>
-            {isAr ? "حاول مجدداً" : "Retry"}
+            {t("dashboard.retry")}
           </button>
         </div>
       )}
@@ -370,14 +345,14 @@ export function GuestDashboard({ locale = "en" }: GuestDashboardProps) {
       {/* Stats bar */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
-          { label: isAr ? "الحجوزات" : "Bookings", value: bookings.length },
+          { label: t("dashboard.nav.bookings"), value: bookings.length },
           {
-            label: isAr ? "الاستفسارات" : "Inquiries",
+            label: t("dashboard.nav.inquiries"),
             value: inquiries.length,
           },
-          { label: isAr ? "طلبات الصيانة" : "Tickets", value: tickets.length },
+          { label: t("dashboard.nav.tickets"), value: tickets.length },
           {
-            label: isAr ? "الحجوزات القادمة" : "Upcoming",
+            label: t("dashboard.nav.upcoming"),
             value: bookings.filter(
               (b) =>
                 b.status !== "cancelled" && new Date(b.checkIn) > new Date(),
@@ -399,7 +374,7 @@ export function GuestDashboard({ locale = "en" }: GuestDashboardProps) {
         <div
           className="flex gap-1 rounded-xl bg-gray-100 p-1 overflow-x-auto"
           role="tablist"
-          aria-label={isAr ? "أقسام لوحة التحكم" : "Dashboard sections"}
+          aria-label={t("dashboard.dashboardSectionsAria")}
         >
           {tabs.map((tab) => (
             <button
@@ -464,7 +439,7 @@ export function GuestDashboard({ locale = "en" }: GuestDashboardProps) {
                 locale={locale}
               />
             ))}
-          {activeTab === "saved" && <SavedTab locale={locale} />}
+          {activeTab === "saved" && <SavedTab />}
         </div>
       </div>
     </div>

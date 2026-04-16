@@ -4,6 +4,12 @@
 
 import React from "react";
 
+/** Matches `useLocale().t` from LocaleContext / next-intl */
+export type DashboardTranslate = (
+  key: string,
+  params?: Record<string, string | number>,
+) => string;
+
 // ── Icon helpers ──────────────────────────────────────────────────────────────
 
 function CalIcon() {
@@ -141,71 +147,71 @@ function UserIcon() {
 
 // ── Nav item factories ────────────────────────────────────────────────────────
 
-export function getGuestNavItems(locale: string, isAr: boolean) {
+export function getGuestNavItems(locale: string, t: DashboardTranslate) {
   return [
     {
       href: `/${locale}/dashboard/guest`,
-      label: isAr ? "نظرة عامة" : "Overview",
+      label: t("dashboard.nav.overview"),
       icon: <CalIcon />,
     },
     {
       href: `/${locale}/dashboard/profile`,
-      label: isAr ? "الملف الشخصي" : "Profile",
+      label: t("dashboard.nav.profile"),
       icon: <UserIcon />,
     },
   ];
 }
 
-export function getInvestorNavItems(locale: string, isAr: boolean) {
+export function getInvestorNavItems(locale: string, t: DashboardTranslate) {
   return [
     {
       href: `/${locale}/dashboard/investor`,
-      label: isAr ? "الاستثمارات" : "Investments",
+      label: t("dashboard.nav.investments"),
       icon: <ChartIcon />,
     },
     {
       href: `/${locale}/dashboard/profile`,
-      label: isAr ? "الملف الشخصي" : "Profile",
+      label: t("dashboard.nav.profile"),
       icon: <UserIcon />,
     },
   ];
 }
 
-export function getOwnerNavItems(locale: string, isAr: boolean) {
+export function getOwnerNavItems(locale: string, t: DashboardTranslate) {
   return [
     {
       href: `/${locale}/dashboard/owner`,
-      label: isAr ? "العقارات" : "Properties",
+      label: t("dashboard.nav.properties"),
       icon: <BuildingIcon />,
     },
     {
       href: `/${locale}/dashboard/owner`,
-      label: isAr ? "الصيانة" : "Maintenance",
+      label: t("dashboard.nav.maintenance"),
       icon: <WrenchIcon />,
     },
     {
       href: `/${locale}/dashboard/owner`,
-      label: isAr ? "الاستفسارات" : "Inquiries",
+      label: t("dashboard.nav.inquiries"),
       icon: <InquiryIcon />,
     },
     {
       href: `/${locale}/dashboard/profile`,
-      label: isAr ? "الملف الشخصي" : "Profile",
+      label: t("dashboard.nav.profile"),
       icon: <UserIcon />,
     },
   ];
 }
 
-export function getSharedNavItems(locale: string, isAr: boolean) {
+export function getSharedNavItems(locale: string, t: DashboardTranslate) {
   return [
     {
       href: `/${locale}/dashboard`,
-      label: isAr ? "الرئيسية" : "Home",
+      label: t("dashboard.nav.home"),
       icon: <BuildingIcon />,
     },
     {
       href: `/${locale}/dashboard/profile`,
-      label: isAr ? "الملف الشخصي" : "Profile",
+      label: t("dashboard.nav.profile"),
       icon: <UserIcon />,
     },
   ];

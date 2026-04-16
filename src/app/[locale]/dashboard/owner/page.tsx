@@ -11,14 +11,13 @@ import { OwnerDashboard } from "@/features/dashboard/OwnerDashboard";
 import { getOwnerNavItems } from "@/features/dashboard/dashboardNavItems";
 
 export default function OwnerDashboardPage() {
-  const { locale } = useLocale();
-  const isAr = locale === "ar";
-  const navItems = getOwnerNavItems(locale, isAr);
+  const { locale, t } = useLocale();
+  const navItems = getOwnerNavItems(locale, t);
 
   return (
     <DashboardLayout
       navItems={navItems}
-      title={isAr ? "لوحة تحكم المالك" : "Owner Dashboard"}
+      title={t("dashboard.ownerDashboard")}
       locale={locale}
     >
       <OwnerDashboard locale={locale} />

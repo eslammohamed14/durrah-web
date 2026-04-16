@@ -11,14 +11,13 @@ import { InvestorDashboard } from "@/features/dashboard/InvestorDashboard";
 import { getInvestorNavItems } from "@/features/dashboard/dashboardNavItems";
 
 export default function InvestorDashboardPage() {
-  const { locale } = useLocale();
-  const isAr = locale === "ar";
-  const navItems = getInvestorNavItems(locale, isAr);
+  const { locale, t } = useLocale();
+  const navItems = getInvestorNavItems(locale, t);
 
   return (
     <DashboardLayout
       navItems={navItems}
-      title={isAr ? "لوحة تحكم المستثمر" : "Investor Dashboard"}
+      title={t("dashboard.investorDashboard")}
       locale={locale}
     >
       <InvestorDashboard locale={locale} />

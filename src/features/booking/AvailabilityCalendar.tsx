@@ -15,6 +15,7 @@
 
 import React, { useState, useCallback, useMemo } from "react";
 import type { AvailabilityCalendar as AvailabilityData } from "@/lib/types";
+import { useLocale } from "@/lib/contexts/LocaleContext";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -253,14 +254,14 @@ function MonthGrid({
 
 // ── Legend ────────────────────────────────────────────────────────────────────
 
-function Legend({ locale }: { locale: string }) {
-  const isAr = locale === "ar";
+function Legend() {
+  const { t } = useLocale();
   const items = [
-    { color: "bg-blue-600", label: isAr ? "محدد" : "Selected" },
-    { color: "bg-gray-200", label: isAr ? "محجوز" : "Booked" },
+    { color: "bg-blue-600", label: t("availability.legendSelected") },
+    { color: "bg-gray-200", label: t("availability.legendBooked") },
     {
       color: "bg-gray-100 border border-dashed border-gray-300",
-      label: isAr ? "مغلق" : "Blocked",
+      label: t("availability.legendBlocked"),
     },
   ];
   return (
@@ -287,6 +288,7 @@ export function AvailabilityCalendar({
   locale = "en",
   className = "",
 }: AvailabilityCalendarProps) {
+  const { t } = useLocale();
   const today = useMemo(() => startOfDay(new Date()), []);
 
   const [viewYear, setViewYear] = useState(today.getFullYear());
@@ -377,8 +379,6 @@ export function AvailabilityCalendar({
     return null;
   }, [value]);
 
-  const isAr = locale === "ar";
-
   return (
     <div
       className={`rounded-xl border border-gray-200 bg-white p-4 shadow-sm ${className}`}
@@ -389,7 +389,7 @@ export function AvailabilityCalendar({
           type="button"
           onClick={prevMonth}
           disabled={!canGoPrev}
-          aria-label={isAr ? "الشهر السابق" : "Previous month"}
+          aria-label={t("availability.prevMonth")}
           className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30"
         >
           <ChevronLeft />
@@ -400,7 +400,7 @@ export function AvailabilityCalendar({
         <button
           type="button"
           onClick={goNextMonth}
-          aria-label={isAr ? "الشهر التالي" : "Next month"}
+          aria-label={t("availability.nextMonth")}
           className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100"
         >
           <ChevronRight />
@@ -439,28 +439,24 @@ export function AvailabilityCalendar({
       <div className="mt-4 space-y-1 text-xs text-gray-500">
         {availability.minStay && (
           <p>
-            {isAr
-              ? `الحد الأدنى للإقامة: ${availability.minStay} ليالٍ`
-              : `Minimum stay: ${availability.minStay} night${availability.minStay > 1 ? "s" : ""}`}
+            {t("availability.minStayNights", { n: availability.minStay })}
           </p>
         )}
         {availability.maxStay && (
           <p>
-            {isAr
-              ? `الحد الأقصى للإقامة: ${availability.maxStay} ليلة`
-              : `Maximum stay: ${availability.maxStay} nights`}
+            {t("availability.maxStayNights", { n: availability.maxStay })}
           </p>
         )}
         {nights !== null && (
           <p className="font-medium text-blue-600">
-            {isAr
-              ? `${nights} ليلة محددة`
-              : `${nights} night${nights !== 1 ? "s" : ""} selected`}
+            {nights === 1
+              ? t("availability.oneNightSelected")
+              : t("availability.nightsSelectedPlural", { n: nights })}
           </p>
         )}
       </div>
 
-      <Legend locale={locale} />
+      <Legend />
     </div>
   );
 }

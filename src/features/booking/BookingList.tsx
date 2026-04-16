@@ -9,6 +9,7 @@
 
 import React, { useState, useMemo } from "react";
 import type { Booking, BookingStatus } from "@/lib/types";
+import { useLocale } from "@/lib/contexts/LocaleContext";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
@@ -31,7 +32,7 @@ interface BookingListProps {
 type StatusFilter = BookingStatus | "all";
 type DateFilter = "all" | "upcoming" | "past";
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// ── Helpers ─────────────────────────────────────────────────────────────────
 
 const STATUS_BADGE_VARIANT: Record<
   BookingStatus,
@@ -86,17 +87,29 @@ function isEditable(booking: Booking): boolean {
   return booking.status === "confirmed";
 }
 
-// ── Status label ──────────────────────────────────────────────────────────────
+function bookingStatusT(
+  tr: (key: string, params?: Record<string, string | number>) => string,
+  status: BookingStatus,
+) {
+  const key = `booking.status_${status}` as const;
+  return tr(key);
+}
 
-function statusLabel(status: BookingStatus, isAr: boolean): string {
-  const labels: Record<BookingStatus, [string, string]> = {
-    pending: ["Pending", "قيد الانتظار"],
-    confirmed: ["Confirmed", "مؤكد"],
-    active: ["Active", "نشط"],
-    completed: ["Completed", "مكتمل"],
-    cancelled: ["Cancelled", "ملغى"],
-  };
-  return labels[status][isAr ? 1 : 0];
+function guestSummaryLine(
+  tr: (key: string, params?: Record<string, string | number>) => string,
+  adults: number,
+  children: number,
+) {
+  const adultPart =
+    adults === 1
+      ? tr("booking.guestsOneAdult", { count: 1 })
+      : tr("booking.guestsManyAdults", { count: adults });
+  if (!children) return adultPart;
+  const childPart =
+    children === 1
+      ? tr("booking.guestsOneChild", { count: 1 })
+      : tr("booking.guestsManyChildren", { count: children });
+  return `${adultPart} · ${childPart}`;
 }
 
 // ── BookingCard ───────────────────────────────────────────────────────────────
@@ -118,51 +131,46 @@ function BookingCard({
   readOnly?: boolean;
   locale: string;
 }) {
-  const isAr = locale === "ar";
+  const { t } = useLocale();
 
   return (
     <article className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
-      {/* Header */}
       <div className="mb-3 flex items-start justify-between gap-2">
         <div>
           <p className="font-semibold text-gray-900 text-sm">
             {propertyName ?? booking.propertyId}
           </p>
           <p className="text-xs text-gray-400 mt-0.5">
-            {isAr ? "رقم الحجز:" : "Booking ID:"} {booking.id}
+            {t("booking.bookingIdLabel")} {booking.id}
           </p>
         </div>
         <Badge variant={STATUS_BADGE_VARIANT[booking.status]} size="sm">
-          {statusLabel(booking.status, isAr)}
+          {bookingStatusT(t, booking.status)}
         </Badge>
       </div>
 
-      {/* Dates */}
       <div className="mb-3 grid grid-cols-2 gap-3 text-xs">
         <div>
-          <p className="text-gray-400 mb-0.5">
-            {isAr ? "تسجيل الوصول" : "Check-in"}
-          </p>
+          <p className="text-gray-400 mb-0.5">{t("booking.checkIn")}</p>
           <p className="font-medium text-gray-700">
             {formatDate(booking.checkIn, locale)}
           </p>
         </div>
         <div>
-          <p className="text-gray-400 mb-0.5">
-            {isAr ? "تسجيل المغادرة" : "Check-out"}
-          </p>
+          <p className="text-gray-400 mb-0.5">{t("booking.checkOut")}</p>
           <p className="font-medium text-gray-700">
             {formatDate(booking.checkOut, locale)}
           </p>
         </div>
       </div>
 
-      {/* Guests + Price */}
       <div className="mb-3 flex items-center justify-between text-xs text-gray-600">
         <span>
-          {isAr
-            ? `${booking.guests.adults} بالغ${booking.guests.children > 0 ? `، ${booking.guests.children} طفل` : ""}`
-            : `${booking.guests.adults} adult${booking.guests.adults !== 1 ? "s" : ""}${booking.guests.children > 0 ? `, ${booking.guests.children} child${booking.guests.children !== 1 ? "ren" : ""}` : ""}`}
+          {guestSummaryLine(
+            t,
+            booking.guests.adults,
+            booking.guests.children,
+          )}
         </span>
         <span className="font-semibold text-gray-900">
           {formatCurrency(
@@ -173,7 +181,6 @@ function BookingCard({
         </span>
       </div>
 
-      {/* Actions */}
       {!readOnly && (
         <div className="flex flex-wrap gap-2 pt-3 border-t border-gray-100">
           {onViewDetails && (
@@ -182,7 +189,7 @@ function BookingCard({
               size="sm"
               onClick={() => onViewDetails(booking.id)}
             >
-              {isAr ? "عرض التفاصيل" : "View Details"}
+              {t("booking.viewDetails")}
             </Button>
           )}
           {onEdit && isEditable(booking) && (
@@ -191,7 +198,7 @@ function BookingCard({
               size="sm"
               onClick={() => onEdit(booking.id)}
             >
-              {isAr ? "تعديل" : "Edit"}
+              {t("common.edit")}
             </Button>
           )}
           {onCancel && isCancellable(booking) && (
@@ -201,7 +208,7 @@ function BookingCard({
               className="text-red-600 hover:bg-red-50 hover:text-red-700"
               onClick={() => onCancel(booking.id)}
             >
-              {isAr ? "إلغاء" : "Cancel"}
+              {t("booking.cancel")}
             </Button>
           )}
         </div>
@@ -222,7 +229,7 @@ export function BookingList({
   readOnly = false,
   locale = "en",
 }: BookingListProps) {
-  const isAr = locale === "ar";
+  const { t } = useLocale();
 
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [dateFilter, setDateFilter] = useState<DateFilter>("all");
@@ -239,16 +246,25 @@ export function BookingList({
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <Spinner size="lg" aria-label={isAr ? "جارٍ التحميل" : "Loading"} />
+        <Spinner size="lg" aria-label={t("booking.loadingAria")} />
       </div>
     );
   }
 
+  const dateFilterLabel = (f: DateFilter) => {
+    if (f === "all") return t("booking.filterAll");
+    if (f === "upcoming") return t("booking.filterUpcoming");
+    return t("booking.filterPast");
+  };
+
+  const resultsCount =
+    filtered.length === 1
+      ? t("booking.bookingsCount", { count: filtered.length })
+      : t("booking.bookingsCount_plural", { count: filtered.length });
+
   return (
     <div className="space-y-4">
-      {/* Filters */}
       <div className="flex flex-wrap gap-3">
-        {/* Date filter */}
         <div className="flex rounded-lg border border-gray-200 bg-white overflow-hidden text-sm">
           {(["all", "upcoming", "past"] as DateFilter[]).map((f) => (
             <button
@@ -261,49 +277,32 @@ export function BookingList({
                   : "text-gray-600 hover:bg-gray-50",
               ].join(" ")}
             >
-              {f === "all"
-                ? isAr
-                  ? "الكل"
-                  : "All"
-                : f === "upcoming"
-                  ? isAr
-                    ? "القادمة"
-                    : "Upcoming"
-                  : isAr
-                    ? "السابقة"
-                    : "Past"}
+              {dateFilterLabel(f)}
             </button>
           ))}
         </div>
 
-        {/* Status filter */}
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
           className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          aria-label={isAr ? "تصفية حسب الحالة" : "Filter by status"}
+          aria-label={t("booking.filterAria")}
         >
-          <option value="all">{isAr ? "جميع الحالات" : "All Statuses"}</option>
-          <option value="pending">{isAr ? "قيد الانتظار" : "Pending"}</option>
-          <option value="confirmed">{isAr ? "مؤكد" : "Confirmed"}</option>
-          <option value="active">{isAr ? "نشط" : "Active"}</option>
-          <option value="completed">{isAr ? "مكتمل" : "Completed"}</option>
-          <option value="cancelled">{isAr ? "ملغى" : "Cancelled"}</option>
+          <option value="all">{t("booking.allStatuses")}</option>
+          <option value="pending">{t("booking.status_pending")}</option>
+          <option value="confirmed">{t("booking.status_confirmed")}</option>
+          <option value="active">{t("booking.status_active")}</option>
+          <option value="completed">{t("booking.status_completed")}</option>
+          <option value="cancelled">{t("booking.status_cancelled")}</option>
         </select>
       </div>
 
-      {/* Results count */}
-      <p className="text-xs text-gray-400">
-        {isAr
-          ? `${filtered.length} حجز`
-          : `${filtered.length} booking${filtered.length !== 1 ? "s" : ""}`}
-      </p>
+      <p className="text-xs text-gray-400">{resultsCount}</p>
 
-      {/* Booking cards */}
       {filtered.length === 0 ? (
         <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center">
           <p className="text-gray-400 text-sm">
-            {isAr ? "لا توجد حجوزات" : "No bookings found"}
+            {t("booking.noBookingsFound")}
           </p>
         </div>
       ) : (
