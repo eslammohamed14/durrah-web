@@ -4,8 +4,7 @@ import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import { setRequestLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import type { ReactNode } from "react";
-import type { Locale } from "@/lib/types";
-import { SUPPORTED_LOCALES } from "@/config/i18n";
+import { isValidLocale, SUPPORTED_LOCALES } from "@/config/i18n";
 import { AuthProvider } from "@/lib/contexts/AuthContext";
 
 const geistSans = Geist({
@@ -49,7 +48,8 @@ export const metadata: Metadata = {
 
 interface LocaleLayoutProps {
   children: ReactNode;
-  params: Promise<{ locale: Locale }>;
+  /** Next.js types `[locale]` as `string`; narrow with `isValidLocale` below. */
+  params: Promise<{ locale: string }>;
 }
 
 export function generateStaticParams() {
@@ -60,11 +60,13 @@ export default async function LocaleLayout({
   children,
   params,
 }: LocaleLayoutProps) {
-  const { locale } = await params;
+  const { locale: rawLocale } = await params;
 
-  if (!SUPPORTED_LOCALES.includes(locale)) {
+  if (!isValidLocale(rawLocale)) {
     notFound();
   }
+
+  const locale = rawLocale;
 
   setRequestLocale(locale);
   const messages = await getMessages();
