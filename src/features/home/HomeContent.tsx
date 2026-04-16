@@ -9,6 +9,7 @@ import { ShopsSection } from "@/features/home/components/shopsSection";
 import { YachtSection } from "@/features/home/components/yachtSection";
 import { BlogsSection } from "@/features/home/components/blogsSection";
 import { InstagramSection } from "@/features/home/components/instagramSection";
+import { HomeDecorativeRightEdge } from "@/features/home/components/homeDecorativeRightEdge";
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
@@ -24,36 +25,39 @@ export function HomeContent({
   allProperties,
 }: HomeContentProps) {
   return (
-    <main id="main-content">
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <HeroSection allProperties={allProperties} />
+    <div className="relative overflow-x-hidden">
+      <main id="main-content" className="relative z-0">
+        {/* ── Hero ─────────────────────────────────────────────────────────── */}
+        <HeroSection allProperties={allProperties} />
 
-      {/* ── Company Metrics ───────────────────────────────────────────────── */}
-      <CompanyMetricsSection />
+        {/* ── Company Metrics ───────────────────────────────────────────────── */}
+        <CompanyMetricsSection />
 
-      {/* ── Properties Section ────────────────────────────────────────────── */}
-      <PropertiesSection properties={featuredForGrid} />
+        {/* ── Properties Section ────────────────────────────────────────────── */}
+        <PropertiesSection properties={featuredForGrid} />
 
-      {/* ── Activities Section ────────────────────────────────────────────── */}
-      <ActivitiesSection />
+        {/* ── Activities Section ────────────────────────────────────────────── */}
+        <ActivitiesSection />
 
-      {/* ── CTA Banner ───────────────────────────────────────────────────── */}
-      <CtaBannerSection />
+        {/* ── CTA Banner ───────────────────────────────────────────────────── */}
+        <CtaBannerSection />
 
-      {/* ── Beaches Section ──────────────────────────────────────────────── */}
-      <BeachesSection />
+        {/* ── Beaches Section ──────────────────────────────────────────────── */}
+        <BeachesSection />
 
-      {/* ── Shops Section ────────────────────────────────────────────────── */}
-      <ShopsSection />
+        {/* ── Shops Section ────────────────────────────────────────────────── */}
+        <ShopsSection />
 
-      {/* ── Yacht Parking ────────────────────────────────────────────────── */}
-      <YachtSection />
+        {/* ── Yacht Parking ────────────────────────────────────────────────── */}
+        <YachtSection />
 
-      {/* ── Blogs Section ────────────────────────────────────────────────── */}
-      <BlogsSection />
+        {/* ── Blogs Section ────────────────────────────────────────────────── */}
+        <BlogsSection />
 
-      {/* ── Instagram Section ─────────────────────────────────────────────── */}
-      <InstagramSection />
-    </main>
+        {/* ── Instagram Section ─────────────────────────────────────────────── */}
+        <InstagramSection />
+      </main>
+      <HomeDecorativeRightEdge />
+    </div>
   );
 }
