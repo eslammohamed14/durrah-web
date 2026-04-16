@@ -567,6 +567,40 @@
     "oneNightSelected": "ليلة واحدة محددة",
     "nightsSelectedPlural": "{n} ليالٍ محددة"
   },
+  "bookingDetails": {
+    "title": "تفاصيل الحجز",
+    "propertySection": "العقار",
+    "propertyName": "العقار",
+    "propertyLocation": "الموقع",
+    "datesSection": "التواريخ",
+    "guests": "الضيوف",
+    "guestSection": "معلومات الضيف",
+    "paymentSection": "الدفع",
+    "transactionId": "رقم المعاملة",
+    "paymentMethod": "طريقة الدفع",
+    "paymentStatus": "حالة الدفع",
+    "cancellationSection": "تفاصيل الإلغاء",
+    "cancelledAt": "تاريخ الإلغاء",
+    "cancelReason": "السبب",
+    "refundAmount": "مبلغ الاسترداد",
+    "cancelledSuccess": "تم إلغاء الحجز بنجاح.",
+    "updatedSuccess": "تم تحديث تواريخ الحجز بنجاح.",
+    "cancelModal": {
+      "title": "إلغاء الحجز",
+      "body": "هل أنت متأكد من رغبتك في إلغاء هذا الحجز؟ لا يمكن التراجع عن هذا الإجراء.",
+      "refundAmount": "سيتم استرداد مبلغ",
+      "noRefund": "هذا الحجز غير قابل للاسترداد. لن يتم إصدار أي استرداد.",
+      "reasonLabel": "سبب الإلغاء (اختياري)",
+      "reasonPlaceholder": "مثال: تغيير الخطط",
+      "defaultReason": "طلب الضيف الإلغاء",
+      "confirmButton": "تأكيد الإلغاء"
+    },
+    "editDatesModal": {
+      "title": "تعديل تواريخ الحجز",
+      "body": "اختر تواريخ تسجيل الدخول والخروج الجديدة.",
+      "saveButton": "حفظ التواريخ الجديدة"
+    }
+  },
   "checkoutClient": {
     "completeBooking": "إتمام الحجز",
     "bookNow": "احجز الآن",

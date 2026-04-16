@@ -395,22 +395,22 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Allow user to update notification preferences
     - _Requirements: 9.2_
 
-- [ ] 15. Implement booking management features
-  - [ ] 15.1 Create booking details page
+- [x] 15. Implement booking management features
+  - [x] 15.1 Create booking details page
     - Implement app/dashboard/bookings/[id]/page.tsx
     - Display complete booking information (dates, property, payment, status)
     - Add edit booking functionality (date modification)
     - Add cancel booking functionality with policy application
     - _Requirements: 8.2, 8.3, 8.4_
 
-  - [ ] 15.2 Implement booking cancellation logic
+  - [x] 15.2 Implement booking cancellation logic
     - Create lib/utils/booking.ts with cancellation policy calculation
     - Implement refund amount calculation based on cancellation policy
     - Integrate with payment service for refund processing
     - Send cancellation notification
     - _Requirements: 8.4, 8.6_
 
-  - [ ] 15.3 Implement booking status notifications
+  - [x] 15.3 Implement booking status notifications
     - Create notification system for booking status changes
     - Send email notifications for booking confirmation, cancellation, completion
     - Display in-app notifications in dashboard

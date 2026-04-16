@@ -567,6 +567,40 @@
     "oneNightSelected": "1 night selected",
     "nightsSelectedPlural": "{n} nights selected"
   },
+  "bookingDetails": {
+    "title": "Booking Details",
+    "propertySection": "Property",
+    "propertyName": "Property",
+    "propertyLocation": "Location",
+    "datesSection": "Dates",
+    "guests": "Guests",
+    "guestSection": "Guest Information",
+    "paymentSection": "Payment",
+    "transactionId": "Transaction ID",
+    "paymentMethod": "Payment Method",
+    "paymentStatus": "Payment Status",
+    "cancellationSection": "Cancellation Details",
+    "cancelledAt": "Cancelled On",
+    "cancelReason": "Reason",
+    "refundAmount": "Refund Amount",
+    "cancelledSuccess": "Booking cancelled successfully.",
+    "updatedSuccess": "Booking dates updated successfully.",
+    "cancelModal": {
+      "title": "Cancel Booking",
+      "body": "Are you sure you want to cancel this booking? This action cannot be undone.",
+      "refundAmount": "You will receive a refund of",
+      "noRefund": "This booking is non-refundable. No refund will be issued.",
+      "reasonLabel": "Reason for cancellation (optional)",
+      "reasonPlaceholder": "e.g. Change of plans",
+      "defaultReason": "Guest requested cancellation",
+      "confirmButton": "Confirm Cancellation"
+    },
+    "editDatesModal": {
+      "title": "Edit Booking Dates",
+      "body": "Select new check-in and check-out dates.",
+      "saveButton": "Save New Dates"
+    }
+  },
   "checkoutClient": {
     "completeBooking": "Complete booking",
     "bookNow": "Book now",

@@ -271,6 +271,47 @@ This allows swapping providers (Firebase → Custom Auth, Stripe → PayPal, etc
 4. Type imports (if separated)
 5. Styles/CSS imports
 
+## Localization Rules
+
+The project uses **next-intl** for all translations. Follow these rules without exception:
+
+### In Client Components (`"use client"`)
+
+```tsx
+import { useTranslations } from "next-intl";
+
+const t = useTranslations();
+// Usage — always dot-notation, no locale condition needed:
+t("home.heroSubheadline");
+t("booking.title");
+t("common.save");
+```
+
+### In Server Components (async, no `"use client"`)
+
+```tsx
+import { getTranslations } from "next-intl/server";
+
+const t = await getTranslations();
+// Usage — same dot-notation:
+t("home.heroSubheadline");
+```
+
+### Rules
+
+- **Never** use `createTranslator` / `getBundledTranslations` from `lib/utils/i18n.ts` for rendering text — those helpers are legacy and must not be used in new code
+- **Never** branch on `locale === "ar"` to return a different string — put both strings in `public/locales/en.json` and `public/locales/ar.json` and call `t("key")`
+- **Never** access `property.title[locale === "ar" ? "ar" : "en"]` inline — use `t()` for UI labels; for data model fields (e.g. `Property.title`) use `property.title[locale]` where `locale` is already typed as `Locale`
+- All translation keys live in `public/locales/en.json` and `public/locales/ar.json` under the same dot-path
+- Add new keys to **both** locale files at the same time
+- Key naming: `namespace.camelCaseKey` — e.g. `home.heroSubheadline`, `booking.cancelBooking`
+
+### Adding a new translation key
+
+1. Add the key + English value to `public/locales/en.json`
+2. Add the key + Arabic value to `public/locales/ar.json`
+3. Use `t("namespace.key")` — no condition, no fallback needed
+
 ## Key Architectural Rules
 
 1. **Separation of Concerns**: Keep presentation, business logic, and data access separate

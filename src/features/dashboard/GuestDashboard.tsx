@@ -277,9 +277,7 @@ export function GuestDashboard({ locale = "en" }: GuestDashboardProps) {
       setProperties(propMap);
     } catch (err) {
       setError(
-        err instanceof Error
-          ? err.message
-          : t("dashboard.genericError"),
+        err instanceof Error ? err.message : t("dashboard.genericError"),
       );
     } finally {
       setLoading(false);
@@ -411,7 +409,9 @@ export function GuestDashboard({ locale = "en" }: GuestDashboardProps) {
                   p.title[locale === "ar" ? "ar" : "en"],
                 ]),
               )}
-              onViewDetails={(id) => router.push(`/dashboard/bookings/${id}`)}
+              onViewDetails={(id) =>
+                router.push(`/${locale}/dashboard/bookings/${id}`)
+              }
               locale={locale}
             />
           )}
