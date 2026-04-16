@@ -323,6 +323,7 @@ export function BookingDetails({ bookingId }: BookingDetailsProps) {
               },
             },
             property,
+            refundAmount,
             locale,
           ).catch(() => {});
         },

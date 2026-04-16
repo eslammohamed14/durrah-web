@@ -6,7 +6,7 @@
  * Requirements: 9.2
  */
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import type { NotificationPreferences } from "@/lib/types";
 import { useAuth } from "@/lib/contexts/AuthContext";
 import { useLocale } from "@/lib/contexts/LocaleContext";
@@ -29,20 +29,23 @@ export function ProfileContent({
   const { user } = useAuth();
   const { t } = useLocale();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState(() => user?.name ?? "");
+  const [email, setEmail] = useState(() => user?.email ?? "");
+  const [phone, setPhone] = useState(() => user?.phoneNumber ?? "");
   const [preferredLocale, setPreferredLocale] = useState<"en" | "ar">(
-    locale as "en" | "ar",
+    () => (user?.preferences.language ?? locale) as "en" | "ar",
   );
-  const [notifications, setNotifications] = useState<NotificationPreferences>({
-    email: true,
-    inApp: true,
-    bookingUpdates: true,
-    maintenanceUpdates: true,
-    reviewAlerts: false,
-    systemAlerts: true,
-  });
+  const [notifications, setNotifications] = useState<NotificationPreferences>(
+    () =>
+      user?.preferences.notifications ?? {
+        email: true,
+        inApp: true,
+        bookingUpdates: true,
+        maintenanceUpdates: true,
+        reviewAlerts: false,
+        systemAlerts: true,
+      },
+  );
 
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -50,16 +53,6 @@ export function ProfileContent({
     name?: string;
     email?: string;
   }>({});
-
-  // Populate form from user
-  useEffect(() => {
-    if (!user) return;
-    setName(user.name ?? "");
-    setEmail(user.email ?? "");
-    setPhone(user.phoneNumber ?? "");
-    setPreferredLocale(user.preferences.language);
-    setNotifications(user.preferences.notifications);
-  }, [user]);
 
   const validate = useCallback((): boolean => {
     const errs: typeof fieldErrors = {};
@@ -100,9 +93,7 @@ export function ProfileContent({
       setTimeout(() => setSaveState("idle"), 3000);
     } catch (err) {
       setErrorMsg(
-        err instanceof Error
-          ? err.message
-          : t("dashboard.profile.saveFailed"),
+        err instanceof Error ? err.message : t("dashboard.profile.saveFailed"),
       );
       setSaveState("error");
     }

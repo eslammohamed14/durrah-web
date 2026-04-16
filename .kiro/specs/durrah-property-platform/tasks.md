@@ -453,7 +453,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Display in-app notifications
     - _Requirements: 13.3, 28.3_
 
-- [ ] 17. Checkpoint - Ensure all tests pass
+- [x] 17. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 18. Implement activity and shop listings
