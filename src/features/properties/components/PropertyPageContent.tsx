@@ -11,6 +11,7 @@ import { PropertyGallery } from "./PropertyGallery";
 import { PropertyDetails } from "./PropertyDetails";
 import { PropertyReviews } from "./PropertyReviews";
 import PropertyMapDynamic from "@/features/properties/PropertyMapDynamic";
+import { InquiryForm } from "@/features/inquiry/InquiryForm";
 import type { Property, Review } from "@/lib/types";
 
 interface PropertyPageContentProps {
@@ -117,12 +118,9 @@ export function PropertyPageContent({
                   {t("property.bookNow")}
                 </a>
               ) : (
-                <button
-                  type="button"
-                  className="block w-full text-center rounded-lg border border-blue-600 px-4 py-3 font-semibold text-blue-600 hover:bg-blue-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                >
-                  {t("property.inquire")}
-                </button>
+                <div className="mt-2">
+                  <InquiryForm propertyId={property.id} />
+                </div>
               )}
             </div>
           </aside>

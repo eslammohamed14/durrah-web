@@ -456,35 +456,35 @@ The implementation follows an incremental approach: foundation → core UI → f
 - [x] 17. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 18. Implement activity and shop listings
-  - [ ] 18.1 Create activity listings page
+- [x] 18. Implement activity and shop listings
+  - [x] 18.1 Create activity listings page
     - Implement app/activities/page.tsx with SSR
     - Display activity cards with photos, descriptions, pricing
     - Add filters by category, price, location
     - Display duration and schedule information
     - _Requirements: 26.1, 26.2, 26.3_
 
-  - [ ] 18.2 Create activity details page
+  - [x] 18.2 Create activity details page
     - Implement app/activities/[id]/page.tsx with SSR
     - Display complete activity information
     - Display availability calendar
     - Add booking functionality through checkout flow
     - _Requirements: 26.4, 26.5_
 
-  - [ ] 18.3 Create shop listings page
+  - [x] 18.3 Create shop listings page
     - Implement app/shops/page.tsx with SSR
     - Display shop cards with photos, specifications, lease terms
     - Add filters by size, location, price, category
     - Display amenities and features
     - _Requirements: 27.1, 27.2, 27.3, 27.5_
 
-  - [ ] 18.4 Create shop details page
+  - [x] 18.4 Create shop details page
     - Implement app/shops/[id]/page.tsx with SSR
     - Display complete shop information
     - Add inquiry form for availability (using shared InquiryForm component)
     - _Requirements: 27.4, 31.1, 31.2_
 
-  - [ ] 18.5 Create inquiry form component and buy property detail behavior
+  - [x] 18.5 Create inquiry form component and buy property detail behavior
     - Implement components/features/inquiry/InquiryForm.tsx (shared by buy and shop pages)
     - Collect name, phone, email, message
     - On property detail pages with category 'buy', display InquiryForm instead of booking/checkout button
