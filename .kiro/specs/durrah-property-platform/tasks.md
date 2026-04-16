@@ -491,15 +491,15 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Send notifications to owner on submission
     - _Requirements: 31.1, 31.2, 31.3, 31.4, 31.7_
 
-- [ ] 19. Implement review system
-  - [ ] 19.1 Create review submission form
+- [x] 19. Implement review system
+  - [x] 19.1 Create review submission form
     - Implement components/features/reviews/ReviewForm.tsx
     - Add star rating selector (1-5)
     - Add comment textarea
     - Validate that user has completed booking before allowing review
     - _Requirements: 25.3, 25.4_
 
-  - [ ] 19.2 Implement review submission and rating calculation
+  - [x] 19.2 Implement review submission and rating calculation
     - Submit review to API
     - Recalculate property average rating
     - Update property rating display

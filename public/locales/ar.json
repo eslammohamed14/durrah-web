@@ -477,8 +477,12 @@
     "title": "كتابة تقييم",
     "rating": "التقييم",
     "comment": "تقييمك",
+    "commentPlaceholder": "شارك تجربتك مع هذا العقار...",
     "submit": "إرسال التقييم",
-    "submitted": "تم إرسال التقييم",
+    "submitted": "تم إرسال التقييم بنجاح",
+    "ratingRequired": "يرجى اختيار تقييم بالنجوم",
+    "loginRequired": "يرجى تسجيل الدخول لترك تقييم",
+    "noCompletedBooking": "يمكن فقط للضيوف الذين أتمّوا إقامتهم ترك تقييم",
     "averageRating": "{rating} من 5",
     "reviewCount": "{count} تقييم",
     "reviewCount_plural": "{count} تقييمات"

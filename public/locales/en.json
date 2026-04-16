@@ -477,8 +477,12 @@
     "title": "Write a Review",
     "rating": "Rating",
     "comment": "Your Review",
+    "commentPlaceholder": "Share your experience with this property...",
     "submit": "Submit Review",
-    "submitted": "Review submitted",
+    "submitted": "Review submitted successfully",
+    "ratingRequired": "Please select a star rating",
+    "loginRequired": "Please log in to leave a review",
+    "noCompletedBooking": "Only guests who have completed a stay can leave a review",
     "averageRating": "{rating} out of 5",
     "reviewCount": "{count} review",
     "reviewCount_plural": "{count} reviews"
