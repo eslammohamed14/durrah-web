@@ -1,68 +1,8 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Poppins } from "next/font/google";
-import { cookies } from "next/headers";
+import type { ReactNode } from "react";
 import "./globals.css";
-import { LocaleProvider } from "@/lib/contexts/LocaleContext";
-import { AuthProvider } from "@/lib/contexts/AuthContext";
-import { DEFAULT_LOCALE, isValidLocale, NEXT_LOCALE_COOKIE } from "@/config/i18n";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-export const metadata: Metadata = {
-  title: {
-    default: "Durrah | Property Management Platform",
-    template: "%s | Durrah",
-  },
-  description:
-    "Search, view, and book properties across Saudi Arabia — rentals, purchases, shops, and activities.",
-  alternates: {
-    languages: {
-      en: "/",
-      ar: "/",
-    },
-  },
-  openGraph: {
-    siteName: "Durrah",
-    type: "website",
-  },
-};
-
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const cookieStore = await cookies();
-  const localeCookie = cookieStore.get(NEXT_LOCALE_COOKIE)?.value;
-  const locale = isValidLocale(localeCookie) ? localeCookie : DEFAULT_LOCALE;
-  const dir = locale === "ar" ? "rtl" : "ltr";
-
-  return (
-    <html
-      lang={locale}
-      dir={dir}
-      className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <LocaleProvider initialLocale={locale}>
-          <AuthProvider>{children}</AuthProvider>
-        </LocaleProvider>
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: { children: ReactNode }) {
+  // All real layout (html/body/lang/dir/providers) is handled inside src/app/[locale]/layout.tsx
+  return children;
 }
+

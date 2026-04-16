@@ -58,7 +58,7 @@
     "resendOTP": "إعادة إرسال الرمز",
     "verifyOtp": "تحقق من الرمز",
     "verify": "تحقق",
-    "otpSent": "تم إرسال رمز التحقق إلى {{phone}}",
+    "otpSent": "تم إرسال رمز التحقق إلى {phone}",
     "otpSentTo": "تم إرسال الرمز إلى",
     "otpLabel": "كلمة المرور لمرة واحدة",
     "otpExpired": "انتهت صلاحية الرمز. يرجى طلب رمز جديد.",
@@ -114,9 +114,9 @@
     "cardStatusSingle": "فردي",
     "cardStatusFamily": "عائلي",
     "viewPropertyDetails": "عرض تفاصيل العقار",
-    "specBed": "{{n}} غرفة",
-    "specBath": "{{n}} حمام",
-    "specSqFt": "{{n}} قدم²",
+    "specBed": "{n} غرفة",
+    "specBath": "{n} حمام",
+    "specSqFt": "{n} قدم²",
     "saveProperty": "حفظ العقار",
     "activitiesTag": "الأنشطة",
     "activitiesHeadline": "اجعل كل إقامة مغامرة لا تُنسى ومثيرة",
@@ -155,7 +155,7 @@
     "instagramSubtitle": "تابعنا على إنستغرام للإقامات الملهمة والمغامرات التي لا تُنسى وإجازتك القادمة."
   },
   "search": {
-    "results": "تم العثور على {{count}} نتيجة",
+    "results": "تم العثور على {count} نتيجة",
     "noResults": "لم يتم العثور على عقارات",
     "noResultsHint": "حاول تعديل الفلاتر",
     "sortBy": "ترتيب حسب",
@@ -207,8 +207,8 @@
     "dates": "التواريخ",
     "checkIn": "تاريخ الوصول",
     "checkOut": "تاريخ المغادرة",
-    "nights": "{{count}} ليلة",
-    "nights_plural": "{{count}} ليالٍ",
+    "nights": "{count} ليلة",
+    "nights_plural": "{count} ليالٍ",
     "guests": "الضيوف",
     "guestInfo": "معلومات الضيف",
     "priceBreakdown": "تفاصيل السعر",
@@ -260,7 +260,7 @@
     "resolution": "الحل"
   },
   "dashboard": {
-    "welcome": "مرحباً، {{name}}",
+    "welcome": "مرحباً، {name}",
     "myBookings": "حجوزاتي",
     "myProperties": "عقاراتي",
     "myTickets": "طلباتي",
@@ -293,9 +293,9 @@
     "comment": "تقييمك",
     "submit": "إرسال التقييم",
     "submitted": "تم إرسال التقييم",
-    "averageRating": "{{rating}} من 5",
-    "reviewCount": "{{count}} تقييم",
-    "reviewCount_plural": "{{count}} تقييمات"
+    "averageRating": "{rating} من 5",
+    "reviewCount": "{count} تقييم",
+    "reviewCount_plural": "{count} تقييمات"
   },
   "notifications": {
     "title": "الإشعارات",
@@ -320,17 +320,20 @@
     "required": "هذا الحقل مطلوب",
     "email": "يرجى إدخال بريد إلكتروني صحيح",
     "phone": "يرجى إدخال رقم هاتف صحيح",
-    "minLength": "يجب أن يكون {{min}} أحرف على الأقل",
-    "maxLength": "يجب ألا يتجاوز {{max}} حرفاً",
+    "minLength": "يجب أن يكون {min} أحرف على الأقل",
+    "maxLength": "يجب ألا يتجاوز {max} حرفاً",
     "passwordMismatch": "كلمتا المرور غير متطابقتين",
     "passwordComplexity": "يجب أن تكون كلمة المرور 8 أحرف على الأقل تحتوي على حروف وأرقام",
     "invalidDate": "يرجى إدخال تاريخ صحيح",
     "checkoutAfterCheckin": "يجب أن يكون تاريخ المغادرة بعد تاريخ الوصول",
     "fileTooLarge": "يجب أن يكون حجم الملف أقل من 5 ميجابايت",
     "invalidFileType": "يُسمح فقط بصور JPEG وPNG وWebP",
-    "maxFiles": "الحد الأقصى {{max}} ملفات"
+    "maxFiles": "الحد الأقصى {max} ملفات"
   },
   "footer": {
+    "home": "الرئيسية",
+    "activities": "أنشطة",
+    "shops": "محلات",
     "properties": "العقارات",
     "about": "من نحن",
     "contactUs": "اتصل بنا",
