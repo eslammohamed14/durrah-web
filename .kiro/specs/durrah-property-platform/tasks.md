@@ -416,8 +416,8 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Display in-app notifications in dashboard
     - _Requirements: 8.6, 28.1, 28.2_
 
-- [ ] 16. Implement maintenance ticket system
-  - [ ] 16.1 Create maintenance ticket creation form
+- [x] 16. Implement maintenance ticket system
+  - [x] 16.1 Create maintenance ticket creation form
     - Implement components/features/maintenance/MaintenanceTicketForm.tsx
     - Add category dropdown (HVAC, Plumbing, Electrical, Appliances, Structural, Other)
     - Add priority selector (Low, Medium, High, Emergency)
@@ -426,21 +426,21 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Validate all required fields
     - _Requirements: 12.1, 12.2, 12.3, 12.4, 32.1, 32.2, 32.3, 32.4_
 
-  - [ ] 16.2 Create maintenance ticket submission logic
+  - [x] 16.2 Create maintenance ticket submission logic
     - Implement ticket creation API call
     - Generate unique ticket ID
     - Associate ticket with property and user
     - Send confirmation notification
     - _Requirements: 12.5, 12.6, 12.7_
 
-  - [ ] 16.3 Create MaintenanceTicketList component
+  - [x] 16.3 Create MaintenanceTicketList component
     - Implement components/features/maintenance/MaintenanceTicketList.tsx
     - Display tickets with status indicators (Open, In Progress, Resolved, Closed)
     - Add filters by status, category, and priority
     - Add action buttons (view details, add comment)
     - _Requirements: 13.1, 13.2, 13.6_
 
-  - [ ] 16.4 Create maintenance ticket details page
+  - [x] 16.4 Create maintenance ticket details page
     - Implement app/dashboard/maintenance/[id]/page.tsx
     - Display complete ticket information
     - Display status history and timeline
@@ -448,7 +448,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Display resolution information when closed
     - _Requirements: 13.1, 13.4, 13.5_
 
-  - [ ] 16.5 Implement ticket status change notifications
+  - [x] 16.5 Implement ticket status change notifications
     - Send notifications when ticket status changes
     - Display in-app notifications
     - _Requirements: 13.3, 28.3_
