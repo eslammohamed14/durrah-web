@@ -21,7 +21,7 @@ export async function HeroSection({ allProperties }: HeroSectionProps) {
   return (
     <section
       aria-label="Hero"
-      className="relative flex min-h-[460px] flex-col bg-cover bg-no-repeat bg-center pb-6 md:min-h-[840px] md:pb-8 lg:min-h-[928px]"
+      className="relative flex min-h-[948px] flex-col bg-cover bg-no-repeat bg-[50%_25%] pb-[30px]"
       style={{ backgroundImage: `url('${images.durrahHomeHero}')` }}
     >
       {/* Dark overlay */}

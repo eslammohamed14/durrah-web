@@ -346,14 +346,14 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Test payment processing success and failure scenarios
     - _Requirements: 7.1, 7.2, 7.3, 7.4_
 
-- [ ] 14. Implement user dashboards
-  - [ ] 14.0 Create dashboard hub page
+- [x] 14. Implement user dashboards
+  - [x] 14.0 Create dashboard hub page
     - Implement app/dashboard/page.tsx that routes to role-specific views
     - If user has one role, redirect to that dashboard
     - If user has multiple roles, show role selector/tabs
     - _Requirements: 10.6, 11.7_
 
-  - [ ] 14.1 Create Guest dashboard
+  - [x] 14.1 Create Guest dashboard
     - Implement app/dashboard/guest/page.tsx with client-side rendering
     - Display upcoming and past bookings
     - Display submitted inquiries (for buy/shop properties) with status
@@ -362,7 +362,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Add booking history with filters
     - _Requirements: 9.1, 9.3, 9.4, 9.5, 31.6_
 
-  - [ ] 14.2 Create Investor dashboard
+  - [x] 14.2 Create Investor dashboard
     - Implement app/dashboard/investor/page.tsx
     - Display invested properties with booking status (read-only)
     - Display revenue analytics and investor's share per property
@@ -371,7 +371,7 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Display maintenance tickets for invested properties (read-only)
     - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
 
-  - [ ] 14.3 Create Owner dashboard
+  - [x] 14.3 Create Owner dashboard
     - Implement app/dashboard/owner/page.tsx
     - Display owned properties with ability to update details and pricing
     - Display all maintenance tickets for owned properties with status management
@@ -381,14 +381,14 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Allow blocking dates for maintenance or personal use
     - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.5, 11.6, 31.5_
 
-  - [ ] 14.4 Create BookingList component
+  - [x] 14.4 Create BookingList component
     - Implement components/features/booking/BookingList.tsx
     - Display bookings with status indicators
     - Add filters by date and status
     - Add action buttons (view details, edit, cancel)
     - _Requirements: 8.1, 8.5_
 
-  - [ ] 14.5 Create profile management page
+  - [x] 14.5 Create profile management page
     - Implement app/dashboard/profile/page.tsx
     - Allow user to update name, email, phone number
     - Allow user to update language preference
