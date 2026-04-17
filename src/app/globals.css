@@ -29,6 +29,44 @@ html[dir="rtl"] .rtl-auto-flip {
   transform: rotate(180deg);
 }
 
+/* ── Accessibility: Focus indicators ──────────────────────────────────────── */
+
+/* Ensure focus-visible outlines are always visible and never clipped */
+:focus-visible {
+  outline: 2px solid #2563eb; /* blue-600 */
+  outline-offset: 2px;
+}
+
+/* Remove outline only when using mouse (pointer device), keep for keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── Accessibility: Text resizing (Req 22.6) ──────────────────────────────── */
+
+/* Use relative units so user-agent font-size scaling works up to 200% */
+html {
+  font-size: 100%; /* respects the browser default (usually 16px) */
+}
+
+/* Prevent fixed-height containers from clipping text when resized */
+.text-container {
+  min-height: 0;
+  height: auto;
+}
+
+/* ── Accessibility: Reduced motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ImageSwiper — pagination dots + nav pills */
 .image-swiper {
   min-width: 0;

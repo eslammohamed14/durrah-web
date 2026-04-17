@@ -9,6 +9,8 @@ import { AuthProvider } from "@/lib/contexts/AuthContext";
 import { NotificationProvider } from "@/lib/contexts/NotificationContext";
 import { ToastProvider } from "@/components/ui/Toast";
 import { OfflineBanner } from "@/components/ui/NetworkErrorBanner";
+import { SkipLink } from "@/components/shared/SkipLink";
+import { AriaLiveProvider } from "@/components/shared/AriaLiveRegion";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -83,12 +85,15 @@ export default async function LocaleLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <SkipLink />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider>
             <NotificationProvider>
               <ToastProvider>
-                <OfflineBanner />
-                {children}
+                <AriaLiveProvider>
+                  <OfflineBanner />
+                  {children}
+                </AriaLiveProvider>
               </ToastProvider>
             </NotificationProvider>
           </AuthProvider>

@@ -67,6 +67,7 @@ export function FormField({
         Wrap children in a fragment — the consumer's input must carry:
           id={id}
           aria-invalid={!!error}
+          aria-required={required}
           aria-describedby={error ? errorId : hint ? hintId : undefined}
         or use the InputWithField helper below for convenience.
       */}
