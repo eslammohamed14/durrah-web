@@ -135,13 +135,13 @@ export function Header({ transparent = false }: HeaderProps) {
             {/* Auth buttons */}
             <div className="hidden items-center gap-2 md:flex">
               <Link
-                href="/"
+                href="/login"
                 className={`rounded-lg border px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "border-white text-white hover:bg-white/10" : "border-[#2A2F73] text-[#2A2F73] hover:bg-gray-50"}`}
               >
                 {t("nav.login")}
               </Link>
               <Link
-                href="/"
+                href="/register"
                 className={`rounded-xl px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "bg-white text-[#FF765E] hover:bg-white/90" : "bg-[#2A2F73] text-white hover:bg-[#2A2F73]/90"}`}
               >
                 {t("nav.signUp")}

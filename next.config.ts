@@ -36,6 +36,10 @@ const nextConfig: NextConfig = {
       source: "/login",
       destination: "/auth/login",
     },
+    {
+      source: "/register",
+      destination: "/auth/register",
+    },
   ],
   // Cache-Control headers for static assets and API routes
   headers: async () => [

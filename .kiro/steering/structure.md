@@ -5,17 +5,17 @@
 ```
 src/
 ├── app/                          # Next.js App Router (pages + layouts)
-│   ├── page.tsx                  # Home page (SSR)
+│   ├── page.tsx                  # Thin routing wrapper (see Thin App Directory Pattern)
 │   ├── layout.tsx                # Root layout with LocaleProvider
 │   ├── globals.css               # Global styles
 │   ├── favicon.ico
-│   └── auth/                     # Authentication pages
+│   └── auth/                     # Authentication routes — App files are wrappers only
 │       ├── login/
-│       │   └── page.tsx
+│       │   └── page.tsx          # Thin routing wrapper
 │       ├── register/
-│       │   └── page.tsx
+│       │   └── page.tsx          # Thin routing wrapper
 │       └── reset-password/
-│           └── page.tsx
+│           └── page.tsx          # Thin routing wrapper
 │
 ├── assets/                       # Static assets
 │   ├── icons/                    # SVG icon components
@@ -56,62 +56,105 @@ src/
 │
 ├── features/                     # Feature modules (co-located by domain)
 │   ├── auth/
-│   │   ├── components/           # Auth-specific components
-│   │   │   ├── LoginForm.tsx
-│   │   │   └── OTPInput.tsx
+│   │   ├── components/           # MANDATORY — section folders as in `home/` (see Feature Module Structure)
+│   │   ├── pages/
+│   │   │   ├── login/
+│   │   │   │   └── index.tsx     # Actual page implementation
+│   │   │   ├── register/
+│   │   │   │   └── index.tsx     # Actual page implementation
+│   │   │   └── reset-password/
+│   │   │       └── index.tsx     # Actual page implementation
 │   │   ├── hooks/                # Auth-specific hooks (e.g., useOTP.ts)
 │   │   ├── utils/                # Auth-specific utilities
 │   │   └── types/                # Auth-specific types
 │   │
-│   ├── home/
-│   │   ├── components/           # Home section components
-│   │   │   ├── heroSection/
-│   │   │   ├── PropertiesSection/
+│   ├── home/                     # REFERENCE IMPLEMENTATION for feature layout
+│   │   ├── pages/
+│   │   │   └── root/
+│   │   │       └── index.tsx     # Actual page implementation for `/` (e.g. composes HomeContent)
+│   │   ├── components/           # MANDATORY: one folder per UI section
+│   │   │   ├── heroSection/      # Example section — primary blueprint
+│   │   │   │   ├── index.tsx     # MANDATORY: section root component (this filename only)
+│   │   │   │   ├── DateRangePanel.tsx
+│   │   │   │   ├── FilterField.tsx
+│   │   │   │   └── filter-container.tsx
 │   │   │   ├── activitiesSection/
+│   │   │   │   ├── index.tsx
+│   │   │   │   └── ActivityItem.tsx
 │   │   │   ├── beachesSection/
+│   │   │   │   ├── index.tsx
+│   │   │   │   ├── BeachItem.tsx
+│   │   │   │   └── BeachesSlider.tsx
 │   │   │   ├── blogsSection/
+│   │   │   │   ├── index.tsx
+│   │   │   │   ├── BlogGridItem.tsx
+│   │   │   │   └── FeaturedBlogCard.tsx
 │   │   │   ├── companyMetrics/
+│   │   │   │   ├── index.tsx
+│   │   │   │   ├── MetricItem.tsx
+│   │   │   │   └── metricIcons.tsx
 │   │   │   ├── ctaBannerSection/
+│   │   │   │   └── index.tsx
+│   │   │   ├── homeDecorativeRightEdge/
+│   │   │   │   └── index.tsx
 │   │   │   ├── instagramSection/
+│   │   │   │   ├── index.tsx
+│   │   │   │   └── InstagramPhoto.tsx
+│   │   │   ├── PropertiesSection/
+│   │   │   │   └── index.tsx
+│   │   │   ├── sectionTag/
+│   │   │   │   └── index.tsx
 │   │   │   ├── shopsSection/
-│   │   │   ├── yachtSection/
-│   │   │   └── sectionTag/
-│   │   ├── hooks/                # Home-specific hooks
-│   │   ├── utils/                # Home-specific utilities
-│   │   ├── types/                # Home-specific types
-│   │   └── HomeContent.tsx       # Home page entry component
+│   │   │   │   ├── index.tsx
+│   │   │   │   └── ShopGallery.tsx
+│   │   │   └── yachtSection/
+│   │   │       └── index.tsx
+│   │   ├── hooks/                # Home-specific hooks (e.g., useHeroFilter.ts)
+│   │   ├── utils/                # Home-specific utilities (optional)
+│   │   ├── types/                # Home-specific types (optional)
+│   │   └── HomeContent.tsx       # Feature entry: composes section components from components/
 │   │
 │   ├── properties/
-│   │   ├── components/           # Property-specific components
-│   │   │   ├── PropertyCard.tsx
-│   │   │   ├── PropertyMap.tsx
-│   │   │   └── PropertyMapDynamic.tsx
+│   │   ├── components/           # Reusable property UI sections & widgets (same section rules as home)
+│   │   ├── pages/                # Multi-route entry points (details vs map-view, etc.)
+│   │   │   ├── details/
+│   │   │   │   └── index.tsx
+│   │   │   └── map-view/
+│   │   │       └── index.tsx
 │   │   ├── hooks/                # e.g., useProperty.ts, usePropertyFilters.ts
 │   │   ├── utils/                # e.g., formatPropertyPrice.ts
 │   │   └── types/                # e.g., Property, PropertyFilter types
 │   │
 │   ├── search/
-│   │   ├── components/           # Search-specific components
-│   │   │   └── SearchBar.tsx
+│   │   ├── components/           # Same section-folder rules as `home/components/`
+│   │   │   └── searchBarSection/
+│   │   │       ├── index.tsx
+│   │   │       └── …             # subcomponents used only by this section
+│   │   ├── pages/                # If search spans multiple routes
 │   │   ├── hooks/                # e.g., useSearch.ts, useSearchFilters.ts
 │   │   ├── utils/                # e.g., buildSearchQuery.ts
 │   │   └── types/                # e.g., SearchFilters, SearchResult types
 │   │
 │   ├── booking/
-│   │   ├── components/           # Booking-specific components
-│   │   │   └── PaymentForm.tsx
+│   │   ├── components/           # Same section-folder rules as `home/components/`
+│   │   │   └── paymentSection/
+│   │   │       ├── index.tsx
+│   │   │       └── …
+│   │   ├── pages/                # e.g., checkout steps as separate routes
 │   │   ├── hooks/                # e.g., useBooking.ts, useAvailability.ts
 │   │   ├── utils/                # e.g., calculateBookingPrice.ts
 │   │   └── types/                # e.g., Booking, BookingStatus types
 │   │
 │   ├── maintenance/              # (planned)
 │   │   ├── components/
+│   │   ├── pages/                # If split across dashboard URLs
 │   │   ├── hooks/
 │   │   ├── utils/
 │   │   └── types/
 │   │
 │   └── dashboard/                # (planned)
 │       ├── components/
+│       ├── pages/
 │       ├── hooks/
 │       ├── utils/
 │       └── types/
@@ -168,24 +211,50 @@ src/
 
 ## Feature Module Structure
 
-Each feature under `src/features/` follows this internal structure:
+**Normative source:** `src/features/home/` is the canonical implementation. New and refactored features **must** match that layout unless an explicit steering exception is recorded.
+
+### Mandatory layout
+
+Every feature under `src/features/{feature-name}/` **must** include at least:
 
 ```
 features/{feature-name}/
-├── components/       # UI components specific to this feature
-├── hooks/            # Custom hooks (data fetching, local state, side effects)
-├── utils/            # Pure utility/helper functions for this feature
-├── types/            # TypeScript interfaces and types scoped to this feature
-└── index.tsx         # (optional) Main entry component or barrel export
+├── components/       # REQUIRED — all feature UI is organized here (see below)
+├── hooks/            # Feature-only hooks (optional folder if empty)
+├── utils/            # Feature-only pure helpers (optional)
+├── types/            # Feature-only TypeScript types (optional)
+└── {Feature}Content.tsx   # OPTIONAL but recommended: single composer that imports sections from components/
 ```
+
+Rules that are **not** optional:
+
+1. **`components/` is required.** No feature may omit it. All section-level UI **must** live under `components/` using the section-folder rules below. A thin root composer at the feature root (e.g. `HomeContent.tsx`) may assemble sections; it **must not** accumulate large UI that belongs in a section’s `index.tsx`.
+2. **One folder per distinct UI section** inside `components/`. Name the folder after the section (e.g. `heroSection`, `activitiesSection`, `PropertiesSection`). This is the unit of composition the feature composer (e.g. `HomeContent.tsx`) imports from.
+3. **Section entry file:** Within each section folder, the primary exported component for that section **must** live in a file named **`index.tsx`**. Consumers import the section via the folder path (e.g. `@/features/home/components/heroSection`). Do not name the main section file after the section title (e.g. `HeroSection.tsx`) at the folder root — **`index.tsx` only** for the section root.
+4. **Co-location (section-private UI):** Any component, hook-local wrapper, or presentational fragment used **only** by that section **must** reside in the **same** section folder as its `index.tsx`. Do not place section-specific pieces in a generic `components/` sibling bucket inside the feature, and do not move them to global `src/components/` unless they are genuinely reused across features (then they belong in `components/shared/` or `components/ui/` per the rules below).
+5. **Hooks at feature level:** Hooks that serve the whole feature (e.g. `useHeroFilter.ts` used by `heroSection`) live in `features/{name}/hooks/`. Section-only hooks may live next to the section if they are never imported elsewhere; prefer `hooks/` when the hook is shared across multiple sections of the same feature.
+6. **Isolation:** Features do not import from other features. Share code through `src/lib/` or shared component trees as already required elsewhere in this document.
+7. **Small components:** Section `index.tsx` files orchestrate layout and data; keep leaf components focused. Split into co-located files when a section grows.
+
+### Multi-Page features
+
+When a single feature domain is served by **more than one** App Router URL (e.g. property details and property map view, or multiple checkout steps as separate routes), **route-level entry components** for those URLs **must** live under:
+
+```
+features/{feature-name}/pages/{route-segment}/index.tsx
+```
+
+Examples (illustrative paths):
+
+- `features/properties/pages/details/index.tsx` — composer for the `/properties/[id]` experience
+- `features/properties/pages/map-view/index.tsx` — composer for a map-focused URL
 
 **Rules:**
 
-- Feature-scoped hooks, utils, and types live inside the feature folder
-- Shared hooks/utils/types that are used by 2+ features go in `lib/`
-- Components inside a feature should not import from other feature folders directly — use `lib/` for shared logic
-- each feature should have a single entry component that render other modular components
-- a component should be as small as possible
+- **`pages/` inside the feature is only for URL-level composers** that wire data and layout for that route. Reusable UI stays in `features/{name}/components/` under section folders.
+- **App Router files** (`src/app/.../page.tsx`) **must** follow **The Thin App Directory Pattern**: no UI markup; re-export the default from `features/{name}/pages/...` (see that section). Params/searchProps are passed from the wrapper only when the framework requires it — composition stays in the feature.
+- A feature may still use a root composer such as `HomeContent.tsx`, but anything rendered for a URL **must** be reached through `features/{name}/pages/{page-name}/index.tsx` when that URL is implemented by `app/.../page.tsx` — the App file never contains the page body.
+- Use **one folder per route segment** under `pages/`, with **`index.tsx`** as the entry file for that segment, consistent with the section-folder convention.
 
 ## Component Organization Principles
 
@@ -197,12 +266,12 @@ Structural elements that define the page layout and navigation.
 
 ### 2. Feature Components (`features/{name}/components/`)
 
-Domain-specific components co-located with their feature's hooks, utils, and types.
+Domain UI **must** follow the section-folder model in **Feature Module Structure**: each subsection of the feature is a directory under `components/` whose public surface is `index.tsx`, with section-only subcomponents co-located in that directory. The **`home`** feature is the reference tree.
 
 **Examples**:
 
-- `features/properties/components/` - Property-related components
-- `features/booking/components/` - Booking flow components
+- `features/home/components/heroSection/index.tsx` — section root; `DateRangePanel.tsx`, `FilterField.tsx`, etc. co-located beside it
+- `features/properties/components/` — the same section-folder rules apply to each property-related section
 
 ### 3. Shared Components (`components/shared/`)
 
@@ -227,6 +296,34 @@ All external services follow the **Adapter Pattern**:
 This allows swapping providers (Firebase → Custom Auth, Stripe → PayPal, etc.) without changing application code.
 
 ## Routing Conventions
+
+### The Thin App Directory Pattern
+
+**Mandatory.** All user-visible page UI is implemented under `src/features/{feature-name}/pages/`. The App Router tree under `src/app/` exists **only** for routing, layouts, and Next.js route module APIs.
+
+**Rule 1:** `src/app/` **must** be used strictly for routing and Next.js route configuration (for example `metadata`, `generateStaticParams`, `generateMetadata`, segment config, and `layout.tsx` boundaries). Do not treat `src/app/**/page.tsx` as a place to build screens.
+
+**Rule 2:** **No UI markup** (JSX/TSX elements, including a single wrapper element whose purpose is page content) is allowed inside any `src/app/**/page.tsx` file. Layout files may contain structural providers and `{children}` only as required by Next.js — not feature page bodies.
+
+**Rule 3:** The **implementation** of each route’s page **must** live in `src/features/{feature-name}/pages/{page-name}/index.tsx` (or the same path shape under a feature subfolder agreed in steering). `{page-name}` maps one segment (or logical page) per folder; dynamic routes use the same folder naming as the app segment (e.g. `[id]/index.tsx` under `pages/` when applicable).
+
+**Rule 4:** Each `src/app/**/page.tsx` **must** import the page’s default export from the corresponding feature `pages/` module and **re-export it as default** (and may export `metadata` or other route config alongside). No other implementation logic belongs in the App `page.tsx`.
+
+**Example — login route**
+
+```tsx
+// src/app/auth/login/page.tsx
+import { Metadata } from "next";
+import LoginPage from "@/features/auth/pages/login";
+
+export const metadata: Metadata = {
+  title: "Sign In",
+};
+
+export default LoginPage;
+```
+
+The real screen composition for sign-in lives in `src/features/auth/pages/login/index.tsx` (and that file pulls in `components/` sections per **Feature Module Structure**).
 
 ### Public Routes (SSR)
 
@@ -315,7 +412,7 @@ t("home.heroSubheadline");
 ## Key Architectural Rules
 
 1. **Separation of Concerns**: Keep presentation, business logic, and data access separate
-2. **Feature-Based Organization**: Co-locate components, hooks, utils, and types by feature
+2. **Feature-Based Organization**: Co-locate hooks, utils, and types by feature; organize feature UI under `features/{name}/components/` using the **Feature Module Structure** section-folder rules (`home` is the reference)
 3. **Dependency Inversion**: External services accessed through abstract interfaces
 4. **SSR for Public Pages**: Use SSR for SEO-critical pages
 5. **Type Safety**: TypeScript strict mode throughout

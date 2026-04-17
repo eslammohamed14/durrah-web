@@ -84,7 +84,38 @@
     "signIn": "Sign In",
     "phoneRequired": "Phone number is required",
     "emailPasswordRequired": "Email and password are required",
-    "loginFailed": "Sign in failed. Please check your credentials."
+    "loginFailed": "Sign in failed. Please check your credentials.",
+    "validation": {
+      "emailRequired": "Email address is required",
+      "emailInvalid": "Please enter a valid email address",
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 8 characters"
+    },
+    "loginPage": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to continue to your account",
+      "emailLabel": "Email address *",
+      "emailPlaceholder": "Enter your email address",
+      "passwordLabel": "Password *",
+      "passwordPlaceholder": "Enter your password",
+      "rememberMe": "Remember me",
+      "apple": "Sign up with apple id",
+      "google": "Sign up with google"
+    },
+    "layout": {
+      "promoTitle": "Where every stay becomes a story.",
+      "promoSubtitle": "Discover premium properties and curated experiences across Saudi Arabia.",
+      "panelAlt": "Durrah resort and property showcase",
+      "logoAlt": "Durrat Al Arous logo",
+      "comingSoon": "This page is under construction.",
+      "footer": {
+        "faq": "FAQs",
+        "investments": "Investments & Leasing",
+        "terms": "Terms & Conditions",
+        "contact": "Contact us",
+        "copyright": "© Copyright 2022 Durrat Al Arous. All rights reserved."
+      }
+    }
   },
   "home": {
     "heroTitle": "Find Your Perfect Property",

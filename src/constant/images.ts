@@ -11,11 +11,10 @@ import activity2 from "@/assets/images/activity2.png";
 import yachtShape from "@/assets/images/yacht_shape.png";
 import durrahLogoBlue from "@/assets/images/durrah_logo_blue.png";
 import homeDecorativeWave from "@/assets/images/home-decorative-wave.svg";
+import authImage from "@/assets/images/auth_image.png";
 
 /** SVG imports are often a plain URL string; raster assets use StaticImageData with `.src`. */
-function assetUrl(
-  mod: string | { src: string },
-): string {
+function assetUrl(mod: string | { src: string }): string {
   return typeof mod === "string" ? mod : mod.src;
 }
 
@@ -32,6 +31,7 @@ const images = {
   activity2: activity2.src,
   yachtShape: yachtShape.src,
   durrahLogoBlue: durrahLogoBlue.src,
+  authImage: authImage.src,
   homeDecorativeWave: assetUrl(homeDecorativeWave),
 } as const;
 

@@ -79,26 +79,24 @@ export default async function LocaleLayout({
   const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
-    <html
+    <div
       lang={locale}
       dir={dir}
       className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <SkipLink />
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <AuthProvider>
-            <NotificationProvider>
-              <ToastProvider>
-                <AriaLiveProvider>
-                  <OfflineBanner />
-                  {children}
-                </AriaLiveProvider>
-              </ToastProvider>
-            </NotificationProvider>
-          </AuthProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+      <SkipLink />
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <AuthProvider>
+          <NotificationProvider>
+            <ToastProvider>
+              <AriaLiveProvider>
+                <OfflineBanner />
+                {children}
+              </AriaLiveProvider>
+            </ToastProvider>
+          </NotificationProvider>
+        </AuthProvider>
+      </NextIntlClientProvider>
+    </div>
   );
 }

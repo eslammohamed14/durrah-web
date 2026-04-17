@@ -32,6 +32,9 @@ export {
 } from "./BeachesSectionIcon";
 export { CalendarIcon, type CalendarIconProps } from "./CalendarIcon";
 export { FacebookIcon, type FacebookIconProps } from "./FacebookIcon";
+export { AppleIcon, type AppleIconProps } from "./AppleIcon";
+export { GoogleIcon, type GoogleIconProps } from "./GoogleIcon";
+export { EyeSlashIcon, type EyeSlashIconProps } from "./EyeSlashIcon";
 export { LinkedinIcon, type LinkedinIconProps } from "./LinkedinIcon";
 export {
   NormalInstagramIcon,
@@ -45,6 +48,7 @@ export {
 export { SearchIcon, type SearchIconProps } from "./SearchIcon";
 export { StarColoredIcon, type StarColoredIconProps } from "./StarColoredIcon";
 export { WorkBagIcon, type WorkBagIconProps } from "./WorkBagIcon";
+export { VerifyIcon, type VerifyIconProps } from "./VerifyIcon";
 export { Xshap, type XshapProps } from "./xshap";
 export { XSocialIcon, type XSocialIconProps } from "./XSocialIcon";
 export {
