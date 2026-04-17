@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Xshap } from "@/assets/icons";
 import images from "@/constant/images";
 
@@ -11,34 +12,46 @@ export function ShopGallery() {
 
         <div className="absolute left-[29px] top-[12px] flex w-[538px] flex-col gap-2">
           <div className="flex w-full gap-2">
-            <div className="h-[257px] w-[308px] overflow-hidden rounded-tl-xl">
-              <img
+            <div className="relative h-[257px] w-[308px] overflow-hidden rounded-tl-xl">
+              <Image
                 src={images.property1}
                 alt="Shop exterior"
-                className="h-full w-full object-cover"
+                fill
+                loading="lazy"
+                sizes="308px"
+                className="object-cover"
               />
             </div>
-            <div className="h-[256px] w-[222px] overflow-hidden rounded-tr-2xl">
-              <img
+            <div className="relative h-[256px] w-[222px] overflow-hidden rounded-tr-2xl">
+              <Image
                 src={images.property2}
                 alt="Shop interior"
-                className="h-full w-full object-cover"
+                fill
+                loading="lazy"
+                sizes="222px"
+                className="object-cover"
               />
             </div>
           </div>
           <div className="flex w-full gap-2">
-            <div className="h-[153px] w-[176px] overflow-hidden rounded-bl-2xl">
-              <img
+            <div className="relative h-[153px] w-[176px] overflow-hidden rounded-bl-2xl">
+              <Image
                 src={images.property3}
                 alt="Shop products"
-                className="h-full w-full object-cover"
+                fill
+                loading="lazy"
+                sizes="176px"
+                className="object-cover"
               />
             </div>
-            <div className="h-[153px] flex-1 overflow-hidden rounded-br-2xl">
-              <img
+            <div className="relative h-[153px] flex-1 overflow-hidden rounded-br-2xl">
+              <Image
                 src={images.property4}
                 alt="Retail storefront"
-                className="h-full w-full object-cover"
+                fill
+                loading="lazy"
+                sizes="(max-width: 1200px) 50vw, 222px"
+                className="object-cover"
               />
             </div>
           </div>

@@ -63,10 +63,13 @@ export function YachtSection() {
       </div>
 
       <div className="absolute left-[600px] top-1/2 h-[450px] w-[720px] -translate-y-1/2 overflow-hidden rounded-xl">
-        <img
+        <Image
           src={images.property6}
           alt="Yacht marina"
-          className="h-full w-full object-cover"
+          fill
+          loading="lazy"
+          sizes="720px"
+          className="object-cover"
         />
       </div>
     </section>

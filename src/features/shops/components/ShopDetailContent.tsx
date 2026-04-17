@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
-import { PropertyGallery } from "@/features/properties/components/PropertyGallery";
+import PropertyGalleryDynamic from "@/features/properties/components/PropertyGalleryDynamic";
 import { InquiryForm } from "@/features/inquiry/InquiryForm";
 import type { Property } from "@/lib/types";
 
@@ -49,7 +49,7 @@ export function ShopDetailContent({ shop, ownerName }: ShopDetailContentProps) {
         </nav>
 
         {/* Gallery */}
-        <PropertyGallery images={shop.images} title={title} />
+        <PropertyGalleryDynamic images={shop.images} title={title} />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">

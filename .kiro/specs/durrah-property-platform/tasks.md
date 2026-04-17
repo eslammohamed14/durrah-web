@@ -527,36 +527,36 @@ The implementation follows an incremental approach: foundation → core UI → f
     - Integrate with backend email service
     - _Requirements: 28.1, 28.2, 28.3, 28.4, 28.5_
 
-- [ ] 21. Implement SEO and performance optimizations
-  - [ ] 21.1 Add dynamic meta tags and structured data
+- [x] 21. Implement SEO and performance optimizations
+  - [x] 21.1 Add dynamic meta tags and structured data
     - Implement generateMetadata for all public pages
     - Add JSON-LD structured data for property, activity, and shop listings
     - Add Open Graph tags for social sharing
     - _Requirements: 19.2, 19.3_
 
-  - [ ] 21.2 Create sitemap generation
+  - [x] 21.2 Create sitemap generation
     - Implement app/sitemap.ts for dynamic sitemap generation
     - Include all public URLs (properties, activities, shops)
     - _Requirements: 19.4_
 
-  - [ ] 21.3 Implement image optimization
+  - [x] 21.3 Implement image optimization
     - Use Next.js Image component throughout the application
     - Configure image sizes and formats
     - Implement lazy loading for below-the-fold images
     - _Requirements: 20.3, 24.5, 24.6_
 
-  - [ ] 21.4 Implement code splitting and lazy loading
+  - [x] 21.4 Implement code splitting and lazy loading
     - Use dynamic imports for heavy components (maps, galleries, charts)
     - Implement route-based code splitting
     - Add loading skeletons for async components
     - _Requirements: 20.4_
 
-  - [ ] 21.5 Configure caching headers
+  - [x] 21.5 Configure caching headers
     - Set appropriate cache headers for static assets
     - Implement revalidation strategy for dynamic pages
     - _Requirements: 20.5_
 
-  - [ ] 21.6 Optimize bundle size
+  - [x] 21.6 Optimize bundle size
     - Analyze bundle with webpack-bundle-analyzer
     - Remove unused dependencies
     - Implement tree shaking

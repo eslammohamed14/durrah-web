@@ -8,19 +8,12 @@
  *   <PropertyMapDynamic coordinates={{ lat: 24.7, lng: 46.7 }} title="My Property" />
  */
 
-import dynamic from 'next/dynamic';
-import { Spinner } from '@/components/ui/Spinner';
+import dynamic from "next/dynamic";
+import { MapSkeleton } from "@/components/ui/Skeleton";
 
-const PropertyMapDynamic = dynamic(
-  () => import('./PropertyMap'),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="w-full flex items-center justify-center bg-gray-100 rounded-lg" style={{ height: 400 }}>
-        <Spinner size="lg" />
-      </div>
-    ),
-  }
-);
+const PropertyMapDynamic = dynamic(() => import("./PropertyMap"), {
+  ssr: false,
+  loading: () => <MapSkeleton height={400} />,
+});
 
 export default PropertyMapDynamic;

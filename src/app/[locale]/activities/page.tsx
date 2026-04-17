@@ -12,11 +12,24 @@ import { Footer } from "@/components/layout/Footer";
 import { ActivitiesContent } from "@/features/activities/components/ActivitiesContent";
 import { Spinner } from "@/components/ui/Spinner";
 
+// Revalidate every hour — activity data changes infrequently
+export const revalidate = 3600;
+
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
   return {
     title: t("activities.pageTitle"),
     description: t("activities.pageDescription"),
+    openGraph: {
+      title: t("activities.pageTitle"),
+      description: t("activities.pageDescription"),
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title: t("activities.pageTitle"),
+      description: t("activities.pageDescription"),
+    },
   };
 }
 

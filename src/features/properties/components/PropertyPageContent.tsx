@@ -7,7 +7,7 @@
  */
 
 import { useLocale } from "@/lib/contexts/LocaleContext";
-import { PropertyGallery } from "./PropertyGallery";
+import PropertyGalleryDynamic from "./PropertyGalleryDynamic";
 import { PropertyDetails } from "./PropertyDetails";
 import { PropertyReviews } from "./PropertyReviews";
 import PropertyMapDynamic from "@/features/properties/PropertyMapDynamic";
@@ -31,7 +31,10 @@ export function PropertyPageContent({
     <main className="min-h-screen bg-white">
       {/* Gallery — full width */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <PropertyGallery images={property.images} title={property.title.en} />
+        <PropertyGalleryDynamic
+          images={property.images}
+          title={property.title.en}
+        />
       </div>
 
       {/* Content grid */}

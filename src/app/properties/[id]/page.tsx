@@ -16,6 +16,9 @@ interface Props {
 
 // ── Metadata ──────────────────────────────────────────────────────────────────
 
+// Revalidate every hour — property data changes infrequently
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const api = getAPIClient();

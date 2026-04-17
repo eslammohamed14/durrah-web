@@ -14,6 +14,9 @@ interface Props {
   params: Promise<{ id: string; locale: string }>;
 }
 
+// Revalidate every hour
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const api = getAPIClient();
@@ -32,6 +35,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description,
         type: "website",
         ...(image && { images: [{ url: image, alt: title }] }),
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        ...(image && { images: [image] }),
       },
     };
   } catch {

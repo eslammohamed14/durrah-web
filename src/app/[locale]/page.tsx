@@ -30,11 +30,54 @@ function buildFeaturedPropertiesGrid(
   return grid;
 }
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://durrah.sa";
+
+// Revalidate the home page every hour (ISR)
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Durrah | Find Your Perfect Property",
   description:
     "Search thousands of properties across Saudi Arabia — rentals, purchases, shops, and activities at Durrah Al-Arus.",
+  openGraph: {
+    title: "Durrah | Find Your Perfect Property",
+    description:
+      "Search thousands of properties across Saudi Arabia — rentals, purchases, shops, and activities at Durrah Al-Arus.",
+    url: BASE_URL,
+    siteName: "Durrah",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Durrah | Find Your Perfect Property",
+    description:
+      "Search thousands of properties across Saudi Arabia — rentals, purchases, shops, and activities at Durrah Al-Arus.",
+  },
 };
+
+function WebsiteStructuredData() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Durrah",
+    url: BASE_URL,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${BASE_URL}/search?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+    />
+  );
+}
 
 async function getHomeData(): Promise<{
   featuredForGrid: Property[];
@@ -67,10 +110,13 @@ export default async function HomePage() {
 
   return (
     <>
+      <WebsiteStructuredData />
       <Header transparent />
-      <HomeContent featuredForGrid={featuredForGrid} allProperties={allProperties} />
+      <HomeContent
+        featuredForGrid={featuredForGrid}
+        allProperties={allProperties}
+      />
       <Footer />
     </>
   );
 }
-

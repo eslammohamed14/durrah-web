@@ -12,7 +12,7 @@ import { useLocale } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
-import { PropertyGallery } from "@/features/properties/components/PropertyGallery";
+import PropertyGalleryDynamic from "@/features/properties/components/PropertyGalleryDynamic";
 import {
   AvailabilityCalendar,
   type DateRange,
@@ -72,7 +72,7 @@ export function ActivityDetailContent({
         </nav>
 
         {/* Gallery */}
-        <PropertyGallery images={activity.images} title={title} />
+        <PropertyGalleryDynamic images={activity.images} title={title} />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
