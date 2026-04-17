@@ -15,6 +15,7 @@ import {
   type BookingFormData,
 } from "@/features/booking/BookingForm";
 import { CheckoutContent } from "@/features/booking/CheckoutContent";
+import { ProgressSteps } from "@/components/ui/ProgressSteps";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 
 interface Props {
@@ -28,16 +29,29 @@ export function CheckoutPageClient({ property }: Props) {
 
   const propertyTitle = property.title[locale === "ar" ? "ar" : "en"];
 
+  const steps = [
+    { id: "dates", label: t("checkoutClient.bookNow") },
+    { id: "details", label: t("checkoutClient.completeBooking") },
+  ];
+
   return (
     <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
       {/* Page header */}
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900">
           {bookingData
             ? t("checkoutClient.completeBooking")
             : t("checkoutClient.bookYourStay")}
         </h1>
         <p className="mt-1 text-sm text-gray-500">{propertyTitle}</p>
+      </div>
+
+      {/* Progress indicator */}
+      <div className="mb-8">
+        <ProgressSteps
+          steps={steps}
+          currentStep={bookingData ? "details" : "dates"}
+        />
       </div>
 
       {!bookingData ? (

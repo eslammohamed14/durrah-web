@@ -13,6 +13,7 @@
  */
 
 import React, { useState, useCallback } from "react";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import type { Property } from "@/lib/types";
 import type { BookingFormData } from "./BookingForm";
@@ -69,7 +70,10 @@ function formatCurrency(
   }
 }
 
-function validateGuestInfo(info: GuestInfo, t: TFn): Record<keyof GuestInfo, string> {
+function validateGuestInfo(
+  info: GuestInfo,
+  t: TFn,
+): Record<keyof GuestInfo, string> {
   const errors: Record<keyof GuestInfo, string> = {
     name: "",
     email: "",
@@ -238,18 +242,6 @@ export function CheckoutContent({
   const { t } = useLocale();
 
   const [step, setStep] = useState<CheckoutStep>("guest-info");
-  const [guestInfo, setGuestInfo] = useState<GuestInfo>({
-    name: "",
-    email: "",
-    phone: "",
-  });
-  const [fieldErrors, setFieldErrors] = useState<
-    Record<keyof GuestInfo, string>
-  >({
-    name: "",
-    email: "",
-    phone: "",
-  });
   const [acknowledged, setAcknowledged] = useState(false);
   const [ackError, setAckError] = useState("");
 
@@ -262,14 +254,20 @@ export function CheckoutContent({
   const [errorMessage, setErrorMessage] = useState("");
   const [bookingId, setBookingId] = useState<string | null>(null);
 
-  const handleGuestInfoSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
+  // React Hook Form — field-level validation with real-time error display
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors: fieldErrors },
+  } = useForm<GuestInfo>({
+    mode: "onBlur",
+    defaultValues: { name: "", email: "", phone: "" },
+  });
 
-      const errors = validateGuestInfo(guestInfo, t);
-      setFieldErrors(errors);
-      if (Object.values(errors).some(Boolean)) return;
-
+  const onGuestInfoValid = useCallback(
+    async (data: GuestInfo) => {
+      void data; // consumed via getValues() in handlePaymentSuccess
       if (!acknowledged) {
         setAckError(t("checkout.mustAcknowledgePolicies"));
         return;
@@ -283,20 +281,19 @@ export function CheckoutContent({
         setStep("payment");
       } catch (err) {
         setErrorMessage(
-          err instanceof Error
-            ? err.message
-            : t("checkout.paymentInitFailed"),
+          err instanceof Error ? err.message : t("checkout.paymentInitFailed"),
         );
         setStep("error");
       } finally {
         setLoadingPayment(false);
       }
     },
-    [guestInfo, acknowledged, bookingData.pricing.total, t],
+    [acknowledged, bookingData.pricing.total, t],
   );
 
   const handlePaymentSuccess = useCallback(
     async (transactionId: string) => {
+      const guestInfo = getValues();
       try {
         const api = getAPIClient();
         const booking = await api.createBooking({
@@ -319,7 +316,7 @@ export function CheckoutContent({
         setStep("error");
       }
     },
-    [property.id, bookingData, guestInfo, t],
+    [property.id, bookingData, getValues, t],
   );
 
   const handlePaymentError = useCallback((message: string) => {
@@ -383,7 +380,7 @@ export function CheckoutContent({
       <div className="space-y-6">
         {step === "guest-info" && (
           <form
-            onSubmit={handleGuestInfoSubmit}
+            onSubmit={handleSubmit(onGuestInfoValid)}
             noValidate
             className="space-y-5"
           >
@@ -395,39 +392,40 @@ export function CheckoutContent({
               label={t("checkout.fullName")}
               type="text"
               autoComplete="name"
-              value={guestInfo.name}
-              onChange={(e) =>
-                setGuestInfo((p) => ({ ...p, name: e.target.value }))
-              }
-              errorText={fieldErrors.name || undefined}
+              errorText={fieldErrors.name?.message}
               validationState={fieldErrors.name ? "error" : "default"}
               required
+              {...register("name", {
+                required: t("checkout.nameRequired"),
+              })}
             />
 
             <Input
               label={t("checkout.emailAddress")}
               type="email"
               autoComplete="email"
-              value={guestInfo.email}
-              onChange={(e) =>
-                setGuestInfo((p) => ({ ...p, email: e.target.value }))
-              }
-              errorText={fieldErrors.email || undefined}
+              errorText={fieldErrors.email?.message}
               validationState={fieldErrors.email ? "error" : "default"}
               required
+              {...register("email", {
+                required: t("checkout.emailRequired"),
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: t("checkout.invalidEmail"),
+                },
+              })}
             />
 
             <Input
               label={t("checkout.phoneNumber")}
               type="tel"
               autoComplete="tel"
-              value={guestInfo.phone}
-              onChange={(e) =>
-                setGuestInfo((p) => ({ ...p, phone: e.target.value }))
-              }
-              errorText={fieldErrors.phone || undefined}
+              errorText={fieldErrors.phone?.message}
               validationState={fieldErrors.phone ? "error" : "default"}
               required
+              {...register("phone", {
+                required: t("checkout.phoneRequired"),
+              })}
             />
 
             <div className="space-y-3">

@@ -500,11 +500,15 @@
     "generic": "Something went wrong. Please try again.",
     "network": "Network error. Please check your connection.",
     "notFound": "Page not found",
+    "notFoundHint": "The page you're looking for doesn't exist or has been moved.",
+    "backHome": "Back to Home",
     "unauthorized": "Please log in to continue",
     "forbidden": "You don't have permission to access this",
     "validation": "Please check the form for errors",
     "paymentFailed": "Payment failed. Please try again.",
-    "uploadFailed": "File upload failed. Please try again."
+    "uploadFailed": "File upload failed. Please try again.",
+    "offline": "You're offline. Please check your connection.",
+    "retryFailed": "Failed again. Please try later."
   },
   "validation": {
     "required": "This field is required",

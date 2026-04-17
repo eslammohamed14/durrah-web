@@ -7,6 +7,8 @@ import type { ReactNode } from "react";
 import { isValidLocale, SUPPORTED_LOCALES } from "@/config/i18n";
 import { AuthProvider } from "@/lib/contexts/AuthContext";
 import { NotificationProvider } from "@/lib/contexts/NotificationContext";
+import { ToastProvider } from "@/components/ui/Toast";
+import { OfflineBanner } from "@/components/ui/NetworkErrorBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -83,7 +85,12 @@ export default async function LocaleLayout({
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider>
-            <NotificationProvider>{children}</NotificationProvider>
+            <NotificationProvider>
+              <ToastProvider>
+                <OfflineBanner />
+                {children}
+              </ToastProvider>
+            </NotificationProvider>
           </AuthProvider>
         </NextIntlClientProvider>
       </body>
