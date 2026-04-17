@@ -43,11 +43,11 @@ export function ActivitiesSection({
   return (
     <section
       aria-labelledby="activities-heading"
-      className="bg-[#F0E9E4] px-[120px] py-[100px]"
+      className="bg-[#F0E9E4] px-4 py-10 sm:px-6 sm:py-16 lg:px-16 xl:px-[120px] xl:py-[100px]"
     >
-      <div className="mx-auto flex max-w-[1200px] flex-col gap-10">
+      <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 xl:max-w-[1200px] xl:gap-10">
         {/* ── Header ─────────────────────────────────────────────────────── */}
-        <div className="flex items-end gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
           <div className="flex flex-1 flex-col gap-4">
             <SectionTag
               icon={<ActivitiesSectionIcon />}
@@ -55,18 +55,18 @@ export function ActivitiesSection({
             />
             <h2
               id="activities-heading"
-              className="text-2xl font-medium leading-[1.5] text-[#2A2F73]"
+              className="text-xl font-medium leading-[1.5] text-[#2A2F73] sm:text-2xl"
             >
               {t("home.activitiesHeadline")}
             </h2>
-            <p className="max-w-[875px] text-base text-[#5A5A5A]">
+            <p className="max-w-[875px] text-sm text-[#5A5A5A] sm:text-base">
               {t("home.activitiesSubtitle")}
             </p>
           </div>
 
           <CtaNavigateButton
             href="/search?category=activity"
-            className="shrink-0"
+            className="shrink-0 self-start sm:self-auto"
             rightIcon={<ArrowRightIcon className="h-6 w-6" />}
           >
             {t("home.viewAllActivities")}
@@ -74,7 +74,7 @@ export function ActivitiesSection({
         </div>
 
         {/* ── Cards ──────────────────────────────────────────────────────── */}
-        <div className="flex h-[411px] gap-4">
+        <div className="flex h-[280px] gap-3 sm:h-[340px] lg:h-[411px] lg:gap-4">
           {activityCards.map((card, index) => {
             const isActive = index === activeIndex;
             return (

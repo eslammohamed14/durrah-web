@@ -21,7 +21,7 @@ export async function HeroSection({ allProperties }: HeroSectionProps) {
   return (
     <section
       aria-label="Hero"
-      className="relative flex min-h-[948px] flex-col bg-cover bg-no-repeat bg-[50%_25%] pb-[30px]"
+      className="relative flex min-h-[560px] flex-col bg-cover bg-no-repeat bg-[50%_25%] pb-[30px] sm:min-h-[700px] lg:min-h-[948px]"
       style={{ backgroundImage: `url('${images.durrahHomeHero}')` }}
     >
       {/* Dark overlay */}
@@ -33,12 +33,12 @@ export async function HeroSection({ allProperties }: HeroSectionProps) {
           {/* Headline row */}
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <h1
-              className="w-full max-w-[747px] text-4xl font-medium leading-[1.2] text-white md:text-5xl lg:text-[55px] lg:leading-[1.3]"
+              className="w-full max-w-[747px] text-3xl font-medium leading-[1.2] text-white sm:text-4xl md:text-5xl lg:text-[55px] lg:leading-[1.3]"
               style={{ textTransform: "capitalize" }}
             >
               {t("home.heroHeadline")}
             </h1>
-            <p className="w-full max-w-[384px] text-lg font-medium leading-[1.3] text-white md:text-xl">
+            <p className="w-full max-w-[384px] text-base font-medium leading-[1.3] text-white md:text-lg lg:text-xl">
               {t("home.heroSubheadline")}
             </p>
           </div>

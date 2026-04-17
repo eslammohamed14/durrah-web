@@ -30,7 +30,7 @@ export function PropertyPageContent({
   return (
     <main className="min-h-screen bg-white">
       {/* Gallery — full width */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8 2xl:max-w-screen-2xl">
         <PropertyGalleryDynamic
           images={property.images}
           title={property.title.en}
@@ -38,10 +38,10 @@ export function PropertyPageContent({
       </div>
 
       {/* Content grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 2xl:max-w-screen-2xl">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-10">
           {/* Left column — main details */}
-          <div className="lg:col-span-2 space-y-0">
+          <div className="space-y-0 lg:col-span-2">
             <PropertyDetails property={property} ownerName={ownerName} />
 
             <hr className="my-8 border-gray-200" />
@@ -50,7 +50,7 @@ export function PropertyPageContent({
             <section aria-labelledby="location-heading">
               <h2
                 id="location-heading"
-                className="text-xl font-semibold text-gray-900 mb-4"
+                className="mb-4 text-xl font-semibold text-gray-900"
               >
                 {t("property.location")}
               </h2>
@@ -72,7 +72,7 @@ export function PropertyPageContent({
             />
           </div>
 
-          {/* Right column — sticky booking card (placeholder for task 13) */}
+          {/* Right column — sticky booking card (desktop only) */}
           <aside className="hidden lg:block">
             <div className="sticky top-24 rounded-2xl border border-gray-200 shadow-lg p-6">
               <p className="text-2xl font-bold text-gray-900">
@@ -95,7 +95,7 @@ export function PropertyPageContent({
                   </span>
                 )}
               </p>
-              <div className="flex items-center gap-1 mt-1 mb-4">
+              <div className="mt-1 mb-4 flex items-center gap-1">
                 <svg
                   className="h-4 w-4 text-yellow-400"
                   viewBox="0 0 20 20"
@@ -116,7 +116,7 @@ export function PropertyPageContent({
               property.category === "activity" ? (
                 <a
                   href={`/checkout/${property.id}`}
-                  className="block w-full text-center rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white hover:bg-blue-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                  className="block w-full rounded-lg bg-blue-600 px-4 py-3 text-center font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                 >
                   {t("property.bookNow")}
                 </a>
@@ -129,6 +129,39 @@ export function PropertyPageContent({
           </aside>
         </div>
       </div>
+
+      {/* Mobile sticky booking bar */}
+      <div className="fixed bottom-0 inset-x-0 z-30 border-t border-gray-200 bg-white px-4 py-3 shadow-lg lg:hidden">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <span className="text-lg font-bold text-gray-900">
+              {new Intl.NumberFormat("en-SA").format(
+                property.pricing.basePrice,
+              )}{" "}
+              <span className="text-sm font-normal text-gray-500">
+                {property.pricing.currency}
+              </span>
+            </span>
+          </div>
+          {property.category === "rent" || property.category === "activity" ? (
+            <a
+              href={`/checkout/${property.id}`}
+              className="min-h-[44px] rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+            >
+              {t("property.bookNow")}
+            </a>
+          ) : (
+            <a
+              href="#inquiry"
+              className="min-h-[44px] rounded-lg border border-blue-600 px-6 py-2.5 text-sm font-semibold text-blue-600 transition-colors hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+            >
+              {t("property.inquire")}
+            </a>
+          )}
+        </div>
+      </div>
+      {/* Bottom padding to prevent content being obscured by the sticky bar on mobile */}
+      <div className="h-20 lg:hidden" aria-hidden="true" />
     </main>
   );
 }

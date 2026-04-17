@@ -12,9 +12,9 @@ export function InstagramSection() {
   return (
     <section
       aria-labelledby="instagram-heading"
-      className="bg-[#FAFAFA] px-[120px] py-[100px]"
+      className="bg-[#FAFAFA] px-4 py-10 sm:px-6 sm:py-16 lg:px-16 xl:px-[120px] xl:py-[100px]"
     >
-      <div className="mx-auto flex max-w-[1200px] flex-col gap-10">
+      <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 xl:max-w-[1200px] xl:gap-10">
         <div className="flex flex-col gap-4">
           <SectionTag
             icon={<InstagramSectionIcon className="h-7 w-7" />}
@@ -22,16 +22,39 @@ export function InstagramSection() {
           />
           <h2
             id="instagram-heading"
-            className="text-[22px] font-medium leading-[1.3] text-[#2A2F73]"
+            className="text-xl font-medium leading-[1.3] text-[#2A2F73] sm:text-[22px]"
           >
             {t("home.instagramHeadline")}
           </h2>
-          <p className="max-w-[875px] text-base leading-[1.6] text-[#5A5A5A]">
+          <p className="max-w-[875px] text-sm leading-[1.6] text-[#5A5A5A] sm:text-base">
             {t("home.instagramSubtitle")}
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        {/* Mobile: 2-col grid; lg+: original mosaic layout */}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:hidden">
+          {[
+            images.property1,
+            images.property2,
+            images.property3,
+            images.property4,
+            images.property5,
+            images.property6,
+          ].map((src, i) => (
+            <div
+              key={i}
+              className="relative aspect-square overflow-hidden rounded-xl"
+            >
+              <InstagramPhoto
+                imageUrl={src}
+                widthClass="w-full"
+                heightClass="h-full"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="hidden items-center gap-3 lg:flex">
           <div className="flex gap-3">
             <div className="flex w-[282px] flex-col gap-3">
               <InstagramPhoto

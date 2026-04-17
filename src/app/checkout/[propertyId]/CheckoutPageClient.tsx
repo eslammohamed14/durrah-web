@@ -35,10 +35,10 @@ export function CheckoutPageClient({ property }: Props) {
   ];
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+    <main className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 2xl:max-w-screen-xl">
       {/* Page header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">
+      <div className="mb-5 sm:mb-6">
+        <h1 className="text-xl font-bold text-gray-900 sm:text-2xl">
           {bookingData
             ? t("checkoutClient.completeBooking")
             : t("checkoutClient.bookYourStay")}
@@ -56,7 +56,7 @@ export function CheckoutPageClient({ property }: Props) {
 
       {!bookingData ? (
         /* Phase 1: date + guest selection */
-        <div className="max-w-xl">
+        <div className="w-full sm:max-w-xl">
           <BookingForm
             property={property}
             onSubmit={setBookingData}

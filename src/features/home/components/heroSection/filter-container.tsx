@@ -91,8 +91,11 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
       </div>
 
       {/* Fields row */}
-      <div className="flex items-end gap-4">
-        <div className="flex flex-1 items-end gap-3" dir={dir}>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4">
+        <div
+          className="grid grid-cols-2 gap-3 sm:flex sm:flex-1 sm:items-end sm:gap-3"
+          dir={dir}
+        >
           {/* ── Unit Type ── */}
           <div className="relative flex-1">
             <FilterField
@@ -242,7 +245,7 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
           size="md"
           backgroundColor="#FF765E"
           onClick={() => {}} //handleSearch
-          className="flex h-12 w-[152px] shrink-0 items-center justify-center gap-2.5 rounded-lg text-base font-medium text-white transition-colors hover:bg-[#e8614a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E] focus-visible:ring-offset-2"
+          className="flex h-12 w-full shrink-0 items-center justify-center gap-2.5 rounded-lg text-base font-medium text-white transition-colors hover:bg-[#e8614a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E] focus-visible:ring-offset-2 sm:w-[152px]"
           leftIcon={<SearchIcon size={24} />}
         >
           {t("common.search")}

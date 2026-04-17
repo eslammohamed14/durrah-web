@@ -17,10 +17,10 @@ export function PropertiesSection({ properties }: PropertiesSectionProps) {
   return (
     <section
       aria-labelledby="properties-heading"
-      className="bg-[#FAFAFA] px-[120px] py-[40px]"
+      className="bg-[#FAFAFA] px-4 py-8 sm:px-6 sm:py-10 lg:px-16 xl:px-[120px] xl:py-[40px]"
     >
-      <div className="mx-auto flex min-w-0 max-w-[1300px] flex-col gap-10">
-        <div className="flex min-w-0 items-end gap-4">
+      <div className="mx-auto flex min-w-0 max-w-screen-2xl flex-col gap-8 xl:max-w-[1300px] xl:gap-10">
+        <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-end">
           <div className="flex min-w-0 flex-1 flex-col gap-4">
             <div className="flex items-end justify-between">
               <div className="flex flex-col gap-4">
@@ -31,27 +31,27 @@ export function PropertiesSection({ properties }: PropertiesSectionProps) {
                 <div className="flex w-full min-w-0 items-end justify-between">
                   <h2
                     id="properties-heading"
-                    className="text-2xl font-medium text-[#2A2F73]"
+                    className="text-xl font-medium text-[#2A2F73] sm:text-2xl"
                   >
                     {t("home.propertiesHeadline")}
                   </h2>
                 </div>
               </div>
             </div>
-            <p className="max-w-[875px] text-base font-normal text-[#5A5A5A]">
+            <p className="max-w-[875px] text-sm font-normal text-[#5A5A5A] sm:text-base">
               {t("home.propertiesSubtitle")}
             </p>
           </div>
           <CtaNavigateButton
             href="/" // "search"
-            className="shrink-0"
+            className="shrink-0 self-start sm:self-auto"
             rightIcon={<ArrowRightIcon className="h-6 w-6" />}
           >
             {t("home.viewAllProperties")}
           </CtaNavigateButton>
         </div>
 
-        <div className="grid min-w-0 grid-cols-3 gap-6">
+        <div className="grid min-w-0 grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {properties.slice(0, 6).map((p) => (
             <div key={p.id} className="min-w-0">
               <PropertyCard property={p} />

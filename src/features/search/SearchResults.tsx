@@ -103,7 +103,7 @@ export function SearchResults({ initialProperties }: SearchResultsProps) {
         </button>
       </div>
 
-      <div className="mx-auto w-full max-w-screen-xl px-4 py-6 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-screen-xl px-4 py-6 sm:px-6 lg:px-8 2xl:max-w-screen-2xl">
         <div className="flex gap-8">
           {/* Sidebar filters — desktop */}
           <aside className="hidden w-64 shrink-0 lg:block">

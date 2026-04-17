@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback } from "react";
 
 export interface ModalProps {
   open: boolean;
@@ -10,7 +10,7 @@ export interface ModalProps {
   /** Prevent closing when clicking the backdrop */
   disableBackdropClose?: boolean;
   className?: string;
-  'aria-label'?: string;
+  "aria-label"?: string;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -19,8 +19,8 @@ export const Modal: React.FC<ModalProps> = ({
   title,
   children,
   disableBackdropClose = false,
-  className = '',
-  'aria-label': ariaLabel,
+  className = "",
+  "aria-label": ariaLabel,
 }) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -42,13 +42,13 @@ export const Modal: React.FC<ModalProps> = ({
     if (!dialog) return;
 
     const focusableSelectors = [
-      'a[href]',
-      'button:not([disabled])',
-      'input:not([disabled])',
-      'select:not([disabled])',
-      'textarea:not([disabled])',
+      "a[href]",
+      "button:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
       '[tabindex]:not([tabindex="-1"])',
-    ].join(', ');
+    ].join(", ");
 
     const getFocusable = () =>
       Array.from(dialog.querySelectorAll<HTMLElement>(focusableSelectors));
@@ -62,12 +62,12 @@ export const Modal: React.FC<ModalProps> = ({
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         onClose();
         return;
       }
 
-      if (e.key !== 'Tab') return;
+      if (e.key !== "Tab") return;
 
       const elements = getFocusable();
       if (elements.length === 0) return;
@@ -88,19 +88,19 @@ export const Modal: React.FC<ModalProps> = ({
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open, onClose]);
 
   // Prevent body scroll when open
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [open]);
 
@@ -115,7 +115,7 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <div
       role="presentation"
-      className="fixed inset-0 z-50 flex items-center justify-center"
+      className="fixed inset-0 z-50 flex items-end justify-center sm:items-center"
     >
       {/* Backdrop */}
       <div
@@ -132,10 +132,11 @@ export const Modal: React.FC<ModalProps> = ({
         aria-label={ariaLabel ?? title}
         tabIndex={-1}
         className={[
-          'relative z-10 w-full max-w-lg rounded-lg bg-white shadow-xl',
-          'focus:outline-none',
+          "relative z-10 w-full max-w-lg rounded-t-2xl bg-white shadow-xl",
+          "sm:rounded-2xl",
+          "focus:outline-none",
           className,
-        ].join(' ')}
+        ].join(" ")}
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
@@ -147,11 +148,11 @@ export const Modal: React.FC<ModalProps> = ({
             onClick={onClose}
             aria-label="Close modal"
             className={[
-              'rounded-md p-1 text-gray-400 transition-colors',
-              'hover:bg-gray-100 hover:text-gray-600',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
-              !title ? 'ms-auto' : '',
-            ].join(' ')}
+              "rounded-md p-1 text-gray-400 transition-colors",
+              "hover:bg-gray-100 hover:text-gray-600",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+              !title ? "ms-auto" : "",
+            ].join(" ")}
           >
             <svg
               aria-hidden="true"
@@ -161,7 +162,11 @@ export const Modal: React.FC<ModalProps> = ({
               stroke="currentColor"
               strokeWidth={2}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -173,4 +178,4 @@ export const Modal: React.FC<ModalProps> = ({
   );
 };
 
-Modal.displayName = 'Modal';
+Modal.displayName = "Modal";

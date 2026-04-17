@@ -16,10 +16,10 @@ export function BlogsSection() {
   return (
     <section
       aria-labelledby="blogs-heading"
-      className="bg-[#FAFAFA] px-[30px] py-[100px]"
+      className="bg-[#FAFAFA] px-4 py-10 sm:px-6 sm:py-16 lg:px-8 xl:px-[30px] xl:py-[100px]"
     >
-      <div className="mx-auto flex max-w-[1200px] flex-col gap-10">
-        <header className="flex items-end gap-10">
+      <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 xl:max-w-[1200px] xl:gap-10">
+        <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-10">
           <div className="flex flex-1 flex-col gap-4">
             <SectionTag
               icon={<BlogsSectionIcon className="h-7 w-7" />}
@@ -27,7 +27,7 @@ export function BlogsSection() {
             />
             <h2
               id="blogs-heading"
-              className="text-[22px] font-medium leading-[1.3] text-[#2A2F73]"
+              className="text-xl font-medium leading-[1.3] text-[#2A2F73] sm:text-[22px]"
             >
               {t("home.blogsHeadline")}
             </h2>
@@ -38,15 +38,16 @@ export function BlogsSection() {
             variant="primary"
             backgroundColor="#FF765E"
             onClick={() => router.push("/blogs")}
-            className="h-12 w-fit rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-[#FF765E]"
+            className="h-12 w-full rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-[#FF765E] sm:w-fit"
             rightIcon={<ArrowRightIcon size={24} />}
           >
             {t("home.viewAllBlogs")}
           </Button>
         </header>
 
-        <div className="flex items-start gap-3">
-          <div className="flex w-[498px] flex-col gap-3">
+        {/* Blog grid — stacked on mobile, side-by-side on lg+ */}
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-3">
+          <div className="grid grid-cols-2 gap-3 lg:w-[498px] lg:flex-none lg:flex-col">
             <div className="flex gap-3">
               <BlogGridItem imageUrl={images.property1} badge="Resorts" />
               <BlogGridItem imageUrl={images.property2} badge="Restaurants" />
@@ -57,13 +58,13 @@ export function BlogsSection() {
             </div>
           </div>
 
-          <div className="flex w-[690px] flex-col gap-6">
+          <div className="flex flex-col gap-4 lg:w-[690px] lg:flex-none lg:gap-6">
             <FeaturedBlogCard
               imageUrl={images.property5}
               title={t("home.blogFeaturedTitle")}
               discoverLabel={t("home.discoverMore")}
             />
-            <p className="text-base leading-[1.6] text-[#5A5A5A]">
+            <p className="text-sm leading-[1.6] text-[#5A5A5A] sm:text-base">
               {t("home.blogFeaturedExcerpt")}
             </p>
           </div>

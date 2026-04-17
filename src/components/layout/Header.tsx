@@ -155,7 +155,7 @@ export function Header({ transparent = false }: HeaderProps) {
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
               onClick={() => setMobileOpen((v) => !v)}
-              className={`inline-flex items-center justify-center rounded-lg p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:hidden ${transparent ? "text-white hover:bg-white/10" : "text-gray-600 hover:bg-gray-100"}`}
+              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:hidden ${transparent ? "text-white hover:bg-white/10" : "text-gray-600 hover:bg-gray-100"}`}
             >
               {mobileOpen ? (
                 <svg
@@ -206,7 +206,7 @@ export function Header({ transparent = false }: HeaderProps) {
                 <Link
                   href={href}
                   onClick={() => setMobileOpen(false)}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-[#2A2F73] transition-colors hover:bg-gray-100"
+                  className="flex min-h-[44px] items-center rounded-lg px-3 py-2 text-sm font-medium text-[#2A2F73] transition-colors hover:bg-gray-100"
                 >
                   {t(`nav.${key}`)}
                 </Link>
@@ -216,14 +216,14 @@ export function Header({ transparent = false }: HeaderProps) {
               <Link
                 href="/auth/login"
                 onClick={() => setMobileOpen(false)}
-                className="flex-1 rounded-lg border border-[#2A2F73] px-3 py-2 text-center text-sm font-medium text-[#2A2F73]"
+                className="flex flex-1 items-center justify-center rounded-lg border border-[#2A2F73] px-3 py-2 text-center text-sm font-medium text-[#2A2F73] min-h-[44px]"
               >
                 {t("nav.login")}
               </Link>
               <Link
                 href="/auth/register"
                 onClick={() => setMobileOpen(false)}
-                className="flex-1 rounded-lg bg-[#2A2F73] px-3 py-2 text-center text-sm font-medium text-white"
+                className="flex flex-1 items-center justify-center rounded-lg bg-[#2A2F73] px-3 py-2 text-center text-sm font-medium text-white min-h-[44px]"
               >
                 {t("nav.signUp")}
               </Link>

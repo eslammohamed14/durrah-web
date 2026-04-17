@@ -24,7 +24,7 @@ export function Footer() {
   const { t } = useLocale();
 
   return (
-    <footer className="relative overflow-hidden bg-[#F0E9E4] px-[120px] py-8">
+    <footer className="relative overflow-hidden bg-[#F0E9E4] px-4 py-8 sm:px-6 lg:px-16 xl:px-[120px]">
       <div
         className="pointer-events-none absolute left-0 top-0 opacity-30"
         aria-hidden="true"
@@ -65,12 +65,12 @@ export function Footer() {
           <div className="h-px w-full bg-[#BFBFBF]" />
 
           <nav aria-label="Footer navigation">
-            <ul className="flex flex-wrap items-center justify-center gap-12">
+            <ul className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 lg:gap-12">
               {NAV_LINK_KEYS.map(({ key, href }) => (
                 <li key={key}>
                   <Link
                     href={href}
-                    className="text-base font-medium text-[#2A2F73] transition-colors hover:text-[#FF765E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2A2F73] focus-visible:ring-offset-2"
+                    className="text-sm font-medium text-[#2A2F73] transition-colors hover:text-[#FF765E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2A2F73] focus-visible:ring-offset-2 sm:text-base"
                   >
                     {t(`footer.${key}`)}
                   </Link>
@@ -81,7 +81,7 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col items-center gap-5">
-          <div className="flex w-[471px] items-center gap-6 rounded-lg border border-[#2A2F73] px-2 py-2">
+          <div className="flex w-full max-w-[471px] items-center gap-6 rounded-lg border border-[#2A2F73] px-2 py-2">
             <input
               type="email"
               placeholder={t("footer.emailPlaceholder")}
@@ -152,7 +152,7 @@ export function Footer() {
           <div className="h-px w-full bg-[#BFBFBF]" />
         </div>
 
-        <div className="flex w-full items-center justify-between text-xs text-[#727272]">
+        <div className="flex w-full flex-col items-center gap-2 text-xs text-[#727272] sm:flex-row sm:justify-between">
           <span>{t("footer.termsAndConditions")}</span>
           <span>{t("footer.copyright")}</span>
           <span>{t("footer.privacyPolicy")}</span>
