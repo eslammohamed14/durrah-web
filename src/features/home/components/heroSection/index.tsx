@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import Image from "next/image";
 import images from "@/constant/images";
 import { FilterContainer } from "./filter-container";
 import type { Property } from "@/lib/types";
@@ -21,9 +22,18 @@ export async function HeroSection({ allProperties }: HeroSectionProps) {
   return (
     <section
       aria-label="Hero"
-      className="relative flex min-h-[560px] flex-col bg-cover bg-no-repeat bg-[50%_25%] pb-[30px] sm:min-h-[700px] lg:min-h-[948px]"
-      style={{ backgroundImage: `url('${images.durrahHomeHero}')` }}
+      className="relative flex min-h-[560px] flex-col pb-[30px] sm:min-h-[700px] lg:min-h-[948px]"
     >
+      {/* Background Image (Next.js optimized) */}
+      <Image
+        src={images.durrahHomeHero}
+        alt="Hero background"
+        fill
+        priority
+        className="object-cover"
+        style={{ objectPosition: "50% 25%" }}
+      />
+
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
 
