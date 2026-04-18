@@ -6,6 +6,88 @@
 :root {
   --background: #fafafa;
   --foreground: #2a2f73;
+
+  /* --- Surface Colors --- */
+  --surface-primary: #fafafa;
+  --surface-lavender: #e8e8ff;
+  --surface-desert-sand: #f0e9e4;
+
+  /* --- Text & Heading --- */
+  --text-dark: #2a2f73;
+  --text-light: #ffffff;
+  --text-body-muted: #f1f1f2;
+  --text-body-dark: #5a5a5a;
+
+  /* --- Status: Attention (Warning) --- */
+  --attention-default: #f2af29;
+  --attention-dark: #8c6518;
+  --attention-soft: #fff5e0;
+
+  /* --- Status: Danger --- */
+  --danger-default: #ef3934;
+  --danger-dark: #831e1c;
+  --danger-soft: #ffd4d3;
+
+  /* --- Status: Success --- */
+  --success-default: #44c95b;
+  --success-dark: #2a7938;
+  --success-soft: #cfefd4;
+
+  /* --- Borders --- */
+  --border-inverse: #ffffff;
+  --border-accent: #c4c7eb;
+  --border-default: #f1f1f2;
+
+  /* --- Primary Scale (Blue/Purple) --- */
+  --primary-blue-50: #c4c7eb;
+  --primary-blue-100: #7a7fc4;
+  --primary-blue-200: #4e54a0;
+  --primary-blue-300: #363c88;
+  --primary-blue-400: #2a2f73;
+  --primary-blue-500: #23275f;
+  --primary-blue-600: #1a1e4a;
+  --primary-blue-700: #0e1027;
+
+  /* --- primary Scale (Coral/Peach) --- */
+  --primary-coral-50: #ffe4de;
+  --primary-coral-100: #ffc5ba;
+  --primary-coral-200: #ffa393;
+  --primary-coral-300: #ff8772;
+  --primary-coral-400: #ff765e;
+  --primary-coral-500: #e36a54;
+  --primary-coral-600: #c15b49;
+  --primary-coral-700: #9a4536;
+
+  /* --- primary Scale (lavender) --- */
+  --primary-lavender-50: #ffffff;
+  --primary-lavender-100: #f5f5ff;
+  --primary-lavender-200: #f0f0ff;
+  --primary-lavender-300: #ececfc;
+  --primary-lavender-400: #e8e8ff;
+  --primary-lavender-500: #c9c9e8;
+  --primary-lavender-600: #a9a9ce;
+  --primary-lavender-700: #77779b;
+
+  /* --- Secondary (Earth Tones) --- */
+  --secondary-50: #f0e9e4;
+  --secondary-100: #ddbfad;
+  --secondary-200: #847368;
+
+  /* --- Grey Scale --- */
+  --grey-50: #f1f1f2;
+  --grey-100: #d9d9d9;
+  --grey-200: #bfbfbf;
+  --grey-300: #a6a6a6;
+  --grey-400: #8b8b8c;
+  --grey-500: #8b8b8c;
+  --grey-600: #5a5a5a;
+  --grey-700: #404040;
+  --grey-800: #404040;
+  --grey-900: #000000;
+
+  /* --- Basic --- */
+  --white: #ffffff;
+  --black: #000000;
 }
 
 @theme inline {
@@ -13,16 +95,86 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-durrah-blue: #2a2f73;
-  --color-durrah-coral: #ff765e;
-  --color-durrah-beige: #f0e9e4;
-  --color-durrah-lavender: #e8e8ff;
+
+  /* Legacy aliases (kept for backward compat) */
+  --color-durrah-blue: var(--primary-blue-400);
+  --color-durrah-coral: var(--primary-coral-400);
+  --color-durrah-beige: var(--secondary-50);
+  --color-durrah-lavender: var(--primary-lavender-400);
+
+  /* Surfaces */
+  --color-surface-primary: var(--surface-primary);
+  --color-surface-lavender: var(--surface-lavender);
+  --color-surface-desert-sand: var(--surface-desert-sand);
+
+  /* Status */
+  --color-attention: var(--attention-default);
+  --color-attention-dark: var(--attention-dark);
+  --color-attention-soft: var(--attention-soft);
+  --color-danger: var(--danger-default);
+  --color-danger-dark: var(--danger-dark);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success-default);
+  --color-success-dark: var(--success-dark);
+  --color-success-soft: var(--success-soft);
+
+  /* Borders */
+  --color-border-inverse: var(--border-inverse);
+  --color-border-accent: var(--border-accent);
+  --color-border-default: var(--border-default);
+
+  /* Primary blue scale */
+  --color-primary-blue-50: var(--primary-blue-50);
+  --color-primary-blue-100: var(--primary-blue-100);
+  --color-primary-blue-200: var(--primary-blue-200);
+  --color-primary-blue-300: var(--primary-blue-300);
+  --color-primary-blue-400: var(--primary-blue-400);
+  --color-primary-blue-500: var(--primary-blue-500);
+  --color-primary-blue-600: var(--primary-blue-600);
+  --color-primary-blue-700: var(--primary-blue-700);
+
+  /* Primary coral scale */
+  --color-primary-coral-50: var(--primary-coral-50);
+  --color-primary-coral-100: var(--primary-coral-100);
+  --color-primary-coral-200: var(--primary-coral-200);
+  --color-primary-coral-300: var(--primary-coral-300);
+  --color-primary-coral-400: var(--primary-coral-400);
+  --color-primary-coral-500: var(--primary-coral-500);
+  --color-primary-coral-600: var(--primary-coral-600);
+  --color-primary-coral-700: var(--primary-coral-700);
+
+  /* Primary lavender scale */
+  --color-primary-lavender-50: var(--primary-lavender-50);
+  --color-primary-lavender-100: var(--primary-lavender-100);
+  --color-primary-lavender-200: var(--primary-lavender-200);
+  --color-primary-lavender-300: var(--primary-lavender-300);
+  --color-primary-lavender-400: var(--primary-lavender-400);
+  --color-primary-lavender-500: var(--primary-lavender-500);
+  --color-primary-lavender-600: var(--primary-lavender-600);
+  --color-primary-lavender-700: var(--primary-lavender-700);
+
+  /* Secondary earth tones */
+  --color-secondary-50: var(--secondary-50);
+  --color-secondary-100: var(--secondary-100);
+  --color-secondary-200: var(--secondary-200);
+
+  /* Grey scale */
+  --color-grey-50: var(--grey-50);
+  --color-grey-100: var(--grey-100);
+  --color-grey-200: var(--grey-200);
+  --color-grey-300: var(--grey-300);
+  --color-grey-400: var(--grey-400);
+  --color-grey-500: var(--grey-500);
+  --color-grey-600: var(--grey-600);
+  --color-grey-700: var(--grey-700);
+  --color-grey-800: var(--grey-800);
+  --color-grey-900: var(--grey-900);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-poppins), 'Poppins', Arial, Helvetica, sans-serif;
+  font-family: var(--font-poppins), "Poppins", Arial, Helvetica, sans-serif;
 }
 
 html[dir="rtl"] .rtl-auto-flip {
