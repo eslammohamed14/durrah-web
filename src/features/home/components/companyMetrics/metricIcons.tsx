@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-const iconClass = "h-6 w-6 text-[#FF765E]";
+const iconClass = "h-6 w-6 text-primary-coral-400";
 
 export function CustomersMetricIcon({
   className = iconClass,

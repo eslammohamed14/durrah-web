@@ -17,7 +17,7 @@ export function PropertiesSection({ properties }: PropertiesSectionProps) {
   return (
     <section
       aria-labelledby="properties-heading"
-      className="bg-[#FAFAFA] px-4 py-8 sm:px-6 sm:py-10 lg:px-16 xl:px-[120px] xl:py-[40px]"
+      className="bg-background px-4 py-8 sm:px-6 sm:py-10 lg:px-16 xl:px-[120px] xl:py-[40px]"
     >
       <div className="mx-auto flex min-w-0 max-w-screen-2xl flex-col gap-8 xl:max-w-[1300px] xl:gap-10">
         <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-end">
@@ -31,14 +31,14 @@ export function PropertiesSection({ properties }: PropertiesSectionProps) {
                 <div className="flex w-full min-w-0 items-end justify-between">
                   <h2
                     id="properties-heading"
-                    className="text-xl font-medium text-[#2A2F73] sm:text-2xl"
+                    className="text-xl font-medium text-text-dark sm:text-2xl"
                   >
                     {t("home.propertiesHeadline")}
                   </h2>
                 </div>
               </div>
             </div>
-            <p className="max-w-[875px] text-sm font-normal text-[#5A5A5A] sm:text-base">
+            <p className="max-w-[875px] text-sm font-normal text-text-body-dark sm:text-base">
               {t("home.propertiesSubtitle")}
             </p>
           </div>

@@ -56,7 +56,7 @@ export function CompanyMetricsSection() {
   return (
     <section
       aria-label="Company metrics"
-      className="bg-[#FAFAFA] px-4 py-10 sm:px-6 md:py-16 lg:px-16 xl:px-[100px] xl:py-20"
+      className="bg-background px-4 py-10 sm:px-6 md:py-16 lg:px-16 xl:px-[100px] xl:py-20"
     >
       <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-8 sm:gap-10 md:grid-cols-4 md:items-center xl:max-w-[1200px]">
         {COMPANY_METRICS.map(({ id, value, labelKey, Icon }) => (

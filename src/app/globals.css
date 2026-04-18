@@ -79,10 +79,10 @@
   --grey-200: #bfbfbf;
   --grey-300: #a6a6a6;
   --grey-400: #8b8b8c;
-  --grey-500: #8b8b8c;
+  --grey-500: #727272;
   --grey-600: #5a5a5a;
   --grey-700: #404040;
-  --grey-800: #404040;
+  --grey-800: #262626;
   --grey-900: #000000;
 
   /* --- Basic --- */
@@ -106,6 +106,12 @@
   --color-surface-primary: var(--surface-primary);
   --color-surface-lavender: var(--surface-lavender);
   --color-surface-desert-sand: var(--surface-desert-sand);
+
+  /* Text */
+  --color-text-dark: var(--text-dark);
+  --color-text-light: var(--text-light);
+  --color-text-body-muted: var(--text-body-muted);
+  --color-text-body-dark: var(--text-body-dark);
 
   /* Status */
   --color-attention: var(--attention-default);

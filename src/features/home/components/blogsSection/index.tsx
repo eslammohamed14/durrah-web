@@ -16,7 +16,7 @@ export function BlogsSection() {
   return (
     <section
       aria-labelledby="blogs-heading"
-      className="bg-[#FAFAFA] px-4 py-10 sm:px-6 sm:py-16 lg:px-8 xl:px-[30px] xl:py-[100px]"
+      className="bg-background px-4 py-10 sm:px-6 sm:py-16 lg:px-8 xl:px-[30px] xl:py-[100px]"
     >
       <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 xl:max-w-[1200px] xl:gap-10">
         <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-10">
@@ -27,7 +27,7 @@ export function BlogsSection() {
             />
             <h2
               id="blogs-heading"
-              className="text-xl font-medium leading-[1.3] text-[#2A2F73] sm:text-[22px]"
+              className="text-xl font-medium leading-[1.3] text-text-dark sm:text-[22px]"
             >
               {t("home.blogsHeadline")}
             </h2>
@@ -38,7 +38,7 @@ export function BlogsSection() {
             variant="primary"
             backgroundColor="#FF765E"
             onClick={() => router.push("/blogs")}
-            className="h-12 w-full rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-[#FF765E] sm:w-fit"
+            className="h-12 w-full rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-primary-coral-400 sm:w-fit"
             rightIcon={<ArrowRightIcon size={24} />}
           >
             {t("home.viewAllBlogs")}
@@ -64,7 +64,7 @@ export function BlogsSection() {
               title={t("home.blogFeaturedTitle")}
               discoverLabel={t("home.discoverMore")}
             />
-            <p className="text-sm leading-[1.6] text-[#5A5A5A] sm:text-base">
+            <p className="text-sm leading-[1.6] text-text-body-dark sm:text-base">
               {t("home.blogFeaturedExcerpt")}
             </p>
           </div>

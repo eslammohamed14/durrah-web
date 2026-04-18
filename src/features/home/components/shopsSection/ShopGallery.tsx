@@ -6,8 +6,8 @@ export function ShopGallery() {
   return (
     <div className="relative h-[450px] w-[583px] shrink-0">
       <div className="absolute left-[13px] top-0 h-full w-[570px]">
-        <div className="absolute left-0 top-0 h-[139px] w-[166px] rounded-tl-2xl bg-[#2A2F73]" />
-        <div className="absolute bottom-0 right-[-10] h-[139px] w-[166px] rounded-br-2xl bg-[#FF765E]" />
+        <div className="absolute left-0 top-0 h-[139px] w-[166px] rounded-tl-2xl bg-text-dark" />
+        <div className="absolute bottom-0 right-[-10] h-[139px] w-[166px] rounded-br-2xl bg-primary-coral-400" />
         <Xshap size={59} className="absolute left-0 bottom-0 z-10" />
 
         <div className="absolute left-[29px] top-[12px] flex w-[538px] flex-col gap-2">

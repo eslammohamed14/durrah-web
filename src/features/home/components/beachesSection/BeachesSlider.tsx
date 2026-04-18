@@ -39,7 +39,8 @@ export function BeachesSlider({ items }: BeachesSliderProps) {
         {visibleOffsets.map((offset, renderOrder) => {
           const { item, index } = getItemByOffset(offset);
           const distanceFromActive = Math.abs(offset);
-          const zIndex = distanceFromActive === 0 ? 30 : distanceFromActive === 1 ? 20 : 10;
+          const zIndex =
+            distanceFromActive === 0 ? 30 : distanceFromActive === 1 ? 20 : 10;
           const marginClass = renderOrder === 0 ? "" : "-ml-[34px]";
 
           return (
@@ -48,11 +49,11 @@ export function BeachesSlider({ items }: BeachesSliderProps) {
               className={`flex h-[411px] items-end justify-center ${marginClass}`}
               style={{ zIndex }}
             >
-            <BeachItem
-              item={item}
-              isActive={index === activeIndex}
-              distanceFromActive={distanceFromActive}
-            />
+              <BeachItem
+                item={item}
+                isActive={index === activeIndex}
+                distanceFromActive={distanceFromActive}
+              />
             </div>
           );
         })}
@@ -61,7 +62,7 @@ export function BeachesSlider({ items }: BeachesSliderProps) {
       <div className="flex items-center justify-center gap-3">
         <button
           type="button"
-          className="beaches-prev flex h-10 w-10 items-center justify-center rounded-full border border-[#C4C7EB] bg-transparent text-[#2A2F73] transition-colors hover:bg-white/40"
+          className="beaches-prev flex h-10 w-10 items-center justify-center rounded-full border border-border-accent bg-transparent text-text-dark transition-colors hover:bg-white/40"
           aria-label="Previous beach"
           onClick={handlePrev}
         >
@@ -69,7 +70,7 @@ export function BeachesSlider({ items }: BeachesSliderProps) {
         </button>
         <button
           type="button"
-          className="beaches-next flex h-10 w-10 items-center justify-center rounded-full border border-[#C4C7EB] bg-transparent text-[#2A2F73] transition-colors hover:bg-white/40"
+          className="beaches-next flex h-10 w-10 items-center justify-center rounded-full border border-border-accent bg-transparent text-text-dark transition-colors hover:bg-white/40"
           aria-label="Next beach"
           onClick={handleNext}
         >

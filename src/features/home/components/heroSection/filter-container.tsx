@@ -80,7 +80,7 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
               className={[
                 "flex-1 rounded-lg py-1 text-xs font-medium transition-colors",
                 activeTab === tab
-                  ? "bg-[#FF765E] text-white shadow-sm"
+                  ? "bg-primary-coral-400 text-white shadow-sm"
                   : "text-[#8B8B8C] hover:text-gray-700",
               ].join(" ")}
             >
@@ -129,12 +129,12 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
                         className={[
                           "flex w-full items-center gap-2 px-4 py-2.5 text-sm transition-colors hover:bg-gray-50",
                           selectedType === value
-                            ? "font-semibold text-[#FF765E]"
+                            ? "font-semibold text-primary-coral-400"
                             : "text-gray-700",
                         ].join(" ")}
                       >
                         {selectedType === value && (
-                          <CheckIcon className="h-3.5 w-3.5 shrink-0 text-[#FF765E]" />
+                          <CheckIcon className="h-3.5 w-3.5 shrink-0 text-primary-coral-400" />
                         )}
                         <span className={selectedType === value ? "" : "ps-5"}>
                           {t(labelKey)}
@@ -215,12 +215,12 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
                         className={[
                           "flex w-full items-center gap-2 px-4 py-2.5 text-sm transition-colors hover:bg-gray-50",
                           selectedPriceRange.label === range.label
-                            ? "font-semibold text-[#FF765E]"
+                            ? "font-semibold text-primary-coral-400"
                             : "text-gray-700",
                         ].join(" ")}
                       >
                         {selectedPriceRange.label === range.label && (
-                          <CheckIcon className="h-3.5 w-3.5 shrink-0 text-[#FF765E]" />
+                          <CheckIcon className="h-3.5 w-3.5 shrink-0 text-primary-coral-400" />
                         )}
                         <span
                           className={
@@ -245,7 +245,7 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
           size="md"
           backgroundColor="#FF765E"
           onClick={() => {}} //handleSearch
-          className="flex h-12 w-full shrink-0 items-center justify-center gap-2.5 rounded-lg text-base font-medium text-white transition-colors hover:bg-[#e8614a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E] focus-visible:ring-offset-2 sm:w-[152px]"
+          className="flex h-12 w-full shrink-0 items-center justify-center gap-2.5 rounded-lg text-base font-medium text-white transition-colors hover:bg-[#e8614a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-coral-400 focus-visible:ring-offset-2 sm:w-[152px]"
           leftIcon={<SearchIcon size={24} />}
         >
           {t("common.search")}
@@ -256,12 +256,12 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
       <div className="flex items-center gap-4">
         <span className="text-xs text-white">{t("home.filter")}</span>
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2.5 rounded-full border border-[#FF765E] bg-[#FFE4DE] px-3 py-2">
-            <span className="text-xs font-medium text-[#FF765E]">
+          <div className="flex items-center gap-2.5 rounded-full border border-primary-coral-400 bg-primary-coral-50 px-3 py-2">
+            <span className="text-xs font-medium text-primary-coral-400">
               {t("home.specialOffers")}
             </span>
             <svg
-              className="h-4 w-4 text-[#FF765E]"
+              className="h-4 w-4 text-primary-coral-400"
               viewBox="0 0 16 16"
               fill="none"
               aria-hidden
@@ -274,7 +274,7 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
               />
             </svg>
           </div>
-          <div className="flex items-center gap-2.5 rounded-full border border-[#F1F1F2]/50 bg-white/5 px-3 py-2">
+          <div className="flex items-center gap-2.5 rounded-full border border-text-body-muted/50 bg-white/5 px-3 py-2">
             <span className="text-xs font-normal text-white">
               {t("home.topRatedFilter")}
             </span>

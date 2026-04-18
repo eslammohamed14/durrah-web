@@ -33,24 +33,24 @@ export function DateRangePanel({ value, onChange }: DateRangePanelProps) {
           caption_label: "text-sm font-semibold text-gray-900",
           nav: "flex items-center gap-1",
           button_previous:
-            "flex h-7 w-7 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E]",
+            "flex h-7 w-7 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-coral-400",
           button_next:
-            "flex h-7 w-7 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E]",
+            "flex h-7 w-7 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-coral-400",
           weekdays: "flex",
           weekday: "w-9 text-center text-xs font-medium text-gray-400 py-1",
           weeks: "flex flex-col gap-1",
           week: "flex",
           day: "relative flex h-9 w-9 items-center justify-center",
           day_button:
-            "h-9 w-9 rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E] focus-visible:ring-offset-1",
+            "h-9 w-9 rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-coral-400 focus-visible:ring-offset-1",
           selected:
-            "[&>button]:bg-[#FF765E] [&>button]:text-white [&>button]:hover:bg-[#e8614a]",
+            "[&>button]:bg-primary-coral-400 [&>button]:text-white [&>button]:hover:bg-[#e8614a]",
           range_start:
-            "rounded-l-full bg-[#FF765E]/15 [&>button]:bg-[#FF765E] [&>button]:text-white",
+            "rounded-l-full bg-primary-coral-400/15 [&>button]:bg-primary-coral-400 [&>button]:text-white",
           range_end:
-            "rounded-r-full bg-[#FF765E]/15 [&>button]:bg-[#FF765E] [&>button]:text-white",
+            "rounded-r-full bg-primary-coral-400/15 [&>button]:bg-primary-coral-400 [&>button]:text-white",
           range_middle:
-            "bg-[#FF765E]/10 rounded-none [&>button]:text-[#FF765E] [&>button]:hover:bg-[#FF765E]/20",
+            "bg-primary-coral-400/10 rounded-none [&>button]:text-primary-coral-400 [&>button]:hover:bg-primary-coral-400/20",
           today: "[&>button]:font-bold [&>button]:underline",
           outside: "opacity-30",
           disabled:
