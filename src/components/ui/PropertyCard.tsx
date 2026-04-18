@@ -66,7 +66,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
   const galleryImages = sortedImages(property.images);
   const isForSale = property.category === "buy";
   const badgeLabel = isForSale ? t("home.forSale") : t("home.forRent");
-  const badgeBg = isForSale ? "bg-[#2A2F73]" : "bg-[#FF765E]";
+  const badgeBg = isForSale ? "bg-text-dark" : "bg-primary-coral-400";
   const typeLabel = property.type
     .split("_")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -88,11 +88,11 @@ export function PropertyCard({ property }: PropertyCardProps) {
   const cardStatus = property.card?.status;
   const occupancyBadgeClass =
     cardStatus === "family"
-      ? "bg-[#EDE9FF] text-[#363C88]"
+      ? "bg-[#EDE9FF] text-primary-blue-300"
       : "bg-[#FFF0E8] text-[#C45C3E]";
 
   return (
-    <article className="flex min-w-0 w-full max-w-full flex-col overflow-hidden rounded-2xl border border-[#F1F1F2] bg-white pb-4 shadow-[0_0_24px_0_rgba(0,0,0,0.06)]">
+    <article className="flex min-w-0 w-full max-w-full flex-col overflow-hidden rounded-2xl border border-text-body-muted bg-white pb-4 shadow-[0_0_24px_0_rgba(0,0,0,0.06)]">
       <div className="relative h-[216px] min-h-[216px] min-w-0 overflow-hidden rounded-t-xl bg-gradient-to-br from-slate-300 to-slate-400">
         {galleryImages.length === 0 ? null : galleryImages.length === 1 ? (
           <Image
@@ -114,11 +114,11 @@ export function PropertyCard({ property }: PropertyCardProps) {
         </div>
         <div className="pointer-events-none absolute left-2.5 top-2.5 z-10 flex w-[calc(100%-20px)] items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-white px-2 py-1 text-xs font-medium text-[#404040]">
+            <span className="rounded-full bg-white px-2 py-1 text-xs font-medium text-grey-700">
               {typeLabel}
             </span>
           </div>
-          <span className="rounded-full bg-white px-2 py-1 text-xs font-medium text-[#FF765E]">
+          <span className="rounded-full bg-white px-2 py-1 text-xs font-medium text-primary-coral-400">
             {t("home.offer")}
           </span>
         </div>
@@ -127,7 +127,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
       <div className="flex flex-col gap-3 px-3 pt-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <h3 className="text-xl font-semibold leading-tight text-[#262626]">
+            <h3 className="text-xl font-semibold leading-tight text-grey-800">
               {title}
             </h3>
           </div>
@@ -144,17 +144,17 @@ export function PropertyCard({ property }: PropertyCardProps) {
           </div>
         </div>
 
-        <div className="flex items-center text-xs text-[#727272]">
-          <div className="flex items-center gap-1.5 border-r border-[#D9D9D9] pr-3.5">
-            <DimensionIcon className="shrink-0 text-[#727272]" />
+        <div className="flex items-center text-xs text-grey-500">
+          <div className="flex items-center gap-1.5 border-r border-grey-100 pr-3.5">
+            <DimensionIcon className="shrink-0 text-grey-500" />
             <span>{sqFtLabel}</span>
           </div>
-          <div className="flex items-center gap-1.5 border-r border-[#D9D9D9] px-3.5">
-            <BedIcon className="shrink-0 text-[#727272]" />
+          <div className="flex items-center gap-1.5 border-r border-grey-100 px-3.5">
+            <BedIcon className="shrink-0 text-grey-500" />
             <span>{rooms != null ? t("home.specBed", { n: rooms }) : "—"}</span>
           </div>
-          <div className="flex items-center gap-1.5 border-r border-[#D9D9D9] pl-3.5 pr-3.5">
-            <BathroomIcon className="shrink-0 text-[#727272]" />
+          <div className="flex items-center gap-1.5 border-r border-grey-100 pl-3.5 pr-3.5">
+            <BathroomIcon className="shrink-0 text-grey-500" />
             <span>
               {bathrooms != null ? t("home.specBath", { n: bathrooms }) : "—"}
             </span>
@@ -165,17 +165,17 @@ export function PropertyCard({ property }: PropertyCardProps) {
       <div className="mt-3 border-t border-[#E8E8E8] px-3 pt-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-[22px] font-semibold text-[#2A2F73]">
+            <span className="text-[22px] font-semibold text-text-dark">
               {price} SAR
             </span>
-            <span className="text-sm text-[#A6A6A6] line-through">
+            <span className="text-sm text-grey-300 line-through">
               {originalPrice} SAR
             </span>
           </div>
           <button
             type="button"
             aria-label={t("home.viewPropertyDetails")}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#F4F4F4] text-[#2A2F73] transition-colors hover:bg-[#e8e8e8]"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#F4F4F4] text-text-dark transition-colors hover:bg-[#e8e8e8]"
           >
             <ArrowRightIcon />
           </button>

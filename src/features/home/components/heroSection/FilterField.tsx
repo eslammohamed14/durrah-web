@@ -120,9 +120,9 @@ export function FilterField({
         dir={dir}
         className={[
           "flex h-[42px] w-full items-center gap-2.5 rounded-xl bg-white px-3 py-2 transition-shadow",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E]",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-coral-400",
           dir === "rtl" ? "flex-row-reverse text-right" : "text-left",
-          isOpen ? "ring-2 ring-[#FF765E]" : "",
+          isOpen ? "ring-2 ring-primary-coral-400" : "",
         ].join(" ")}
       >
         <span

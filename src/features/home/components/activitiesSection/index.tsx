@@ -43,7 +43,7 @@ export function ActivitiesSection({
   return (
     <section
       aria-labelledby="activities-heading"
-      className="bg-[#F0E9E4] px-4 py-10 sm:px-6 sm:py-16 lg:px-16 xl:px-[120px] xl:py-[100px]"
+      className="bg-surface-desert-sand px-4 py-10 sm:px-6 sm:py-16 lg:px-16 xl:px-[120px] xl:py-[100px]"
     >
       <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 xl:max-w-[1200px] xl:gap-10">
         {/* ── Header ─────────────────────────────────────────────────────── */}
@@ -55,11 +55,11 @@ export function ActivitiesSection({
             />
             <h2
               id="activities-heading"
-              className="text-xl font-medium leading-[1.5] text-[#2A2F73] sm:text-2xl"
+              className="text-xl font-medium leading-[1.5] text-text-dark sm:text-2xl"
             >
               {t("home.activitiesHeadline")}
             </h2>
-            <p className="max-w-[875px] text-sm text-[#5A5A5A] sm:text-base">
+            <p className="max-w-[875px] text-sm text-text-body-dark sm:text-base">
               {t("home.activitiesSubtitle")}
             </p>
           </div>

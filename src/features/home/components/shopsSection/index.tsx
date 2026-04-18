@@ -18,7 +18,7 @@ export function ShopsSection() {
   return (
     <section
       aria-labelledby="shops-heading"
-      className="bg-[#FAFAFA] px-4 py-10 sm:px-6 sm:py-16 lg:px-16 xl:px-[120px] xl:py-[100px]"
+      className="bg-background px-4 py-10 sm:px-6 sm:py-16 lg:px-16 xl:px-[120px] xl:py-[100px]"
     >
       <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-8 xl:max-w-[1200px] xl:flex-row xl:gap-12">
         <div className="w-full xl:flex-1">
@@ -33,14 +33,14 @@ export function ShopsSection() {
             />
             <h2
               id="shops-heading"
-              className="text-xl font-medium leading-[1.3] text-[#2A2F73] sm:text-[22px]"
+              className="text-xl font-medium leading-[1.3] text-text-dark sm:text-[22px]"
             >
               {t("home.shopsHeadline")}
             </h2>
-            <p className="text-sm font-normal leading-[1.6] text-[#5A5A5A] sm:text-[16px]">
+            <p className="text-sm font-normal leading-[1.6] text-text-body-dark sm:text-[16px]">
               {t("home.shopsSubtitle1")}
             </p>
-            <p className="text-sm font-normal leading-[1.6] text-[#5A5A5A] sm:text-[16px]">
+            <p className="text-sm font-normal leading-[1.6] text-text-body-dark sm:text-[16px]">
               {t("home.shopsSubtitle2")}
             </p>
           </div>
@@ -50,7 +50,7 @@ export function ShopsSection() {
             variant="primary"
             backgroundColor="#FF765E"
             onClick={() => router.push("/search?category=shop")}
-            className="h-12 w-full rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-[#FF765E] sm:w-fit"
+            className="h-12 w-full rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-primary-coral-400 sm:w-fit"
             leftIcon={<SearchIcon className="h-6 w-6" />}
             rightIcon={<ArrowRightIcon className="h-6 w-6" />}
           >

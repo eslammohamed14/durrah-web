@@ -118,7 +118,7 @@ export default function LoginFormSection() {
           type="submit"
           loading={isSubmitting}
           backgroundColor="#FF765E"
-          className="mt-2 h-11 w-full rounded-lg text-sm font-semibold text-white hover:opacity-95 focus-visible:ring-[#FF765E]"
+          className="mt-2 h-11 w-full rounded-lg text-sm font-semibold text-white hover:opacity-95 focus-visible:ring-primary-coral-400"
         >
           {t("signIn")}
         </Button>

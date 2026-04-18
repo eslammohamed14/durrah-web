@@ -24,7 +24,7 @@ export function CtaNavigateButton({
       type="button"
       variant="primary"
       backgroundColor="#FF765E"
-      className={`h-12 rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-[#FF765E] disabled:!bg-[#FF765E]/50 ${className}`}
+      className={`h-12 rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-primary-coral-400 disabled:!bg-primary-coral-400/50 ${className}`}
       rightIcon={rightIcon}
       onClick={() => router.push(href)}
     >

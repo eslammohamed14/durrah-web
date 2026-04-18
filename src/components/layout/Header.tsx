@@ -30,7 +30,7 @@ export function Header({ transparent = false }: HeaderProps) {
 
   const linkClasses = transparent
     ? "text-white/90 hover:text-white"
-    : "text-[#2A2F73] hover:text-[#2A2F73]/80";
+    : "text-text-dark hover:text-text-dark/80";
 
   return (
     <header className={baseClasses}>
@@ -71,7 +71,7 @@ export function Header({ transparent = false }: HeaderProps) {
                   </Link>
                   {hasDropdown && (
                     <svg
-                      className={`h-[18px] w-[18px] ${transparent ? "text-white/70" : "text-[#2A2F73]/70"}`}
+                      className={`h-[18px] w-[18px] ${transparent ? "text-white/70" : "text-text-dark/70"}`}
                       viewBox="0 0 18 18"
                       fill="none"
                       aria-hidden="true"
@@ -104,8 +104,8 @@ export function Header({ transparent = false }: HeaderProps) {
                 className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 ${
                   locale === "en"
                     ? transparent
-                      ? "bg-white text-[#FF765E]"
-                      : "bg-[#2A2F73] text-white"
+                      ? "bg-white text-primary-coral-400"
+                      : "bg-text-dark text-white"
                     : transparent
                       ? "text-white/70 hover:text-white"
                       : "text-gray-500 hover:text-gray-700"
@@ -121,10 +121,10 @@ export function Header({ transparent = false }: HeaderProps) {
                 className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 ${
                   locale === "ar"
                     ? transparent
-                      ? "bg-white text-[#FF765E]"
-                      : "bg-[#2A2F73] text-white"
+                      ? "bg-white text-primary-coral-400"
+                      : "bg-text-dark text-white"
                     : transparent
-                      ? "text-[#FAFAFA] hover:text-[#FAFAFA]/80"
+                      ? "text-surface-primary hover:text-surface-primary/80"
                       : "text-gray-500 hover:text-gray-700"
                 }`}
               >
@@ -136,13 +136,13 @@ export function Header({ transparent = false }: HeaderProps) {
             <div className="hidden items-center gap-2 md:flex">
               <Link
                 href="/login"
-                className={`rounded-lg border px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "border-white text-white hover:bg-white/10" : "border-[#2A2F73] text-[#2A2F73] hover:bg-gray-50"}`}
+                className={`rounded-lg border px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "border-white text-white hover:bg-white/10" : "border-text-dark text-text-dark hover:bg-gray-50"}`}
               >
                 {t("nav.login")}
               </Link>
               <Link
                 href="/register"
-                className={`rounded-xl px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "bg-white text-[#FF765E] hover:bg-white/90" : "bg-[#2A2F73] text-white hover:bg-[#2A2F73]/90"}`}
+                className={`rounded-xl px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "bg-white text-primary-coral-400 hover:bg-white/90" : "bg-text-dark text-white hover:bg-text-dark/90"}`}
               >
                 {t("nav.signUp")}
               </Link>
@@ -206,7 +206,7 @@ export function Header({ transparent = false }: HeaderProps) {
                 <Link
                   href={href}
                   onClick={() => setMobileOpen(false)}
-                  className="flex min-h-[44px] items-center rounded-lg px-3 py-2 text-sm font-medium text-[#2A2F73] transition-colors hover:bg-gray-100"
+                  className="flex min-h-[44px] items-center rounded-lg px-3 py-2 text-sm font-medium text-text-dark transition-colors hover:bg-gray-100"
                 >
                   {t(`nav.${key}`)}
                 </Link>
@@ -216,14 +216,14 @@ export function Header({ transparent = false }: HeaderProps) {
               <Link
                 href="/auth/login"
                 onClick={() => setMobileOpen(false)}
-                className="flex flex-1 items-center justify-center rounded-lg border border-[#2A2F73] px-3 py-2 text-center text-sm font-medium text-[#2A2F73] min-h-[44px]"
+                className="flex flex-1 items-center justify-center rounded-lg border border-text-dark px-3 py-2 text-center text-sm font-medium text-text-dark min-h-[44px]"
               >
                 {t("nav.login")}
               </Link>
               <Link
                 href="/auth/register"
                 onClick={() => setMobileOpen(false)}
-                className="flex flex-1 items-center justify-center rounded-lg bg-[#2A2F73] px-3 py-2 text-center text-sm font-medium text-white min-h-[44px]"
+                className="flex flex-1 items-center justify-center rounded-lg bg-text-dark px-3 py-2 text-center text-sm font-medium text-white min-h-[44px]"
               >
                 {t("nav.signUp")}
               </Link>

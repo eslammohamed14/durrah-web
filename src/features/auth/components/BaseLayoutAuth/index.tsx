@@ -24,7 +24,7 @@ export default async function BaseLayoutAuth({
       dir={dir}
       lang={locale}
       // ✅ flex row, locked to viewport, no overflow escape
-      className="flex h-screen overflow-hidden bg-[#fafafa] text-durrah-blue"
+      className="flex h-screen overflow-hidden bg-background text-durrah-blue"
     >
       {/* ✅ sticky + explicit h-screen = never collapses regardless of display mode */}
       <aside

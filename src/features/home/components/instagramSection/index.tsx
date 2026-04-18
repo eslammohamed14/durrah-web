@@ -12,7 +12,7 @@ export function InstagramSection() {
   return (
     <section
       aria-labelledby="instagram-heading"
-      className="bg-[#FAFAFA] px-4 py-10 sm:px-6 sm:py-16 lg:px-16 xl:px-[120px] xl:py-[100px]"
+      className="bg-background px-4 py-10 sm:px-6 sm:py-16 lg:px-16 xl:px-[120px] xl:py-[100px]"
     >
       <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 xl:max-w-[1200px] xl:gap-10">
         <div className="flex flex-col gap-4">
@@ -22,11 +22,11 @@ export function InstagramSection() {
           />
           <h2
             id="instagram-heading"
-            className="text-xl font-medium leading-[1.3] text-[#2A2F73] sm:text-[22px]"
+            className="text-xl font-medium leading-[1.3] text-text-dark sm:text-[22px]"
           >
             {t("home.instagramHeadline")}
           </h2>
-          <p className="max-w-[875px] text-sm leading-[1.6] text-[#5A5A5A] sm:text-base">
+          <p className="max-w-[875px] text-sm leading-[1.6] text-text-body-dark sm:text-base">
             {t("home.instagramSubtitle")}
           </p>
         </div>
