@@ -47,23 +47,15 @@ export default async function BaseLayoutAuth({
       {/* ✅ Right panel: full width on mobile, half on desktop, scrolls internally */}
       <main
         style={{ height: "100vh", overflowY: "auto" }}
-        className="relative flex w-full flex-col lg:w-1/2"
+        className="relative flex w-full flex-col lg:w-1/2 overflow-x-hidden"
       >
         {/* Decorative waves */}
         <Image
-          src={images.homeDecorativeWave}
-          alt=""
-          width={108}
+          src={images.yachtShape}
+          alt="icon yacht"
+          width={208}
           height={195}
-          className="pointer-events-none absolute end-5 top-0 opacity-35"
-          aria-hidden
-        />
-        <Image
-          src={images.homeDecorativeWave}
-          alt=""
-          width={108}
-          height={195}
-          className="pointer-events-none absolute bottom-6 start-1/2 -translate-x-1/2 rotate-180 opacity-35"
+          className="pointer-events-none absolute  top-0  right-[-130px] rotate-180" //opacity-35
           aria-hidden
         />
 

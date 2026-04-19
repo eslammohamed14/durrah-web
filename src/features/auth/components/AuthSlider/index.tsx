@@ -43,7 +43,7 @@ export default function AuthSlider({
           background-color: rgba(255, 255, 255, 1);
         }
         .auth-slider-dot-active {
-          width: 24px !important;
+          width: 44px !important;
           background-color: #FF765E !important;
           opacity: 1 !important;
         }
@@ -112,7 +112,7 @@ export default function AuthSlider({
       <div
         style={{
           position: "absolute",
-          bottom: 0,
+          bottom: "10px",
           left: 0,
           right: 0,
           zIndex: 20,

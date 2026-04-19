@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRightIcon, SearchIcon } from "@/assets/icons";
+import Image from "next/image";
 
 interface FeaturedBlogCardProps {
   imageUrl: string;
@@ -15,10 +16,12 @@ export function FeaturedBlogCard({
   return (
     <article className="flex flex-col gap-6">
       <div className="relative h-[379px] w-[690px] overflow-hidden rounded-lg">
-        <img
+        <Image
           src={imageUrl}
           alt={title}
-          className="h-full w-full object-cover"
+          width={690}
+          height={379}
+          className="object-cover"
         />
         <div className="absolute inset-x-0 bottom-0 h-[240px] bg-gradient-to-t from-black/80 to-transparent" />
 

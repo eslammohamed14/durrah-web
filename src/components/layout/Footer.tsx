@@ -29,20 +29,24 @@ export function Footer() {
         className="pointer-events-none absolute left-0 top-0 opacity-30"
         aria-hidden="true"
       >
-        <img
+        <Image
           src={images.yachtShape}
           alt=""
-          className="h-[160px] w-[140px] object-cover"
+          width={140}
+          height={160}
+          className="object-cover"
         />
       </div>
       <div
         className="pointer-events-none absolute bottom-0 right-0 opacity-20"
         aria-hidden="true"
       >
-        <img
+        <Image
           src={images.yachtShape}
           alt=""
-          className="h-[120px] w-[90px] object-cover"
+          width={90}
+          height={120}
+          className="object-cover"
         />
       </div>
 

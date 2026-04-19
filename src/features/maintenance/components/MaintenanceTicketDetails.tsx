@@ -21,6 +21,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
 import type { BadgeVariant } from "@/components/ui/Badge";
+import Image from "next/image";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -359,10 +360,12 @@ export function MaintenanceTicketDetails({
                 className="block aspect-square overflow-hidden rounded-lg border border-gray-200 hover:opacity-90 transition-opacity"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={url}
                   alt={`Ticket image ${idx + 1}`}
-                  className="h-full w-full object-cover"
+                  width={100}
+                  height={100}
+                  className="object-cover"
                   loading="lazy"
                 />
               </a>

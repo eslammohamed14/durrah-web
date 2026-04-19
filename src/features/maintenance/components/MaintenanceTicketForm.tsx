@@ -21,6 +21,7 @@ import {
   ALLOWED_MIME_TYPES,
   MAX_FILE_SIZE_BYTES,
 } from "@/lib/services/storage/IFileStorageService";
+import Image from "next/image";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -182,10 +183,12 @@ function ImageUploadArea({
           {images.map((img) => (
             <div key={img.localId} className="relative aspect-square">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={img.previewUrl}
                 alt=""
-                className="h-full w-full rounded-lg object-cover"
+                width={100}
+                height={100}
+                className="object-cover"
               />
 
               {/* Uploading overlay */}
