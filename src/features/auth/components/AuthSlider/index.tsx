@@ -34,17 +34,17 @@ export default function AuthSlider({
     : "auth-slider-dot-active";
 
   return (
-    // ✅ inline style — cannot be overridden by Swiper's injected CSS
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        height: "100vh",
-        overflow: "hidden",
-      }}
-      className="bg-black"
-    >
+    <div className="relative h-full min-h-0 w-full overflow-hidden bg-black">
       <style>{`
+        /* Isolate from global Swiper CSS (swiper/css can add margins / min-heights). */
+        .auth-swiper.swiper {
+          margin: 0 !important;
+          padding-bottom: 0 !important;
+          max-height: none !important;
+        }
+        .auth-swiper .swiper-wrapper {
+          align-items: stretch;
+        }
         .auth-slider-dot {
           display: inline-block;
           height: 6px;
@@ -87,6 +87,7 @@ export default function AuthSlider({
         .auth-swiper .swiper-slide {
           height: 100% !important;
           width: 100% !important;
+          min-height: 0 !important;
         }
       `}</style>
 
@@ -104,14 +105,13 @@ export default function AuthSlider({
           bulletActiveClass,
         }}
         // ✅ custom class so our CSS selector is scoped
-        className="auth-swiper"
-        // ✅ inline style as backup — belt AND suspenders
+        className="auth-swiper absolute inset-0 !m-0 h-full min-h-0 w-full"
         style={{ width: "100%", height: "100%" }}
       >
         {sliderImages.map((image, idx) => (
           <SwiperSlide
             key={`${image}-${idx}`}
-            // ✅ inline style on slide — fill needs a positioned parent with real height
+            className="!bg-black"
             style={{ position: "relative", width: "100%", height: "100%" }}
           >
             <Image
@@ -122,6 +122,7 @@ export default function AuthSlider({
               loading="eager" // ✅ fixes LCP warning
               sizes="50vw"
               className="object-cover object-center"
+              style={{ minHeight: "100%", minWidth: "100%" }}
             />
           </SwiperSlide>
         ))}
@@ -146,11 +147,11 @@ export default function AuthSlider({
       <div
         style={{
           position: "absolute",
-          bottom: "10px",
+          bottom: 0,
           left: 0,
           right: 0,
           zIndex: 20,
-          padding: "0 2.5rem 3.5rem",
+          padding: "0 2.5rem calc(2.5rem + env(safe-area-inset-bottom, 0px))",
           pointerEvents: "none",
         }}
       >
