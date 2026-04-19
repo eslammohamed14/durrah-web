@@ -3,17 +3,13 @@
 import Image from "next/image";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
-import {
-  AppleIcon,
-  ArrowSolidDownIcon,
-  EyeSlashIcon,
-  GoogleIcon,
-} from "@/assets/icons";
+import { useForm, useWatch } from "react-hook-form";
+import { useLocale, useTranslations } from "next-intl";
+import { AppleIcon, EyeSlashIcon, GoogleIcon } from "@/assets/icons";
 import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { PhoneNumberInput } from "@/components/ui/PhoneNumberInput";
 import { Link } from "@/lib/navigation";
 import {
   registerSchema,
@@ -27,10 +23,13 @@ import {
 export default function RegisterFormSection() {
   const t = useTranslations("auth.registerPage");
   const tAuth = useTranslations("auth");
+  const locale = useLocale();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
+    setValue,
+    control,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormValues>({
@@ -40,10 +39,14 @@ export default function RegisterFormSection() {
       email: "",
       nationalId: "",
       password: "",
+      phoneCountry: "SA",
       phone: "",
       termsAccepted: false,
     },
   });
+
+  const phoneCountry =
+    useWatch({ control, name: "phoneCountry", defaultValue: "SA" }) ?? "SA";
 
   const onSubmit = async () => {
     await new Promise((r) => setTimeout(r, 500));
@@ -226,36 +229,35 @@ export default function RegisterFormSection() {
                 *
               </span>
             </label>
-            <div
-              dir="ltr"
-              className={[
-                "flex h-12 overflow-hidden rounded-lg border bg-white",
-                errors.phone ? "border-red-500" : "border-grey-100",
-              ].join(" ")}
-            >
-              <div className="flex shrink-0 items-center gap-2 border-e border-grey-100 px-3">
-                <span className="text-lg leading-none" aria-hidden>
-                  🇸🇦
-                </span>
-                <div className="h-6 w-px shrink-0 bg-grey-100" aria-hidden />
-                <span className="text-xs text-grey-500">+966</span>
-                <ArrowSolidDownIcon size={16} className="shrink-0 text-grey-500" />
-              </div>
-              <input
-                id="register-phone"
-                type="tel"
-                inputMode="numeric"
-                autoComplete="tel-national"
-                placeholder={t("phonePlaceholder")}
-                aria-invalid={errors.phone ? "true" : undefined}
-                aria-labelledby="register-phone-label"
-                className="min-w-0 flex-1 border-0 bg-transparent px-3 text-base text-[#101828] placeholder:text-grey-200 outline-none focus:ring-0"
-                {...register("phone")}
-              />
-            </div>
+            <input type="hidden" {...register("phoneCountry")} />
+            <PhoneNumberInput
+              id="register-phone"
+              countryIso={phoneCountry}
+              onCountryChange={(iso) =>
+                setValue("phoneCountry", iso, {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                })
+              }
+              lang={locale}
+              invalid={Boolean(errors.phone || errors.phoneCountry)}
+              searchPlaceholder={t("phoneCountrySearch")}
+              countryTriggerAriaLabel={t("phoneCountryOpen")}
+              placeholder={t("phonePlaceholder")}
+              aria-invalid={
+                errors.phone || errors.phoneCountry ? "true" : undefined
+              }
+              aria-labelledby="register-phone-label"
+              {...register("phone")}
+            />
             <p className="text-xs leading-normal text-grey-300">
               {t("phoneSmsHelper")}
             </p>
+            {errors.phoneCountry ? (
+              <p className="text-xs text-red-500" role="alert">
+                {tAuth(errors.phoneCountry.message as string)}
+              </p>
+            ) : null}
             {errors.phone ? (
               <p className="text-xs text-red-500" role="alert">
                 {tAuth(errors.phone.message as string)}

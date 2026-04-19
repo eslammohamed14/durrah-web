@@ -116,7 +116,9 @@ export default async function BaseLayoutAuth({
       <aside
         className={[
           "relative hidden bg-black lg:block",
-          isRegisterShell ? "h-[968px] w-1/2 shrink-0" : "h-full min-h-0",
+          isRegisterShell
+            ? "h-[968px] w-full shrink-0 lg:w-[52%] lg:max-w-[52%]"
+            : "h-full min-h-0",
         ].join(" ")}
       >
         <AuthSlider
@@ -131,7 +133,7 @@ export default async function BaseLayoutAuth({
         className={[
           "relative flex flex-col bg-white",
           isRegisterShell
-            ? "w-full min-h-[100dvh] overflow-hidden lg:w-1/2 shrink-0"
+            ? "w-full min-h-[100dvh] min-w-0 overflow-x-hidden overflow-y-visible lg:w-[48%] lg:max-w-[48%] lg:shrink-0"
             : "min-h-0 h-full min-w-0 overflow-x-hidden overflow-y-auto lg:border-s lg:border-grey-100",
         ].join(" ")}
       >

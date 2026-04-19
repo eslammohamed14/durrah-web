@@ -1,12 +1,10 @@
 import * as yup from "yup";
+import {
+  getCountryCallingCode,
+  isValidPhoneNumber,
+  type CountryCode,
+} from "libphonenumber-js";
 import { isValidSaudiNationalId } from "@/lib/saudiNationalId";
-
-function normalizeSaudiLocalPhone(value: string): string {
-  const digits = value.replace(/\D/g, "");
-  if (digits.startsWith("966")) return digits.slice(3);
-  if (digits.startsWith("0")) return digits.slice(1);
-  return digits;
-}
 
 export const loginSchema = yup.object({
   email: yup
@@ -80,14 +78,29 @@ export const registerSchema = yup.object({
     .string()
     .min(8, "validation.passwordMin")
     .required("validation.passwordRequired"),
+  phoneCountry: yup
+    .string()
+    .trim()
+    .length(2, "validation.phoneCountryInvalid")
+    .required("validation.phoneCountryRequired"),
   phone: yup
     .string()
     .trim()
     .required("validation.phoneRequired")
-    .test("sa-mobile", "validation.phoneInvalid", (v) => {
+    .test("phone-e164", "validation.phoneInvalid", function (v) {
       if (!v) return false;
-      const local = normalizeSaudiLocalPhone(v);
-      return /^5[0-9]{8}$/.test(local);
+      const country = (this.parent as { phoneCountry?: string }).phoneCountry;
+      if (!country || country.length !== 2) return false;
+      const digits = v.replace(/\D/g, "");
+      if (!digits) return false;
+      try {
+        const cc = country.toUpperCase() as CountryCode;
+        const dial = getCountryCallingCode(cc);
+        const e164 = `+${dial}${digits}`;
+        return isValidPhoneNumber(e164, cc);
+      } catch {
+        return false;
+      }
     }),
   termsAccepted: yup
     .boolean()

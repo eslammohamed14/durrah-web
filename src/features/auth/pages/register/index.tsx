@@ -16,7 +16,7 @@ export default async function RegisterPage() {
       promoSubtitle={tPanel("promoSubtitle")}
       sliderPaginationVariant="verifyEmail"
       footerVariant="register"
-      contentMaxWidthClass="max-w-[560px]"
+      contentMaxWidthClass="max-w-full"
       showFormColumnDecoration
       formAreaClassName="flex min-h-0 flex-1 items-start justify-center px-6 pb-8 pt-8 sm:px-10 lg:px-0 lg:pb-10 lg:pt-0"
       contentInnerClassName="lg:pt-[100px] lg:ps-[100px] lg:pe-[60px]"
