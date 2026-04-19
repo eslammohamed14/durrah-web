@@ -36,7 +36,7 @@ export default function CreateNewPasswordFormSection() {
 
   const onSubmit = async () => {
     await new Promise((r) => setTimeout(r, 400));
-    router.push("/auth/login");
+    router.push("/auth/password-reset-success");
   };
 
   return (

@@ -139,6 +139,11 @@
       "submit": "Set new password",
       "backToLogin": "Back to login"
     },
+    "passwordResetSuccessPage": {
+      "title": "All done!",
+      "message": "Your password has been reset. Please return to login to continue.",
+      "backToLogin": "Back to login"
+    },
     "layout": {
       "promoTitle": "Where every stay becomes a story.",
       "promoSubtitle": "Discover premium properties and curated experiences across Saudi Arabia.",

@@ -18,7 +18,9 @@ src/
 │       │   └── page.tsx          # Thin routing wrapper
 │       ├── verify-email/
 │       │   └── page.tsx          # Thin routing wrapper
-│       └── create-new-password/
+│       ├── create-new-password/
+│       │   └── page.tsx          # Thin routing wrapper
+│       └── password-reset-success/
 │           └── page.tsx          # Thin routing wrapper
 │
 ├── assets/                       # Static assets
@@ -70,7 +72,9 @@ src/
 │   │   │   │   └── index.tsx     # Actual page implementation
 │   │   │   ├── verify-email/
 │   │   │   │   └── index.tsx     # Actual page implementation
-│   │   │   └── create-new-password/
+│   │   │   ├── create-new-password/
+│   │   │   │   └── index.tsx     # Actual page implementation
+│   │   │   └── password-reset-success/
 │   │   │       └── index.tsx     # Actual page implementation
 │   │   ├── hooks/                # Auth-specific hooks (e.g., useOTP.ts)
 │   │   ├── utils/                # Auth-specific utilities
@@ -347,7 +351,8 @@ The real screen composition for sign-in lives in `src/features/auth/pages/login/
 - `/auth/register` - Registration
 - `/auth/reset-password` - Password reset
 - `/auth/verify-email` - Email verification (optional `?email=` query for the instruction line)
-- `/auth/create-new-password` - Set new password after verification (then redirects to login in current mock flow)
+- `/auth/create-new-password` - Set new password after verification
+- `/auth/password-reset-success` - Confirmation after new password is set (CTA to login)
 
 ### Protected Routes (CSR)
 
