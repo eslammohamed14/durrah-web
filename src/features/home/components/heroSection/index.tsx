@@ -1,29 +1,37 @@
-import { cookies } from "next/headers";
+import Image from "next/image";
 import images from "@/constant/images";
 import { FilterContainer } from "./filter-container";
 import type { Property } from "@/lib/types";
-import { createTranslator, getBundledTranslations } from "@/lib/utils/i18n";
-import {
-  DEFAULT_LOCALE,
-  isValidLocale,
-  NEXT_LOCALE_COOKIE,
-} from "@/config/i18n";
+import {createTranslator} from "@/lib/utils/i18n";
+
+
 
 interface HeroSectionProps {
   allProperties: Property[];
+  t:ReturnType<typeof createTranslator>;
 }
 
-export async function HeroSection({ allProperties }: HeroSectionProps) {
-  const localeCookie = (await cookies()).get(NEXT_LOCALE_COOKIE)?.value;
-  const locale = isValidLocale(localeCookie) ? localeCookie : DEFAULT_LOCALE;
-  const t = createTranslator(locale, getBundledTranslations(locale));
+export const HeroSection = ({ allProperties,t }: HeroSectionProps) => {
+ 
 
   return (
     <section
       aria-label="Hero"
-      className="relative flex min-h-[560px] flex-col bg-cover bg-no-repeat bg-[50%_25%] pb-[30px] sm:min-h-[700px] lg:min-h-[948px]"
-      style={{ backgroundImage: `url('${images.durrahHomeHero}')` }}
+      className="relative flex min-h-[560px] flex-col pb-[30px] sm:min-h-[700px] lg:min-h-[948px]"
     >
+      {/* Background Image (Next.js optimized) */}
+      <Image
+        src={images.durrahHomeHero}
+        alt="Hero background"
+        fill
+        priority
+        fetchPriority="high" // 🔥 ADD THIS
+        sizes="100vw"
+
+        className="object-cover"
+        style={{ objectPosition: "50% 25%" }}
+      />
+
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
 
