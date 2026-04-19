@@ -189,8 +189,8 @@ html[dir="rtl"] .rtl-auto-flip {
 
 /* ── Accessibility: Focus indicators ──────────────────────────────────────── */
 
-/* Ensure focus-visible outlines are always visible and never clipped */
-:focus-visible {
+/* Focus ring for interactive controls (not form fields — those use border-only focus). */
+:focus-visible:not(:where(input, textarea, select)) {
   outline: 2px solid #2563eb; /* blue-600 */
   outline-offset: 2px;
 }

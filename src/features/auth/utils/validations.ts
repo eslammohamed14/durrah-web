@@ -14,3 +14,16 @@ export const loginSchema = yup.object({
 });
 
 export type LoginFormValues = yup.InferType<typeof loginSchema>;
+
+/** Request password reset — email only (Figma “Forgot Your Password?”). */
+export const forgotPasswordEmailSchema = yup.object({
+  email: yup
+    .string()
+    .trim()
+    .email("validation.emailInvalid")
+    .required("validation.emailRequired"),
+});
+
+export type ForgotPasswordEmailValues = yup.InferType<
+  typeof forgotPasswordEmailSchema
+>;

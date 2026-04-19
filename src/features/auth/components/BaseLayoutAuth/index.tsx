@@ -2,10 +2,18 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import images from "@/constant/images";
-import AuthSlider from "../AuthSlider";
+import AuthSlider, {
+  type AuthSliderPaginationVariant,
+} from "../AuthSlider";
 
 type BaseLayoutAuthProps = {
   children: ReactNode;
+  /** Overrides default promo strings from `auth.layout` (e.g. verify-email Figma). */
+  promoTitle?: string;
+  promoSubtitle?: string;
+  sliderPaginationVariant?: AuthSliderPaginationVariant;
+  /** Footer link row tone — `verifyEmail` matches Figma verify screen. */
+  footerVariant?: "default" | "verifyEmail";
 };
 
 /**
@@ -14,10 +22,24 @@ type BaseLayoutAuthProps = {
  */
 export default async function BaseLayoutAuth({
   children,
+  promoTitle,
+  promoSubtitle,
+  sliderPaginationVariant = "default",
+  footerVariant = "default",
 }: BaseLayoutAuthProps) {
   const t = await getTranslations("auth");
   const locale = await getLocale();
   const dir = locale === "ar" ? "rtl" : "ltr";
+  const panelTitle = promoTitle ?? t("layout.promoTitle");
+  const panelSubtitle = promoSubtitle ?? t("layout.promoSubtitle");
+  const footerLinksClass =
+    footerVariant === "verifyEmail"
+      ? "text-[#21265d]"
+      : "text-[#667085]";
+  const footerCopyrightClass =
+    footerVariant === "verifyEmail"
+      ? "text-grey-400"
+      : "text-[#98A2B3]";
 
   return (
     <div
@@ -38,9 +60,10 @@ export default async function BaseLayoutAuth({
         className="hidden lg:block"
       >
         <AuthSlider
-          title={t("layout.promoTitle")}
-          subtitle={t("layout.promoSubtitle")}
+          title={panelTitle}
+          subtitle={panelSubtitle}
           imageAlt={t("layout.panelAlt")}
+          paginationVariant={sliderPaginationVariant}
         />
       </aside>
 
@@ -61,12 +84,14 @@ export default async function BaseLayoutAuth({
 
         {/* ✅ Centered form — flex-1 fills remaining height, items/justify center the child */}
         <div className="flex flex-1 items-center justify-center px-6 py-10 sm:px-10">
-          <div className="w-full max-w-[25rem]">{children}</div>
+          <div className="w-full max-w-[28rem]">{children}</div>
         </div>
 
         {/* Footer */}
         <footer className="relative z-10 pb-6 text-center">
-          <div className="mx-auto flex flex-wrap items-center justify-center gap-2 text-[11px] text-[#667085]">
+          <div
+            className={`mx-auto flex flex-wrap items-center justify-center gap-2 text-[11px] ${footerLinksClass}`}
+          >
             <span>{t("layout.footer.faq")}</span>
             <span>|</span>
             <span>{t("layout.footer.investments")}</span>
@@ -75,7 +100,7 @@ export default async function BaseLayoutAuth({
             <span>|</span>
             <span>{t("layout.footer.contact")}</span>
           </div>
-          <p className="mt-1 text-[10px] text-[#98A2B3]">
+          <p className={`mt-1 text-[10px] ${footerCopyrightClass}`}>
             {t("layout.footer.copyright")}
           </p>
         </footer>

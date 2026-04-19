@@ -102,6 +102,29 @@
       "apple": "التسجيل عبر Apple ID",
       "google": "التسجيل عبر Google"
     },
+    "verifyEmailPage": {
+      "promoTitle": "عِش البحر، واعثر على إقامتك المثالية",
+      "promoSubtitle": "بوابتك إلى حياة راقية على الواجهة البحرية وتجارب لا تُنسى",
+      "title": "تحقق من بريدك الإلكتروني",
+      "description": "أدخل رمز التحقق المكوّن من 4 أرقام لـ: {email}.",
+      "placeholderEmail": "your@email.com",
+      "digitAriaLabel": "الرقم {n} من 4",
+      "resendPrefix": "لم يصلك الرمز؟",
+      "resendCountdown": "إعادة الإرسال خلال {seconds} ث",
+      "resendCta": "إعادة إرسال الرمز",
+      "verifyCode": "تحقق من الرمز",
+      "backToLogin": "العودة لتسجيل الدخول"
+    },
+    "forgotPasswordPage": {
+      "title": "نسيت كلمة المرور؟",
+      "subtitle": "أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "sendCode": "إرسال الرمز المكوّن من 4 أرقام",
+      "backToLogin": "العودة لتسجيل الدخول",
+      "noAccount": "ليس لديك حساب؟",
+      "signUp": "إنشاء حساب"
+    },
     "layout": {
       "promoTitle": "حيث تصبح كل إقامة حكاية.",
       "promoSubtitle": "اكتشف عقارات فاخرة وتجارب مختارة في أنحاء المملكة العربية السعودية.",

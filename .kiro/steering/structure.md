@@ -14,7 +14,9 @@ src/
 │       │   └── page.tsx          # Thin routing wrapper
 │       ├── register/
 │       │   └── page.tsx          # Thin routing wrapper
-│       └── reset-password/
+│       ├── reset-password/
+│       │   └── page.tsx          # Thin routing wrapper
+│       └── verify-email/
 │           └── page.tsx          # Thin routing wrapper
 │
 ├── assets/                       # Static assets
@@ -62,7 +64,9 @@ src/
 │   │   │   │   └── index.tsx     # Actual page implementation
 │   │   │   ├── register/
 │   │   │   │   └── index.tsx     # Actual page implementation
-│   │   │   └── reset-password/
+│   │   │   ├── reset-password/
+│   │   │   │   └── index.tsx     # Actual page implementation
+│   │   │   └── verify-email/
 │   │   │       └── index.tsx     # Actual page implementation
 │   │   ├── hooks/                # Auth-specific hooks (e.g., useOTP.ts)
 │   │   ├── utils/                # Auth-specific utilities
@@ -338,6 +342,7 @@ The real screen composition for sign-in lives in `src/features/auth/pages/login/
 - `/auth/login` - Login with phone/OTP
 - `/auth/register` - Registration
 - `/auth/reset-password` - Password reset
+- `/auth/verify-email` - Email verification (optional `?email=` query for the instruction line)
 
 ### Protected Routes (CSR)
 
@@ -408,6 +413,42 @@ t("home.heroSubheadline");
 1. Add the key + English value to `public/locales/en.json`
 2. Add the key + Arabic value to `public/locales/ar.json`
 3. Use `t("namespace.key")` — no condition, no fallback needed
+
+## Colors and design tokens
+
+**Source of truth:** `src/app/globals.css`. All product colors are defined as CSS custom properties on `:root` and exposed to Tailwind under `@theme inline` as `--color-*` keys. **Do not duplicate palette values in this document** (no hex/RGB literals here); read or change them only in `globals.css`.
+
+### `:root` tokens (use in plain CSS)
+
+| Group | Variables |
+| --- | --- |
+| Base | `--background`, `--foreground` |
+| Surfaces | `--surface-primary`, `--surface-lavender`, `--surface-desert-sand` |
+| Text | `--text-dark`, `--text-light`, `--text-body-muted`, `--text-body-dark` |
+| Status — attention | `--attention-default`, `--attention-dark`, `--attention-soft` |
+| Status — danger | `--danger-default`, `--danger-dark`, `--danger-soft` |
+| Status — success | `--success-default`, `--success-dark`, `--success-soft` |
+| Borders | `--border-inverse`, `--border-accent`, `--border-default` |
+| Primary blue scale | `--primary-blue-50` … `--primary-blue-700` |
+| Primary coral scale | `--primary-coral-50` … `--primary-coral-700` |
+| Primary lavender scale | `--primary-lavender-50` … `--primary-lavender-700` |
+| Secondary (earth) | `--secondary-50`, `--secondary-100`, `--secondary-200` |
+| Grey scale | `--grey-50` … `--grey-900` |
+| Basic | `--white`, `--black` |
+
+Example: `color: var(--text-dark);`, `background: var(--surface-primary);`.
+
+### Tailwind theme (`@theme inline`)
+
+Theme colors mirror the same palette via `var(...)`. Prefer Tailwind utilities when styling components: each `--color-{name}` in `globals.css` maps to utilities such as `bg-{name}`, `text-{name}`, `border-{name}` (for example `bg-surface-primary`, `text-primary-blue-400`, `border-accent`).
+
+**Legacy aliases (backward compatible):** utilities `durrah-blue`, `durrah-coral`, `durrah-beige`, and `durrah-lavender` are wired to the same underlying values as `--primary-blue-400`, `--primary-coral-400`, `--secondary-50`, and `--primary-lavender-400` respectively.
+
+**Also wired in theme:** `--color-background`, `--color-foreground` (root page background and default text).
+
+### Outside the token table
+
+A few rules in the same file use **ad hoc** colors for accessibility or third-party widgets (for example focus outlines and Swiper navigation). Those are local to those selectors; prefer the tokens above for product UI.
 
 ## Key Architectural Rules
 

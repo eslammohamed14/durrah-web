@@ -102,6 +102,29 @@
       "apple": "Sign up with apple id",
       "google": "Sign up with google"
     },
+    "verifyEmailPage": {
+      "promoTitle": "Live the Sea, Find Your Perfect Stay",
+      "promoSubtitle": "Your gateway to premium waterfront living and unforgettable seaside experiences",
+      "title": "Verify Your Email",
+      "description": "Enter the 4-digit verification code to: {email}.",
+      "placeholderEmail": "your@email.com",
+      "digitAriaLabel": "Digit {n} of 4",
+      "resendPrefix": "Didn't Receive the code?",
+      "resendCountdown": "Resend code in {seconds}s",
+      "resendCta": "Resend code",
+      "verifyCode": "Verify Code",
+      "backToLogin": "Back to login"
+    },
+    "forgotPasswordPage": {
+      "title": "Forgot Your Password?",
+      "subtitle": "Enter your email address and we'll send you a verification code",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email address",
+      "sendCode": "Send 4-digit code",
+      "backToLogin": "Back to login",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign Up"
+    },
     "layout": {
       "promoTitle": "Where every stay becomes a story.",
       "promoSubtitle": "Discover premium properties and curated experiences across Saudi Arabia.",

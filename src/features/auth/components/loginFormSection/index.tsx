@@ -81,10 +81,10 @@ export default function LoginFormSection() {
               aria-invalid={errors.password ? "true" : undefined}
               className={[
                 "block h-11 w-full rounded-lg border bg-white px-3 pe-10 text-sm text-[#101828]",
-                "placeholder:text-[#98A2B3] focus:outline-none focus:ring-2",
+                "placeholder:text-[#98A2B3] focus:outline-none focus:ring-0 focus-visible:outline-none",
                 errors.password
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-[#D0D5DD] focus:border-blue-500 focus:ring-blue-500",
+                  ? "border-red-500 focus:border-red-500 focus:ring-0"
+                  : "border-[#D0D5DD] focus:border-[#D0D5DD] focus:ring-0",
               ].join(" ")}
               {...register("password")}
             />
@@ -107,7 +107,7 @@ export default function LoginFormSection() {
             {t("loginPage.rememberMe")}
           </label>
           <Link
-            href="/auth/forgot-password"
+            href="/auth/reset-password"
             className="text-xs text-durrah-coral hover:underline"
           >
             {t("forgotPassword")}

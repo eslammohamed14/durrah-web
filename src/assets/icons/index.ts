@@ -2,6 +2,7 @@ export {
   ActivitiesSectionIcon,
   type ActivitiesSectionIconProps,
 } from "./ActivitiesSectionIcon";
+export { ArrowLeftIcon, type ArrowLeftIconProps } from "./ArrowLeftIcon";
 export { ArrowRightIcon, type ArrowRightIconProps } from "./ArrowRightIcon";
 export { BathroomIcon, type BathroomIconProps } from "./BathroomIcon";
 export { BedIcon, type BedIconProps } from "./BedIcon";
