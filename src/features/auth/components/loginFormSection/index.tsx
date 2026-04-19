@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { Link } from "@/lib/navigation";
+import { markPasswordResetFlowStartedFromLogin } from "../../hooks/useBackToLoginFromPasswordResetFlow";
 import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -109,6 +110,7 @@ export default function LoginFormSection() {
           <Link
             href="/auth/reset-password"
             className="text-xs text-durrah-coral hover:underline"
+            onClick={() => markPasswordResetFlowStartedFromLogin()}
           >
             {t("forgotPassword")}
           </Link>

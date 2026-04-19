@@ -9,6 +9,7 @@ import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Link, useRouter } from "@/lib/navigation";
+import { useBackToLoginFromPasswordResetFlow } from "../../hooks/useBackToLoginFromPasswordResetFlow";
 import {
   forgotPasswordEmailSchema,
   type ForgotPasswordEmailValues,
@@ -19,6 +20,7 @@ export default function ResetPasswordFormSection() {
   const t = useTranslations("auth.forgotPasswordPage");
   const tAuth = useTranslations("auth");
   const router = useRouter();
+  const backToLogin = useBackToLoginFromPasswordResetFlow();
   const {
     register,
     handleSubmit,
@@ -31,7 +33,7 @@ export default function ResetPasswordFormSection() {
   const onSubmit = async (data: ForgotPasswordEmailValues) => {
     await new Promise((r) => setTimeout(r, 400));
     const q = new URLSearchParams({ email: data.email.trim() });
-    router.push(`/auth/verify-email?${q.toString()}`);
+    router.replace(`/auth/verify-email?${q.toString()}`);
   };
 
   return (
@@ -97,13 +99,14 @@ export default function ResetPasswordFormSection() {
           {t("sendCode")}
         </Button>
 
-        <Link
-          href="/auth/login"
-          className="flex h-12 w-full flex-row items-center justify-center gap-2.5 rounded-lg text-base font-medium text-grey-700 hover:bg-grey-50 rtl:flex-row-reverse"
+        <button
+          type="button"
+          onClick={backToLogin}
+          className="flex h-12 w-full flex-row items-center justify-center gap-2.5 rounded-lg text-base font-medium text-grey-700 hover:bg-grey-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grey-200 focus-visible:ring-offset-2 rtl:flex-row-reverse"
         >
           <ArrowLeftIcon size={24} className="shrink-0 text-grey-700" />
           <span className="capitalize">{t("backToLogin")}</span>
-        </Link>
+        </button>
       </form>
 
       <p className="text-center text-sm leading-relaxed text-grey-500">

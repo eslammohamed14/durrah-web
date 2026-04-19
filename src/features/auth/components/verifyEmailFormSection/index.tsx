@@ -6,7 +6,8 @@ import { useTranslations } from "next-intl";
 import { ArrowLeftIcon } from "@/assets/icons";
 import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";
-import { Link, useRouter } from "@/lib/navigation";
+import { useRouter } from "@/lib/navigation";
+import { useBackToLoginFromPasswordResetFlow } from "../../hooks/useBackToLoginFromPasswordResetFlow";
 
 const OTP_LEN = 4;
 const RESEND_SECONDS = 30;
@@ -23,6 +24,7 @@ export default function VerifyEmailFormSection({
   const t = useTranslations("auth.verifyEmailPage");
   const tAuth = useTranslations("auth");
   const router = useRouter();
+  const backToLogin = useBackToLoginFromPasswordResetFlow();
   const [digits, setDigits] = useState<string[]>(() =>
     Array.from({ length: OTP_LEN }, () => ""),
   );
@@ -84,7 +86,7 @@ export default function VerifyEmailFormSection({
     setIsSubmitting(true);
     await new Promise((r) => setTimeout(r, 500));
     setIsSubmitting(false);
-    router.push("/auth/create-new-password");
+    router.replace("/auth/create-new-password");
   };
 
   const canResend = resendSeconds === 0;
@@ -170,13 +172,14 @@ export default function VerifyEmailFormSection({
             {t("verifyCode")}
           </Button>
 
-          <Link
-            href="/auth/login"
-            className="flex h-12 w-full flex-row items-center justify-center gap-2.5 rounded-lg text-base font-medium text-grey-700 hover:bg-grey-50 rtl:flex-row-reverse"
+          <button
+            type="button"
+            onClick={backToLogin}
+            className="flex h-12 w-full flex-row items-center justify-center gap-2.5 rounded-lg text-base font-medium text-grey-700 hover:bg-grey-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grey-200 focus-visible:ring-offset-2 rtl:flex-row-reverse"
           >
             <ArrowLeftIcon size={24} className="shrink-0 text-grey-700" />
             <span className="capitalize">{t("backToLogin")}</span>
-          </Link>
+          </button>
         </div>
       </form>
     </section>

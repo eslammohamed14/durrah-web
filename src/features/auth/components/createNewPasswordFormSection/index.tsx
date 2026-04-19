@@ -8,7 +8,8 @@ import { useTranslations } from "next-intl";
 import { ArrowLeftIcon, EyeSlashIcon } from "@/assets/icons";
 import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";
-import { Link, useRouter } from "@/lib/navigation";
+import { useRouter } from "@/lib/navigation";
+import { useBackToLoginFromPasswordResetFlow } from "../../hooks/useBackToLoginFromPasswordResetFlow";
 import {
   createNewPasswordSchema,
   type CreateNewPasswordFormValues,
@@ -19,6 +20,7 @@ export default function CreateNewPasswordFormSection() {
   const t = useTranslations("auth.createNewPasswordPage");
   const tAuth = useTranslations("auth");
   const router = useRouter();
+  const backToLogin = useBackToLoginFromPasswordResetFlow();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -36,7 +38,7 @@ export default function CreateNewPasswordFormSection() {
 
   const onSubmit = async () => {
     await new Promise((r) => setTimeout(r, 400));
-    router.push("/auth/password-reset-success");
+    router.replace("/auth/password-reset-success");
   };
 
   return (
@@ -178,13 +180,14 @@ export default function CreateNewPasswordFormSection() {
             {t("submit")}
           </Button>
 
-          <Link
-            href="/auth/login"
-            className="flex h-12 w-full flex-row items-center justify-center gap-2.5 rounded-lg text-base font-medium text-grey-700 hover:bg-grey-50 rtl:flex-row-reverse"
+          <button
+            type="button"
+            onClick={backToLogin}
+            className="flex h-12 w-full flex-row items-center justify-center gap-2.5 rounded-lg text-base font-medium text-grey-700 hover:bg-grey-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grey-200 focus-visible:ring-offset-2 rtl:flex-row-reverse"
           >
             <ArrowLeftIcon size={24} className="shrink-0 text-grey-700" />
             <span className="capitalize">{t("backToLogin")}</span>
-          </Link>
+          </button>
         </div>
       </form>
     </section>

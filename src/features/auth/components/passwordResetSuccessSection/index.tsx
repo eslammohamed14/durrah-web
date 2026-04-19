@@ -4,12 +4,13 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { VerifyIcon } from "@/assets/icons";
 import images from "@/constant/images";
-import { Link } from "@/lib/navigation";
+import { useBackToLoginFromPasswordResetFlow } from "../../hooks/useBackToLoginFromPasswordResetFlow";
 
 /** Password reset success — Figma `807:5499` “New Password Reset Successfully”. */
 export default function PasswordResetSuccessSection() {
   const t = useTranslations("auth.passwordResetSuccessPage");
   const tAuth = useTranslations("auth");
+  const backToLogin = useBackToLoginFromPasswordResetFlow();
 
   return (
     <section className="flex w-full flex-col items-center">
@@ -38,12 +39,13 @@ export default function PasswordResetSuccessSection() {
           </p>
         </div>
 
-        <Link
-          href="/auth/login"
+        <button
+          type="button"
+          onClick={backToLogin}
           className="inline-flex h-12 w-full items-center justify-center rounded-lg bg-primary-coral-400 text-base font-medium capitalize text-white transition-opacity hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-coral-400 focus-visible:ring-offset-2"
         >
           {t("backToLogin")}
-        </Link>
+        </button>
       </div>
     </section>
   );
