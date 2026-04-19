@@ -71,7 +71,7 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
         <p className="text-xl font-medium text-white">
           {t("home.findYourDreamEscape")}
         </p>
-        <div className="flex w-[132px] items-stretch gap-1 rounded-lg border border-[#F0F1F3] bg-white p-0.5">
+        {/* <div className="flex w-[132px] items-stretch gap-1 rounded-lg border border-[#F0F1F3] bg-white p-0.5">
           {(["rent", "buy"] as const).map((tab) => (
             <button
               key={tab}
@@ -87,7 +87,7 @@ export function FilterContainer({ allProperties }: FilterContainerProps) {
               {t(`nav.${tab}`)}
             </button>
           ))}
-        </div>
+        </div> */}
       </div>
 
       {/* Fields row */}

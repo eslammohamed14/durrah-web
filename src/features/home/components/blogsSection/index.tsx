@@ -1,71 +1,88 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import images from "@/constant/images";
 import { ArrowRightIcon, BlogsSectionIcon } from "@/assets/icons";
-import { Button } from "@/components/ui/Button";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import { SectionTag } from "@/features/home/components/sectionTag";
 import { BlogGridItem } from "./BlogGridItem";
 import { FeaturedBlogCard } from "./FeaturedBlogCard";
 
+/**
+ * Home — Concept 1 blogs block from Figma **Final UI** → `489:5399` ("Blogs - 3").
+ * @see https://www.figma.com/design/XKx3FF4Xw6ZpvooyvB71Kn/Durrah-Property?node-id=489-5399
+ */
 export function BlogsSection() {
   const router = useRouter();
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
+  const headlineCaps =
+    locale === "ar" ? "" : "capitalize";
 
   return (
     <section
       aria-labelledby="blogs-heading"
-      className="bg-background px-4 py-10 sm:px-6 sm:py-16 lg:px-8 xl:px-[30px] xl:py-[100px]"
+      className="bg-background px-4 py-10 sm:px-6 sm:py-14 md:px-10 lg:px-16 lg:py-16 xl:px-[120px]"
     >
-      <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 xl:max-w-[1200px] xl:gap-10">
-        <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-10">
-          <div className="flex flex-1 flex-col gap-4">
+      <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-10">
+        <header className="flex w-full flex-col gap-10 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex min-w-0 flex-1 flex-col gap-4">
             <SectionTag
               icon={<BlogsSectionIcon className="h-7 w-7" />}
               label={t("home.blogsTag")}
             />
             <h2
               id="blogs-heading"
-              className="text-xl font-medium leading-[1.3] text-text-dark sm:text-[22px]"
+              className={[
+                "max-w-[983px] text-[22px] font-medium leading-[1.3] text-text-dark",
+                headlineCaps,
+              ]
+                .filter(Boolean)
+                .join(" ")}
             >
               {t("home.blogsHeadline")}
             </h2>
           </div>
 
-          <Button
+          <button
             type="button"
-            variant="primary"
-            backgroundColor="#FF765E"
             onClick={() => router.push("/blogs")}
-            className="h-12 w-full rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-primary-coral-400 sm:w-fit"
-            rightIcon={<ArrowRightIcon size={24} />}
+            className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2.5 rounded-lg bg-[#FF765E] px-4 py-4 text-base font-medium text-white transition hover:bg-[#e86a54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E] focus-visible:ring-offset-2 active:bg-[#d45540] sm:w-[177px]"
           >
             {t("home.viewAllBlogs")}
-          </Button>
+            <ArrowRightIcon size={24} className="shrink-0" aria-hidden />
+          </button>
         </header>
 
-        {/* Blog grid — stacked on mobile, side-by-side on lg+ */}
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-3">
-          <div className="grid grid-cols-2 gap-3 lg:w-[498px] lg:flex-none lg:flex-col">
-            <div className="flex gap-3">
+        <div className="flex w-full flex-col gap-3 lg:flex-row lg:items-start">
+          <div className="flex min-w-0 flex-1 flex-col gap-3">
+            <div className="flex w-full gap-3">
               <BlogGridItem imageUrl={images.property1} badge="Resorts" />
               <BlogGridItem imageUrl={images.property2} badge="Restaurants" />
             </div>
-            <div className="flex gap-3">
+            <div className="flex w-full gap-3">
               <BlogGridItem imageUrl={images.property3} badge="Restaurants" />
               <BlogGridItem imageUrl={images.property4} badge="Resorts" />
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 lg:w-[690px] lg:flex-none lg:gap-6">
+          <div className="flex w-full shrink-0 flex-col gap-6 self-stretch lg:w-[690px] lg:max-w-[690px]">
             <FeaturedBlogCard
               imageUrl={images.property5}
               title={t("home.blogFeaturedTitle")}
               discoverLabel={t("home.discoverMore")}
+              category={t("home.blogFeaturedCategory")}
+              date={t("home.blogFeaturedDate")}
+              readTime={t("home.blogFeaturedReadTime")}
             />
-            <p className="text-sm leading-[1.6] text-text-body-dark sm:text-base">
+            <p className="w-full text-base font-normal leading-[1.6] text-grey-600">
               {t("home.blogFeaturedExcerpt")}
+              <Link
+                href="/blogs"
+                className="font-semibold leading-[1.5] text-[#2a2f73] underline-offset-2 hover:underline"
+              >
+                {t("home.blogReadMore")}
+              </Link>
             </p>
           </div>
         </div>
