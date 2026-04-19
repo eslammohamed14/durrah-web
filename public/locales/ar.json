@@ -89,7 +89,9 @@
       "emailRequired": "البريد الإلكتروني مطلوب",
       "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
       "passwordRequired": "كلمة المرور مطلوبة",
-      "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل"
+      "passwordMin": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+      "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+      "passwordMismatch": "كلمتا المرور غير متطابقتين"
     },
     "loginPage": {
       "title": "مرحباً بعودتك",
@@ -124,6 +126,18 @@
       "backToLogin": "العودة لتسجيل الدخول",
       "noAccount": "ليس لديك حساب؟",
       "signUp": "إنشاء حساب"
+    },
+    "createNewPasswordPage": {
+      "title": "إنشاء كلمة مرور جديدة",
+      "subtitle": "يجب أن تكون 8 أحرف على الأقل.",
+      "passwordLabel": "كلمة المرور",
+      "passwordPlaceholder": "أدخل كلمة المرور",
+      "confirmPasswordLabel": "تأكيد كلمة المرور",
+      "confirmPasswordPlaceholder": "أعد إدخال كلمة المرور للتأكيد",
+      "togglePasswordVisibility": "إظهار أو إخفاء كلمة المرور",
+      "toggleConfirmPasswordVisibility": "إظهار أو إخفاء تأكيد كلمة المرور",
+      "submit": "تعيين كلمة المرور الجديدة",
+      "backToLogin": "العودة لتسجيل الدخول"
     },
     "layout": {
       "promoTitle": "حيث تصبح كل إقامة حكاية.",

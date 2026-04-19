@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { ArrowLeftIcon } from "@/assets/icons";
 import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";
-import { Link } from "@/lib/navigation";
+import { Link, useRouter } from "@/lib/navigation";
 
 const OTP_LEN = 4;
 const RESEND_SECONDS = 30;
@@ -22,6 +22,7 @@ export default function VerifyEmailFormSection({
 }: VerifyEmailFormSectionProps) {
   const t = useTranslations("auth.verifyEmailPage");
   const tAuth = useTranslations("auth");
+  const router = useRouter();
   const [digits, setDigits] = useState<string[]>(() =>
     Array.from({ length: OTP_LEN }, () => ""),
   );
@@ -83,6 +84,7 @@ export default function VerifyEmailFormSection({
     setIsSubmitting(true);
     await new Promise((r) => setTimeout(r, 500));
     setIsSubmitting(false);
+    router.push("/auth/create-new-password");
   };
 
   const canResend = resendSeconds === 0;

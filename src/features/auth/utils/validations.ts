@@ -27,3 +27,19 @@ export const forgotPasswordEmailSchema = yup.object({
 export type ForgotPasswordEmailValues = yup.InferType<
   typeof forgotPasswordEmailSchema
 >;
+
+/** Set new password after verification (Figma “Create New Password”). */
+export const createNewPasswordSchema = yup.object({
+  password: yup
+    .string()
+    .min(8, "validation.passwordMin")
+    .required("validation.passwordRequired"),
+  confirmPassword: yup
+    .string()
+    .required("validation.confirmPasswordRequired")
+    .oneOf([yup.ref("password")], "validation.passwordMismatch"),
+});
+
+export type CreateNewPasswordFormValues = yup.InferType<
+  typeof createNewPasswordSchema
+>;
