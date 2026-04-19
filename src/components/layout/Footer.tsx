@@ -26,14 +26,14 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-surface-desert-sand px-4 py-8 sm:px-6 lg:px-16 xl:px-[120px]">
       <div
-        className="pointer-events-none absolute left-0 top-0 opacity-30"
+        className="pointer-events-none absolute left-[-130px] top-[-100px] opacity-30"
         aria-hidden="true"
       >
         <Image
-          src={images.yachtShape}
+          src={images.homeDecorativeWave}
           alt=""
-          width={140}
-          height={160}
+          width={252}
+          height={252}
           className="object-cover"
         />
       </div>
