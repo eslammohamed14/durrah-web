@@ -65,10 +65,6 @@ export default async function BaseLayoutAuth({
 
   const isRegisterShell = authShellVariant === "register";
 
-  const formAreaClasses =
-    formAreaClassName ??
-    "flex min-h-0 flex-1 items-center justify-center px-6 py-10 sm:px-10";
-
   const innerMaxWidthClasses = [
     "w-full",
     contentMaxWidthClass,
@@ -95,7 +91,15 @@ export default async function BaseLayoutAuth({
   );
 
   const formColumn = (
-    <div className={formAreaClasses}>
+    <div
+      className={
+        isRegisterShell
+          ? (formAreaClassName ??
+            "flex w-full items-start justify-center px-6 pb-8 pt-8 sm:px-10 lg:px-0 lg:pb-10 lg:pt-0")
+          : (formAreaClassName ??
+            "flex min-h-0 flex-1 items-center justify-center px-6 py-10 sm:px-10")
+      }
+    >
       <div className={innerMaxWidthClasses}>{children}</div>
     </div>
   );
@@ -107,7 +111,7 @@ export default async function BaseLayoutAuth({
       className={[
         "w-full bg-[var(--surface-primary,#fafafa)] text-durrah-blue",
         isRegisterShell
-          ? "flex flex-col items-start min-h-[100dvh] overflow-x-hidden lg:flex-row"
+          ? "flex flex-col items-start min-h-[100dvh] lg:flex-row bg-white"
           : "grid min-h-0 h-[100dvh] grid-cols-1 overflow-hidden lg:grid-cols-2",
       ]
         .filter(Boolean)
@@ -115,10 +119,10 @@ export default async function BaseLayoutAuth({
     >
       <aside
         className={[
-          "relative hidden bg-black lg:block",
+          "relative hidden lg:block",
           isRegisterShell
-            ? "h-[968px] w-full shrink-0 lg:w-[52%] lg:max-w-[52%]"
-            : "h-full min-h-0",
+            ? "h-[968px] w-full shrink-0 bg-transparent lg:w-[52%] lg:max-w-[52%]"
+            : "h-full min-h-0 bg-black",
         ].join(" ")}
       >
         <AuthSlider
@@ -133,7 +137,7 @@ export default async function BaseLayoutAuth({
         className={[
           "relative flex flex-col bg-white",
           isRegisterShell
-            ? "w-full min-h-[100dvh] min-w-0 overflow-x-hidden overflow-y-visible lg:w-[48%] lg:max-w-[48%] lg:shrink-0"
+            ? "w-full min-h-[100dvh] min-w-0 overflow-hidden lg:w-[48%] lg:max-w-[48%] lg:shrink-0"
             : "min-h-0 h-full min-w-0 overflow-x-hidden overflow-y-auto lg:border-s lg:border-grey-100",
         ].join(" ")}
       >
@@ -154,7 +158,7 @@ export default async function BaseLayoutAuth({
                 alt="icon yacht bottom"
                 width={208}
                 height={195}
-                className="pointer-events-none absolute bottom-[-7%] start-[-130px]"
+                className="pointer-events-none absolute bottom-[-7%] start-[-130px] opacity-40"
                 aria-hidden
               />
             )}
