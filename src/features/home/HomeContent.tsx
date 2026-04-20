@@ -17,6 +17,9 @@ import {
   NEXT_LOCALE_COOKIE,
 } from "@/config/i18n";
 import { createTranslator, getBundledTranslations } from "@/lib/utils/i18n";
+import { SharedHeroSection } from "@/components/shared/ui/SharedHeroSections";
+import images from "@/constant/images";
+import { FilterContainer } from "./components/heroSection/filter-container";
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
@@ -39,7 +42,13 @@ export async function HomeContent({
     <div className="relative overflow-x-hidden">
       <main id="main-content" className="relative z-0">
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
-        <HeroSection allProperties={allProperties} t={t} />
+        <SharedHeroSection
+          allProperties={allProperties}
+          t={t}
+          image={images.durrahHomeHero}
+        >
+          {({ properties }) => <FilterContainer allProperties={properties} />}
+        </SharedHeroSection>
 
         {/* ── Company Metrics ───────────────────────────────────────────────── */}
         <CompanyMetricsSection />

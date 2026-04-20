@@ -6,12 +6,15 @@ import { Footer } from "@/components/layout/Footer";
 import SearchHeroSection from "@/features/search/components/searchHeroSection";
 import { SearchResults } from "@/features/search/SearchResults";
 import { Spinner } from "@/components/ui/Spinner";
+import images from "@/constant/images";
+
 import type {
   PropertyCategory,
   PropertyType,
   SearchFilters,
 } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
+import { SharedHeroSection } from "@/components/shared/ui/SharedHeroSections";
 
 // Search results are always dynamic — filtered by URL params
 export const dynamic = "force-dynamic";
@@ -39,7 +42,7 @@ interface SearchPageProps {
 }
 
 function parseSearchParams(
-  params: Record<string, string | string[] | undefined>,
+  params: Record<string, string | string[] | undefined>
 ): SearchFilters {
   const get = (key: string) => {
     const v = params[key];
@@ -87,7 +90,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     <>
       <Header transparent />
       <main>
-        <SearchHeroSection t={t} />
+        {/* <SearchHeroSection t={t} /> */}
+        <SharedHeroSection allProperties={[]} image={images.searchHero} t={t} />
         <Suspense
           fallback={
             <div className="flex min-h-[60vh] items-center justify-center">
