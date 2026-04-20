@@ -23,10 +23,10 @@ export function Header({ transparent = false }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const baseClasses = transparent
-    ? "absolute top-0 left-0 right-0 z-50 border-b border-white/15"
+    ? "absolute top-0 left-0 right-0 z-50"
     : "sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm";
 
-  const bgClasses = transparent ? "bg-white/10 " : "bg-white";
+  const bgClasses = transparent ? "bg-transparent" : "bg-white";
 
   const linkClasses = transparent
     ? "text-white/90 hover:text-white"
@@ -104,7 +104,7 @@ export function Header({ transparent = false }: HeaderProps) {
                 className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 ${
                   locale === "en"
                     ? transparent
-                      ? "bg-white text-primary-coral-400"
+                      ? "bg-white text-primary-blue-400"
                       : "bg-text-dark text-white"
                     : transparent
                       ? "text-white/70 hover:text-white"
@@ -121,7 +121,7 @@ export function Header({ transparent = false }: HeaderProps) {
                 className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 ${
                   locale === "ar"
                     ? transparent
-                      ? "bg-white text-primary-coral-400"
+                      ? "bg-white text-primary-blue-400"
                       : "bg-text-dark text-white"
                     : transparent
                       ? "text-surface-primary hover:text-surface-primary/80"
@@ -142,7 +142,7 @@ export function Header({ transparent = false }: HeaderProps) {
               </Link>
               <Link
                 href="/register"
-                className={`rounded-xl px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "bg-white text-primary-coral-400 hover:bg-white/90" : "bg-text-dark text-white hover:bg-text-dark/90"}`}
+                className={`rounded-xl px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "bg-white text-primary-blue-400 hover:bg-white/90" : "bg-text-dark text-white hover:bg-text-dark/90"}`}
               >
                 {t("nav.signUp")}
               </Link>

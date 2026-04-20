@@ -7,6 +7,7 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useRouter as useI18nRouter } from "@/lib/navigation";
 import type {
   Booking,
   MaintenanceTicket,
@@ -212,6 +213,7 @@ function TicketsTab({
 
 function SavedTab() {
   const { t } = useLocale();
+  const i18nRouter = useI18nRouter();
   return (
     <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center">
       <p className="text-gray-400 text-sm">
@@ -221,7 +223,7 @@ function SavedTab() {
         variant="outline"
         size="sm"
         className="mt-4"
-        onClick={() => (window.location.href = "/search")}
+        onClick={() => i18nRouter.push("/search")}
       >
         {t("dashboard.guest.browseProperties")}
       </Button>

@@ -30,13 +30,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
       alternates: localeUrls(""),
     })),
-    {
-      url: `${BASE_URL}/search`,
+    ...SUPPORTED_LOCALES.map((locale) => ({
+      url: `${BASE_URL}/${locale}/search`,
       lastModified: new Date(),
       changeFrequency: "daily" as const,
       priority: 0.9,
       alternates: localeUrls("/search"),
-    },
+    })),
     ...SUPPORTED_LOCALES.map((locale) => ({
       url: `${BASE_URL}/${locale}/activities`,
       lastModified: new Date(),

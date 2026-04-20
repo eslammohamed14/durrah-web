@@ -8,6 +8,7 @@ import property5 from "@/assets/images/property5.webp";
 import property6 from "@/assets/images/property6.webp";
 import activity1 from "@/assets/images/activity1.webp";
 import activity2 from "@/assets/images/activity2.webp";
+import searchHero from "@/assets/images/search_hero.webp";
 import yachtShape from "@/assets/images/yacht_shape.png";
 import durrahLogoBlue from "@/assets/images/durrah_logo_blue.png";
 import homeDecorativeWave from "@/assets/images/home-decorative-wave.svg";
@@ -29,6 +30,7 @@ const images = {
   property6: property6.src,
   activity1: activity1.src,
   activity2: activity2.src,
+  searchHero: searchHero.src,
   yachtShape: yachtShape.src,
   durrahLogoBlue: durrahLogoBlue.src,
   authImage: authImage.src,

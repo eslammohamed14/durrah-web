@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { getAPIClient } from "@/lib/api";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import SearchHeroSection from "@/features/search/components/searchHeroSection";
 import { SearchResults } from "@/features/search/SearchResults";
 import { Spinner } from "@/components/ui/Spinner";
 import type {
@@ -10,6 +11,7 @@ import type {
   PropertyType,
   SearchFilters,
 } from "@/lib/types";
+import { getTranslations } from "next-intl/server";
 
 // Search results are always dynamic — filtered by URL params
 export const dynamic = "force-dynamic";
@@ -79,11 +81,13 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   const api = getAPIClient();
   const properties = await api.searchProperties(filters);
+  const t = await getTranslations();
 
   return (
     <>
-      <Header />
+      <Header transparent />
       <main>
+        <SearchHeroSection t={t} />
         <Suspense
           fallback={
             <div className="flex min-h-[60vh] items-center justify-center">

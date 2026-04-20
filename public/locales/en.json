@@ -274,6 +274,8 @@
     "instagramSubtitle": "Follow us on Instagram for inspiring stays, unforgettable adventures, and your next getaway."
   },
   "search": {
+    "heroTitle": "Discover Stays That Match Your Lifestyle",
+    "heroSubtitle": "Explore a curated selection of units tailored to your needs, with smart filters to help you find exactly what you're looking for.",
     "results": "{count} results found",
     "noResults": "No properties found",
     "noResultsHint": "Try adjusting your filters",

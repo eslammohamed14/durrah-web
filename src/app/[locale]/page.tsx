@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DEFAULT_LOCALE } from "@/config/i18n";
 import { getAPIClient } from "@/lib/api";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -65,7 +66,7 @@ function WebsiteStructuredData() {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: `${BASE_URL}/search?q={search_term_string}`,
+        urlTemplate: `${BASE_URL}/${DEFAULT_LOCALE}/search?q={search_term_string}`,
       },
       "query-input": "required name=search_term_string",
     },
