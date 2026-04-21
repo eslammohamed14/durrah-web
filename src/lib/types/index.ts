@@ -99,6 +99,10 @@ export interface Property {
     currency: string;
     priceType: 'per_night' | 'per_month' | 'total';
     fees?: { name: string; amount: number }[];
+    originalPrice?: number;
+    offerPercentage?: number;
+    previewNights?: number;
+    previewNightlyRate?: number;
   };
   amenities: string[];
   images: PropertyImage[];

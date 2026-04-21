@@ -28,7 +28,7 @@ export default function PropertyDetailsPage({
 
   return (
     <>
-      <main className="mx-auto max-w-[1200px] space-y-10 px-4 py-10 sm:px-6">
+      <main className="mx-auto max-w-[1200px] space-y-10 bg-surface-primary px-4 pb-10 sm:px-6">
         <PropertyHeroSection
           property={property}
           onOpenGallery={(index) => {
@@ -37,7 +37,7 @@ export default function PropertyDetailsPage({
           }}
         />
 
-        <section className="grid gap-6 lg:grid-cols-[1fr_384px]">
+        <section className="grid gap-6 lg:grid-cols-[792px_384px]">
           <div className="space-y-8">
             <PropertyInfoSection property={property} />
             <PropertyAmenitiesSection property={property} />

@@ -18,10 +18,10 @@ export default function PropertyPoliciesSection({
   return (
     <section className="space-y-5">
       <div>
-        <h3 className="text-2xl font-semibold text-text-dark">
+        <h3 className="text-[28px] font-semibold leading-[1.4] text-grey-800">
           {t("propertyDetails.reservationPolicy")}
         </h3>
-        <p className="mt-3 leading-8 text-grey-700">
+        <p className="mt-3 text-[16px] leading-[1.6] text-grey-600">
           {property.policies.houseRules[locale as "en" | "ar"]}
         </p>
       </div>
@@ -29,13 +29,13 @@ export default function PropertyPoliciesSection({
         <button
           type="button"
           onClick={() => setShowCancellation((v) => !v)}
-          className="flex w-full items-center justify-between text-left text-2xl font-semibold text-text-dark"
+          className="flex w-full items-center justify-between text-left text-[28px] font-semibold leading-[1.4] text-grey-800"
         >
           {t("propertyDetails.cancellationPolicy")}
-          <span>{showCancellation ? "-" : "+"}</span>
+          <span className="text-[20px]">{showCancellation ? "▲" : "▼"}</span>
         </button>
         {showCancellation && property.policies.cancellation && (
-          <p className="mt-3 leading-8 text-grey-700">
+          <p className="mt-3 text-[16px] leading-[1.6] text-grey-600">
             {property.policies.cancellation.description[locale as "en" | "ar"]}
           </p>
         )}

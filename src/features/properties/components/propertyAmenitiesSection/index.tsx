@@ -14,14 +14,14 @@ export default function PropertyAmenitiesSection({
 
   return (
     <section className="space-y-4">
-      <h2 className="text-3xl font-semibold text-text-dark">
+      <h2 className="text-[28px] font-semibold leading-[1.4] text-grey-800">
         {t("propertyDetails.premiumAmenities")}
       </h2>
-      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid gap-x-4 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
         {property.amenities.map((amenity) => (
           <li
             key={amenity}
-            className="rounded-xl border border-border-default px-4 py-3 text-sm text-grey-700"
+            className="flex h-[42px] items-center rounded-xl border border-grey-50 bg-surface-primary px-3 text-[14px] leading-[1.6] text-grey-700"
           >
             {amenity}
           </li>

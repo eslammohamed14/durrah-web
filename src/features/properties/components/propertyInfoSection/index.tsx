@@ -12,24 +12,26 @@ export default function PropertyInfoSection({ property }: PropertyInfoSectionPro
   const t = useTranslations();
   const description =
     property.description[locale as "en" | "ar"] || property.description.en;
-  const area =
-    property.location.address[locale as "en" | "ar"] || property.location.address.en;
+  const area = property.location.area;
+  const sqFt = Math.round(property.specifications.size * 10.7639);
 
   return (
-    <section className="space-y-4">
-      <div className="space-y-2">
-        <p className="text-base text-grey-700">{area}</p>
-        <h2 className="text-3xl font-semibold text-text-dark">
+    <section className="space-y-6 pt-10">
+      <div className="space-y-3">
+        <p className="text-[16px] font-medium leading-[1.5] text-grey-700">{area}</p>
+        <h2 className="text-[28px] font-semibold leading-[1.4] text-grey-800">
           {t("propertyDetails.unitInfo")}
         </h2>
-        <div className="flex flex-wrap gap-4 text-base text-grey-700">
-          <span>{property.specifications.size} sq.ft.</span>
+        <div className="flex flex-wrap items-center gap-3 text-[16px] leading-[1.6] text-grey-700">
+          <span>{sqFt.toLocaleString("en-US")} sq.ft.</span>
           <span>{property.specifications.rooms ?? 0} Bed</span>
           <span>{property.specifications.bathrooms ?? 0} Bath</span>
-          <span>{property.specifications.maxGuests ?? 1} Guests</span>
+          <span>1 Living</span>
+          <span>1 Kitchen</span>
+          <span>1 Parking Space</span>
         </div>
       </div>
-      <p className="leading-8 text-grey-700">{description}</p>
+      <p className="text-[16px] leading-[1.6] text-grey-600">{description}</p>
     </section>
   );
 }

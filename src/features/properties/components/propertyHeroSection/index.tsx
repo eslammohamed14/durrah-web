@@ -20,23 +20,29 @@ export default function PropertyHeroSection({
     property.location.address[locale as "en" | "ar"] || property.location.address.en;
 
   return (
-    <section className="space-y-4">
-      <div>
-        <h1 className="text-3xl font-semibold text-text-dark sm:text-5xl">{title}</h1>
-        <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-grey-600 sm:text-base">
+    <section className="space-y-4 pt-10">
+      <div className="space-y-1">
+        <h1 className="text-[40px] font-semibold leading-[1.4] text-grey-800">{title}</h1>
+        <div className="mt-1 flex flex-wrap items-center gap-3 text-[19px] leading-[1.5] text-grey-700">
           <span>{property.ratings.average.toFixed(1)}</span>
           <span className="h-1 w-1 rounded-full bg-grey-500" />
           <span>{t(`categories.${property.category}`)}</span>
+          {property.card?.status && (
+            <>
+              <span className="h-1 w-1 rounded-full bg-grey-500" />
+              <span>{property.card.status === "family" ? "Family" : "Single"}</span>
+            </>
+          )}
           <span className="h-1 w-1 rounded-full bg-grey-500" />
-          <span>{address}</span>
+          <span>{property.amenities[0] || address}</span>
         </div>
       </div>
 
-      <div className="grid h-[420px] grid-cols-1 gap-4 lg:h-[611px] lg:grid-cols-[1fr_291px]">
+      <div className="grid h-[420px] grid-cols-1 gap-4 lg:h-[611px] lg:grid-cols-[893px_291px]">
         <button
           type="button"
           onClick={() => onOpenGallery(0)}
-          className="relative overflow-hidden rounded-2xl"
+          className="relative overflow-hidden rounded-xl"
         >
           <Image
             src={property.images[0]?.url}
@@ -53,7 +59,7 @@ export default function PropertyHeroSection({
               key={image.id}
               type="button"
               onClick={() => onOpenGallery(idx + 1)}
-              className="relative overflow-hidden rounded-2xl"
+              className="relative overflow-hidden rounded-xl"
             >
               <Image
                 src={image.url}
@@ -62,6 +68,11 @@ export default function PropertyHeroSection({
                 sizes="291px"
                 className="object-cover"
               />
+              {idx === 2 && property.images.length > 4 && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-[20px] font-semibold leading-[1.5] text-white">
+                  + {property.images.length} Photos
+                </div>
+              )}
             </button>
           ))}
         </div>

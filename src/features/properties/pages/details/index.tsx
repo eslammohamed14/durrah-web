@@ -43,11 +43,13 @@ export default async function PropertyDetailsRoute({ params }: Props) {
     return (
       <>
         <Header />
-        <PropertyDetailsPage
-          property={property}
-          ownerName={owner?.name}
-          similarProperties={similarProperties}
-        />
+        <div className="bg-surface-primary">
+          <PropertyDetailsPage
+            property={property}
+            ownerName={owner?.name}
+            similarProperties={similarProperties}
+          />
+        </div>
         <Footer />
       </>
     );
