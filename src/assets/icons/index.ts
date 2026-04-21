@@ -48,6 +48,13 @@ export {
 } from "./PropertySectionIcon";
 export { SearchIcon, type SearchIconProps } from "./SearchIcon";
 export { StarColoredIcon, type StarColoredIconProps } from "./StarColoredIcon";
+export { StarSlashIcon, type StarSlashIconProps } from "./StarSlashIcon";
+export { HeartOutlineIcon, type HeartOutlineIconProps } from "./HeartOutlineIcon";
+export { ShareOutlineIcon, type ShareOutlineIconProps } from "./ShareOutlineIcon";
+export {
+  ImageOutlineIcon,
+  type ImageOutlineIconProps,
+} from "./ImageOutlineIcon";
 export { WorkBagIcon, type WorkBagIconProps } from "./WorkBagIcon";
 export { VerifyIcon, type VerifyIconProps } from "./VerifyIcon";
 export { Xshap, type XshapProps } from "./xshap";

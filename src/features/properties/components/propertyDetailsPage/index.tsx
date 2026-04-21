@@ -28,7 +28,7 @@ export default function PropertyDetailsPage({
 
   return (
     <>
-      <main className="mx-auto max-w-[1200px] space-y-10 bg-surface-primary px-4 pb-10 sm:px-6">
+      <main className="mx-auto max-w-[1200px] space-y-10 bg-surface-primary px-4 pb-10 sm:px-6 lg:px-0">
         <PropertyHeroSection
           property={property}
           onOpenGallery={(index) => {

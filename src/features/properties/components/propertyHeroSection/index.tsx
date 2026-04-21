@@ -2,6 +2,12 @@
 
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
+import {
+  HeartOutlineIcon,
+  ImageOutlineIcon,
+  ShareOutlineIcon,
+  StarSlashIcon,
+} from "@/assets/icons";
 import type { Property } from "@/lib/types";
 
 interface PropertyHeroSectionProps {
@@ -22,19 +28,40 @@ export default function PropertyHeroSection({
   return (
     <section className="space-y-4 pt-10">
       <div className="space-y-1">
-        <h1 className="text-[40px] font-semibold leading-[1.4] text-grey-800">{title}</h1>
-        <div className="mt-1 flex flex-wrap items-center gap-3 text-[19px] leading-[1.5] text-grey-700">
-          <span>{property.ratings.average.toFixed(1)}</span>
-          <span className="h-1 w-1 rounded-full bg-grey-500" />
-          <span>{t(`categories.${property.category}`)}</span>
-          {property.card?.status && (
-            <>
-              <span className="h-1 w-1 rounded-full bg-grey-500" />
-              <span>{property.card.status === "family" ? "Family" : "Single"}</span>
-            </>
-          )}
-          <span className="h-1 w-1 rounded-full bg-grey-500" />
-          <span>{property.amenities[0] || address}</span>
+        <h1 className="text-[40px] font-medium leading-[1.4] text-primary-blue-400">
+          {title}
+        </h1>
+        <div className="mt-1 flex items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-2 text-[18px] leading-[1.6] text-grey-700">
+            <StarSlashIcon size={18} />
+            <span>{property.ratings.average.toFixed(1)}</span>
+            <span className="h-1 w-1 rounded-full bg-grey-500" />
+            <span>{t(`categories.${property.category}`)}</span>
+            {property.card?.status && (
+              <>
+                <span className="h-1 w-1 rounded-full bg-grey-500" />
+                <span>{property.card.status === "family" ? "Family" : "Single"}</span>
+              </>
+            )}
+            <span className="h-1 w-1 rounded-full bg-grey-500" />
+            <span>{property.amenities[0] || address}</span>
+          </div>
+          <div className="hidden items-center gap-2 sm:flex">
+            <button
+              type="button"
+              className="inline-flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white"
+              aria-label="Add to favorites"
+            >
+              <HeartOutlineIcon size={24} />
+            </button>
+            <button
+              type="button"
+              className="inline-flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white"
+              aria-label="Share property"
+            >
+              <ShareOutlineIcon size={24} />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -52,6 +79,10 @@ export default function PropertyHeroSection({
             sizes="(max-width: 1024px) 100vw, 893px"
             className="object-cover"
           />
+          <span className="absolute bottom-5 right-5 hidden h-[42px] items-center gap-2 rounded-[24px] bg-white px-3 py-1 text-[14px] font-medium leading-[1.5] text-grey-700 lg:inline-flex">
+            {t("common.viewAllImages")}
+            <ImageOutlineIcon size={24} />
+          </span>
         </button>
         <div className="hidden gap-4 lg:grid lg:grid-rows-3">
           {property.images.slice(1, 4).map((image, idx) => (
