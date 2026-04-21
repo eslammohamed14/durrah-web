@@ -14,7 +14,7 @@
 
 import React, { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import type { Property } from "@/lib/types";
 import type { BookingFormData } from "./BookingForm";
 import { PaymentForm } from "./PaymentForm";

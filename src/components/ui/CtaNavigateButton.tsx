@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { Button } from "./Button";
 
 export interface CtaNavigateButtonProps {

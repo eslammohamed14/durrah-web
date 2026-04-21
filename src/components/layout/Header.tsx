@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import { Link } from "@/navigation";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import images from "@/constant/images";
 import Image from "next/image";

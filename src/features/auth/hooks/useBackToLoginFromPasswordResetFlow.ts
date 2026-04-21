@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { useRouter } from "@/lib/navigation";
+import { useRouter } from "@/navigation";
 
 const SESSION_KEY = "durrah:password-reset-from-login";
 

@@ -10,7 +10,7 @@ import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { PhoneNumberInput } from "@/components/ui/PhoneNumberInput";
-import { Link } from "@/lib/navigation";
+import { Link } from "@/navigation";
 import {
   registerSchema,
   type RegisterFormValues,

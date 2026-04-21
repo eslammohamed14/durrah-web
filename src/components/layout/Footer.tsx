@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/navigation";
 import images from "@/constant/images";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import Image from "next/image";

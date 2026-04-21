@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useRouter } from "@/navigation";
 import images from "@/constant/images";
 import { ArrowRightIcon, BlogsSectionIcon } from "@/assets/icons";
 import { useLocale } from "@/lib/contexts/LocaleContext";

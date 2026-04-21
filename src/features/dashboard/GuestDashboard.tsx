@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import type {
   Booking,
   MaintenanceTicket,
@@ -212,6 +212,7 @@ function TicketsTab({
 
 function SavedTab() {
   const { t } = useLocale();
+  const router = useRouter();
   return (
     <div className="rounded-xl border-2 border-dashed border-gray-200 py-12 text-center">
       <p className="text-gray-400 text-sm">
@@ -221,7 +222,7 @@ function SavedTab() {
         variant="outline"
         size="sm"
         className="mt-4"
-        onClick={() => (window.location.href = "/search")}
+        onClick={() => router.push("/search")}
       >
         {t("dashboard.guest.browseProperties")}
       </Button>

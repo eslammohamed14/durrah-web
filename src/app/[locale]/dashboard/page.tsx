@@ -9,7 +9,7 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import { useAuth } from "@/lib/contexts/AuthContext";
 import { Spinner } from "@/components/ui/Spinner";

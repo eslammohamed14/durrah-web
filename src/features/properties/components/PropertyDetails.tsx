@@ -7,7 +7,7 @@
  */
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";

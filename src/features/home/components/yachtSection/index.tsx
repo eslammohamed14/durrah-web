@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import images from "@/constant/images";
 import { ArrowRightIcon, SearchIcon, BeachesSectionIcon } from "@/assets/icons";
 import { Button } from "@/components/ui/Button";

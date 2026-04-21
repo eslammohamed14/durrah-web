@@ -1,4 +1,6 @@
-import Link from "next/link";
+"use client";
+
+import { Link } from "@/navigation";
 import { ArrowRightIcon } from "@/assets/icons";
 
 export interface BeachItemData {

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { Link } from "@/lib/navigation";
+import { Link } from "@/navigation";
 import { markPasswordResetFlowStartedFromLogin } from "../../hooks/useBackToLoginFromPasswordResetFlow";
 import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";

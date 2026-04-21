@@ -8,7 +8,7 @@
 
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { Badge } from "@/components/ui/Badge";
 import PropertyGalleryDynamic from "@/features/properties/components/PropertyGalleryDynamic";
 import { InquiryForm } from "@/features/inquiry/InquiryForm";
