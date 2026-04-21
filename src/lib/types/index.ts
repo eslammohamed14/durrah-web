@@ -60,6 +60,22 @@ export interface PropertyImage {
   order: number;
 }
 
+/** Icons for the Premium Amenities grid (Figma unit details). */
+export type PremiumAmenityIconKey =
+  | 'pool'
+  | 'marina'
+  | 'seaView'
+  | 'waterSports'
+  | 'dining'
+  | 'events';
+
+export interface PremiumAmenityHighlight {
+  id: string;
+  icon: PremiumAmenityIconKey;
+  /** `next-intl` key under `propertyDetails.*` (e.g. `premiumPrivatePool`). */
+  labelKey: string;
+}
+
 export interface Coordinates {
   lat: number;
   lng: number;
@@ -109,6 +125,8 @@ export interface Property {
     extraGuestFeePerNight?: number;
   };
   amenities: string[];
+  /** Curated premium highlights with icons (Figma). Falls back to `amenities` when absent. */
+  premiumAmenities?: PremiumAmenityHighlight[];
   images: PropertyImage[];
   floorPlans?: string[];
   /**

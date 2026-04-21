@@ -344,7 +344,13 @@
     "locationNearby": "Location & Nearby",
     "reservationPolicy": "Reservation Policy",
     "cancellationPolicy": "Cancellation Policy",
-    "similarProperties": "Similar Properties"
+    "similarProperties": "Similar Properties",
+    "premiumPrivatePool": "Private Pool",
+    "premiumNearMarina": "Near Marina",
+    "premiumSeaView": "Sea View",
+    "premiumWaterSports": "Water Sports Nearby",
+    "premiumCloseToDining": "Close to Dining",
+    "premiumEventFriendly": "Event-Friendly"
   },
   "booking": {
     "title": "Complete Your Booking",

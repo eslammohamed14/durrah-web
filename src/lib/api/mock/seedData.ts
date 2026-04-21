@@ -136,6 +136,14 @@ export const seedProperties: Property[] = [
       "Kitchen",
       "Washer",
     ],
+    premiumAmenities: [
+      { id: "pa-1", icon: "pool", labelKey: "premiumPrivatePool" },
+      { id: "pa-2", icon: "marina", labelKey: "premiumNearMarina" },
+      { id: "pa-3", icon: "seaView", labelKey: "premiumSeaView" },
+      { id: "pa-4", icon: "waterSports", labelKey: "premiumWaterSports" },
+      { id: "pa-5", icon: "dining", labelKey: "premiumCloseToDining" },
+      { id: "pa-6", icon: "events", labelKey: "premiumEventFriendly" },
+    ],
     images: [
       { id: "img-1", url: images.property1, alt: "Living room", order: 0 },
       { id: "img-2", url: images.property2, alt: "Bedroom", order: 1 },

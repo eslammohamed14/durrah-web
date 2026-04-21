@@ -344,7 +344,13 @@
     "locationNearby": "الموقع وما حوله",
     "reservationPolicy": "سياسة الحجز",
     "cancellationPolicy": "سياسة الإلغاء",
-    "similarProperties": "عقارات مشابهة"
+    "similarProperties": "عقارات مشابهة",
+    "premiumPrivatePool": "مسبح خاص",
+    "premiumNearMarina": "قرب المرسى",
+    "premiumSeaView": "إطلالة بحرية",
+    "premiumWaterSports": "أنشطة مائية قريبة",
+    "premiumCloseToDining": "قرب المطاعم",
+    "premiumEventFriendly": "مناسب للفعاليات"
   },
   "booking": {
     "title": "أكمل حجزك",

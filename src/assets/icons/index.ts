@@ -12,6 +12,13 @@ export {
 } from "./BlogsSectionIcon";
 export { DimensionIcon, type DimensionIconProps } from "./DimensionIcon";
 export { DiscountIcon, type DiscountIconProps } from "./DiscountIcon";
+export { DiningIcon, type DiningIconProps } from "./DiningIcon";
+export { EventsIcon, type EventsIconProps } from "./EventsIcon";
+export { PoolPremiumIcon, type PoolPremiumIconProps } from "./PoolPremiumIcon";
+export {
+  SeaViewPremiumIcon,
+  type SeaViewPremiumIconProps,
+} from "./SeaViewPremiumIcon";
 export {
   LocationOutlineIcon,
   type LocationOutlineIconProps,
