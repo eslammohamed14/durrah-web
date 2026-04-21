@@ -1,4 +1,5 @@
 import createMiddleware from "next-intl/middleware";
+import { NextRequest } from "next/server";
 import {
   SUPPORTED_LOCALES as locales,
   DEFAULT_LOCALE as defaultLocale,
@@ -11,7 +12,10 @@ const intlMiddleware = createMiddleware({
   localeDetection: true,
 });
 
-export default intlMiddleware;
+// FIXED: Replaced 'export default' with the named 'proxy' function required by Next.js 16
+export function proxy(request: NextRequest) {
+  return intlMiddleware(request);
+}
 
 export const config = {
   matcher: [
