@@ -41,47 +41,6 @@ const nextConfig: NextConfig = {
       destination: "/auth/register",
     },
   ],
-  // Cache-Control headers for static assets and API routes
-  headers: async () => [
-    {
-      // Immutable cache for Next.js static chunks (hashed filenames)
-      source: "/_next/static/:path*",
-      headers: [
-        {
-          key: "Cache-Control",
-          value: "public, max-age=31536000, immutable",
-        },
-      ],
-    },
-    {
-      // Longer cache for public static assets (images, fonts, videos)
-      source: "/images/:path*",
-      headers: [
-        {
-          key: "Cache-Control",
-          value: "public, max-age=86400, stale-while-revalidate=604800",
-        },
-      ],
-    },
-    {
-      source: "/videos/:path*",
-      headers: [
-        {
-          key: "Cache-Control",
-          value: "public, max-age=86400, stale-while-revalidate=604800",
-        },
-      ],
-    },
-    {
-      source: "/locales/:path*",
-      headers: [
-        {
-          key: "Cache-Control",
-          value: "public, max-age=3600, stale-while-revalidate=86400",
-        },
-      ],
-    },
-  ],
 };
 
 export default withBundleAnalyzer(withNextIntl(nextConfig));
