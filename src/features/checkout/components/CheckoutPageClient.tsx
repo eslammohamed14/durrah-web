@@ -1,13 +1,5 @@
 "use client";
 
-/**
- * CheckoutPageClient — client shell for the checkout flow.
- *
- * Manages the two-phase flow:
- *   Phase 1: BookingForm (date selection + guest count + price preview)
- *   Phase 2: CheckoutContent (guest info + payment)
- */
-
 import React, { useState } from "react";
 import type { Property } from "@/lib/types";
 import {
@@ -24,9 +16,7 @@ interface Props {
 
 export function CheckoutPageClient({ property }: Props) {
   const { locale, t } = useLocale();
-
   const [bookingData, setBookingData] = useState<BookingFormData | null>(null);
-
   const propertyTitle = property.title[locale === "ar" ? "ar" : "en"];
 
   const steps = [
@@ -36,7 +26,6 @@ export function CheckoutPageClient({ property }: Props) {
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 2xl:max-w-screen-xl">
-      {/* Page header */}
       <div className="mb-5 sm:mb-6">
         <h1 className="text-xl font-bold text-gray-900 sm:text-2xl">
           {bookingData
@@ -46,7 +35,6 @@ export function CheckoutPageClient({ property }: Props) {
         <p className="mt-1 text-sm text-gray-500">{propertyTitle}</p>
       </div>
 
-      {/* Progress indicator */}
       <div className="mb-8">
         <ProgressSteps
           steps={steps}
@@ -55,7 +43,6 @@ export function CheckoutPageClient({ property }: Props) {
       </div>
 
       {!bookingData ? (
-        /* Phase 1: date + guest selection */
         <div className="w-full sm:max-w-xl">
           <BookingForm
             property={property}
@@ -64,9 +51,7 @@ export function CheckoutPageClient({ property }: Props) {
           />
         </div>
       ) : (
-        /* Phase 2: guest info + payment */
         <>
-          {/* Back to date selection */}
           <button
             type="button"
             onClick={() => setBookingData(null)}

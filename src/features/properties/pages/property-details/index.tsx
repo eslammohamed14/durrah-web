@@ -1,8 +1,3 @@
-/**
- * Property Details Page — SSR with dynamic metadata and JSON-LD structured data.
- * Requirements: 4.10, 19.1, 19.2, 19.3
- */
-
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAPIClient } from "@/lib/api";
@@ -13,8 +8,6 @@ import { PropertyPageContent } from "@/features/properties/components/PropertyPa
 interface Props {
   params: Promise<{ id: string }>;
 }
-
-// ── Metadata ──────────────────────────────────────────────────────────────────
 
 // Revalidate every hour — property data changes infrequently
 export const revalidate = 3600;
@@ -58,8 +51,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// ── JSON-LD structured data ───────────────────────────────────────────────────
-
 function PropertyStructuredData({
   property,
 }: {
@@ -99,8 +90,6 @@ function PropertyStructuredData({
   );
 }
 
-// ── Page ──────────────────────────────────────────────────────────────────────
-
 export default async function PropertyPage({ params }: Props) {
   const { id } = await params;
   const api = getAPIClient();
@@ -118,7 +107,6 @@ export default async function PropertyPage({ params }: Props) {
     notFound();
   }
 
-  // Fetch owner name (best-effort — don't fail the page if unavailable)
   try {
     owner = await api.getUserProfile(property.ownerId);
   } catch {

@@ -21,7 +21,7 @@ import { PaymentForm } from "./PaymentForm";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Spinner } from "@/components/ui/Spinner";
-import { createPaymentIntent } from "@/app/checkout/[propertyId]/actions";
+import { createPaymentIntent } from "@/features/checkout/actions/createPaymentIntent";
 import { getAPIClient } from "@/lib/api";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 

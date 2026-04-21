@@ -1,7 +1,3 @@
-/**
- * Route-level loading skeleton for the search results page.
- */
-
 import { Skeleton } from "@/components/ui/Skeleton";
 
 export default function SearchLoading() {
@@ -13,7 +9,6 @@ export default function SearchLoading() {
       />
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex gap-8">
-          {/* Filters sidebar */}
           <aside
             className="hidden w-64 shrink-0 space-y-4 lg:block"
             aria-hidden="true"
@@ -23,7 +18,6 @@ export default function SearchLoading() {
               <Skeleton key={i} className="h-10 w-full" />
             ))}
           </aside>
-          {/* Results grid */}
           <div className="flex-1">
             <Skeleton className="mb-6 h-6 w-40" />
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
