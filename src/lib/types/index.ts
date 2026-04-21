@@ -114,6 +114,17 @@ export interface Property {
     average: number;
     count: number;
   };
+  host?: {
+    name: Record<Locale, string>;
+    title?: Record<Locale, string>;
+    description?: Record<Locale, string>;
+    isOfficialUnit?: boolean;
+  };
+  nearby?: Array<{
+    icon: "location" | "shop" | "building";
+    label: Record<Locale, string>;
+  }>;
+  similarProperties?: string[];
   policies: {
     cancellation?: CancellationPolicy;
     houseRules: Record<Locale, string>;

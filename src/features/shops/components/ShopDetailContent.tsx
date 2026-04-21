@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import { Link } from "@/navigation";
 import { Badge } from "@/components/ui/Badge";
-import PropertyGalleryDynamic from "@/features/properties/components/PropertyGalleryDynamic";
+import PropertyGalleryDynamic from "@/features/properties/components/propertyGalleryDynamic";
 import { InquiryForm } from "@/features/inquiry/InquiryForm";
 import type { Property } from "@/lib/types";
 

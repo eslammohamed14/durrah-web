@@ -9,10 +9,9 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
-import Image from "next/image";
 import { Link } from "@/navigation";
 import { Badge } from "@/components/ui/Badge";
-import PropertyGalleryDynamic from "@/features/properties/components/PropertyGalleryDynamic";
+import PropertyGalleryDynamic from "@/features/properties/components/propertyGalleryDynamic";
 import {
   AvailabilityCalendar,
   type DateRange,

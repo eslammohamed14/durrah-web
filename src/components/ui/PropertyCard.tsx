@@ -4,6 +4,7 @@ import type { Property, PropertyImage } from "@/lib/types";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { Link } from "@/navigation";
 import {
   ArrowRightIcon,
   BathroomIcon,
@@ -62,6 +63,7 @@ function sortedImages(images: PropertyImage[]) {
 
 export function PropertyCard({ property }: PropertyCardProps) {
   const { t, locale, dir } = useLocale();
+  const propertyHref = `/properties/${property.id}`;
   const title = property.title[locale] || property.title.en;
   const galleryImages = sortedImages(property.images);
   const isForSale = property.category === "buy";
@@ -127,9 +129,11 @@ export function PropertyCard({ property }: PropertyCardProps) {
       <div className="flex flex-col gap-3 px-3 pt-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <h3 className="text-xl font-semibold leading-tight text-grey-800">
-              {title}
-            </h3>
+            <Link href={propertyHref} className="transition-colors hover:text-primary-blue-400">
+              <h3 className="text-xl font-semibold leading-tight text-grey-800">
+                {title}
+              </h3>
+            </Link>
           </div>
           <div className="flex shrink-0 items-center gap-1">
             {cardStatus != null ? (
@@ -172,13 +176,13 @@ export function PropertyCard({ property }: PropertyCardProps) {
               {originalPrice} SAR
             </span>
           </div>
-          <button
-            type="button"
+          <Link
+            href={propertyHref}
             aria-label={t("home.viewPropertyDetails")}
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#F4F4F4] text-text-dark transition-colors hover:bg-[#e8e8e8]"
           >
             <ArrowRightIcon />
-          </button>
+          </Link>
         </div>
       </div>
     </article>

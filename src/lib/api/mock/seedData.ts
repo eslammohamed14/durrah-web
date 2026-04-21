@@ -144,6 +144,39 @@ export const seedProperties: Property[] = [
       maxStay: 30,
     },
     ratings: { average: 4.8, count: 24 },
+    host: {
+      name: { en: "DURRAT AL AROUS", ar: "درة العروس" },
+      title: { en: "Official Unit", ar: "وحدة رسمية" },
+      description: {
+        en: "This property is part of the official Durrat Al Arous resort experience.",
+        ar: "هذه الوحدة جزء من تجربة منتجع درة العروس الرسمية.",
+      },
+      isOfficialUnit: true,
+    },
+    nearby: [
+      {
+        icon: "location",
+        label: {
+          en: "Next to Usman Super Store",
+          ar: "بجوار سوبر ماركت عثمان",
+        },
+      },
+      {
+        icon: "shop",
+        label: {
+          en: "5 minutes to Reda Al Arous",
+          ar: "5 دقائق إلى رضا العروس",
+        },
+      },
+      {
+        icon: "building",
+        label: {
+          en: "10 min to City Center Mall",
+          ar: "10 دقائق إلى سيتي سنتر مول",
+        },
+      },
+    ],
+    similarProperties: ["prop-rent-2", "prop-buy-1", "prop-buy-2"],
     policies: {
       cancellation: {
         type: "moderate",
@@ -218,6 +251,20 @@ export const seedProperties: Property[] = [
       minStay: 3,
     },
     ratings: { average: 4.6, count: 11 },
+    host: {
+      name: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+      title: { en: "Superhost", ar: "مضيف مميز" },
+      description: {
+        en: "Passionate host dedicated to exceptional stays along the coast.",
+        ar: "مضيف شغوف بتقديم إقامة استثنائية على الساحل.",
+      },
+    },
+    nearby: [
+      { icon: "location", label: { en: "Core Bay Beach", ar: "شاطئ كور باي" } },
+      { icon: "shop", label: { en: "Nearby Marina", ar: "بالقرب من المارينا" } },
+      { icon: "building", label: { en: "City services 10 min", ar: "خدمات المدينة 10 دقائق" } },
+    ],
+    similarProperties: ["prop-rent-1", "prop-buy-2", "prop-activity-1"],
     policies: {
       cancellation: {
         type: "strict",
@@ -271,6 +318,20 @@ export const seedProperties: Property[] = [
     ],
     card: { status: "single" },
     ratings: { average: 4.5, count: 3 },
+    host: {
+      name: { en: "Al Jazeera Properties", ar: "الجزيرة العقارية" },
+      title: { en: "Managed Property", ar: "وحدة مُدارة" },
+      description: {
+        en: "Licensed third-party managed property.",
+        ar: "وحدة تُدار بواسطة مزود مرخص.",
+      },
+    },
+    nearby: [
+      { icon: "location", label: { en: "Sea promenade", ar: "ممشى البحر" } },
+      { icon: "shop", label: { en: "Retail district", ar: "منطقة تجارية" } },
+      { icon: "building", label: { en: "Business center", ar: "مركز أعمال" } },
+    ],
+    similarProperties: ["prop-buy-2", "prop-rent-1", "prop-rent-2"],
     policies: {
       houseRules: { en: "Inquire for details.", ar: "استفسر للتفاصيل." },
     },
@@ -321,6 +382,21 @@ export const seedProperties: Property[] = [
     ],
     card: { status: "family" },
     ratings: { average: 4.7, count: 9 },
+    host: {
+      name: { en: "Durrat Al Arous", ar: "درة العروس" },
+      title: { en: "Official Unit", ar: "وحدة رسمية" },
+      description: {
+        en: "Professionally managed by the Durrat team.",
+        ar: "تُدار باحترافية من فريق درة.",
+      },
+      isOfficialUnit: true,
+    },
+    nearby: [
+      { icon: "location", label: { en: "Core Bay Beach", ar: "شاطئ كور باي" } },
+      { icon: "shop", label: { en: "5 minutes to Reda Al Arous", ar: "5 دقائق إلى رضا العروس" } },
+      { icon: "building", label: { en: "10 min to City Center Mall", ar: "10 دقائق إلى سيتي سنتر مول" } },
+    ],
+    similarProperties: ["prop-rent-2", "prop-rent-1", "prop-buy-1"],
     policies: {
       houseRules: { en: "Viewing by appointment.", ar: "المعاينة بموعد مسبق." },
     },
@@ -359,6 +435,16 @@ export const seedProperties: Property[] = [
     ],
     card: { status: "single" },
     ratings: { average: 4.2, count: 5 },
+    host: {
+      name: { en: "Commercial Management", ar: "إدارة تجارية" },
+      title: { en: "Leasing Team", ar: "فريق التأجير" },
+    },
+    nearby: [
+      { icon: "location", label: { en: "Main commercial strip", ar: "الشارع التجاري الرئيسي" } },
+      { icon: "shop", label: { en: "High foot traffic", ar: "حركة مرور عالية" } },
+      { icon: "building", label: { en: "Adjacent services", ar: "خدمات مجاورة" } },
+    ],
+    similarProperties: ["prop-buy-1", "prop-buy-2", "prop-rent-1"],
     policies: {
       houseRules: { en: "Commercial use only.", ar: "للاستخدام التجاري فقط." },
     },
@@ -399,6 +485,16 @@ export const seedProperties: Property[] = [
       maxStay: 14,
     },
     ratings: { average: 4.9, count: 38 },
+    host: {
+      name: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+      title: { en: "Superhost", ar: "مضيف مميز" },
+    },
+    nearby: [
+      { icon: "location", label: { en: "Durrah Marina", ar: "مرسى درة" } },
+      { icon: "shop", label: { en: "Seaside dining", ar: "مطاعم بحرية" } },
+      { icon: "building", label: { en: "City center access", ar: "قرب مركز المدينة" } },
+    ],
+    similarProperties: ["prop-rent-1", "prop-rent-2", "prop-buy-1"],
     policies: {
       cancellation: {
         type: "flexible",

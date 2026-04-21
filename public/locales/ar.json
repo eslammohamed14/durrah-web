@@ -320,6 +320,18 @@
     "beachView": "إطلالة على البحر",
     "sqm": "م²"
   },
+  "propertyDetails": {
+    "unitInfo": "معلومات الوحدة وتفاصيلها",
+    "premiumAmenities": "المرافق المميزة",
+    "aboutHost": "عن المضيف",
+    "officialUnit": "وحدة رسمية",
+    "hostDescription": "هذه الوحدة جزء من تجربة منتجع درة العروس الرسمية.",
+    "hostDescriptionAlt": "تتم إدارة هذه الوحدة باحترافية من فريقنا لضمان تجربة عالية الجودة.",
+    "locationNearby": "الموقع وما حوله",
+    "reservationPolicy": "سياسة الحجز",
+    "cancellationPolicy": "سياسة الإلغاء",
+    "similarProperties": "عقارات مشابهة"
+  },
   "booking": {
     "title": "أكمل حجزك",
     "summary": "ملخص الحجز",
