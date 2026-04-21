@@ -6,6 +6,52 @@
 
 export type Locale = 'en' | 'ar';
 
+/** Property details — About the host (Figma: Durrat vs owner vs investor). */
+export type PropertyHostType = 'durrat' | 'owner' | 'investor';
+
+export type PropertyHostInvestorServiceIcon =
+  | 'propertyKey'
+  | 'headphoneSupport'
+  | 'checkIn';
+
+export interface PropertyHostManagementChip {
+  id: string;
+  icon: PropertyHostInvestorServiceIcon;
+  /** `propertyDetails.<key>` — short label (e.g. “Key handover”). */
+  labelKey: string;
+  /** Guest support chip: dashed accent border in Figma. */
+  variant?: 'default' | 'emphasized';
+}
+
+/** Second card under owner profile when `host.type === 'investor'`. */
+export interface PropertyHostInvestorManagementCard {
+  /** Defaults to `host.name` when omitted. */
+  brandName?: Record<Locale, string>;
+  badgeLabel: Record<Locale, string>;
+  description: Record<Locale, string>;
+  chips: PropertyHostManagementChip[];
+}
+
+export interface PropertyHostOwnerDetails {
+  displayName: Record<Locale, string>;
+  roleLabel?: Record<Locale, string>;
+  bio?: Record<Locale, string>;
+  memberSinceYear?: string;
+  responseRatePercent?: number;
+  responseTimeLabel?: Record<Locale, string>;
+  isSuperhost?: boolean;
+  reviewRating?: number;
+  reviewCount?: number;
+  propertyCount?: number;
+  /** Green “Licensed by Ministry of Tourism” pill (Figma owner). */
+  showLicensedBadge?: boolean;
+  /**
+   * When `false`, “Message host” stays disabled (e.g. until booking confirmation).
+   */
+  contactHostEnabled?: boolean;
+  avatarUrl?: string;
+}
+
 // ─── User ────────────────────────────────────────────────────────────────────
 
 export type UserRole = 'guest' | 'investor' | 'owner';
@@ -141,10 +187,21 @@ export interface Property {
     count: number;
   };
   host?: {
+    type?: PropertyHostType;
     name: Record<Locale, string>;
     title?: Record<Locale, string>;
     description?: Record<Locale, string>;
     isOfficialUnit?: boolean;
+    /** Durrat card subtitle (e.g. “Managed by …”). */
+    managedByLabel?: Record<Locale, string>;
+    /** Italic footer (Durrat + investor management card). */
+    operatedByLabel?: Record<Locale, string>;
+    /** Circular logo for Durrat / management card (defaults in UI). */
+    durratLogoUrl?: string;
+    /** Owner / investor profile card (Figma). */
+    ownerDetails?: PropertyHostOwnerDetails;
+    /** Investor-only: Durrat management card under the owner profile. */
+    investorManagementCard?: PropertyHostInvestorManagementCard;
   };
   nearby?: Array<{
     icon: "location" | "shop" | "building";

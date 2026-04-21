@@ -162,11 +162,16 @@ export const seedProperties: Property[] = [
     },
     ratings: { average: 4.8, count: 24 },
     host: {
+      type: "durrat",
       name: { en: "DURRAT AL AROUS", ar: "درة العروس" },
       title: { en: "Official Unit", ar: "وحدة رسمية" },
       description: {
         en: "This property is part of the official Durrat Al Arous resort experience.",
         ar: "هذه الوحدة جزء من تجربة منتجع درة العروس الرسمية.",
+      },
+      operatedByLabel: {
+        en: "Operated by Saudi Company for Tourist Cities",
+        ar: "تشغيل شركة المدن السياحية السعودية",
       },
       isOfficialUnit: true,
     },
@@ -269,11 +274,26 @@ export const seedProperties: Property[] = [
     },
     ratings: { average: 4.6, count: 11 },
     host: {
+      type: "owner",
       name: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
       title: { en: "Superhost", ar: "مضيف مميز" },
       description: {
         en: "Passionate host dedicated to exceptional stays along the coast.",
         ar: "مضيف شغوف بتقديم إقامة استثنائية على الساحل.",
+      },
+      ownerDetails: {
+        displayName: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+        isSuperhost: true,
+        showLicensedBadge: true,
+        memberSinceYear: "2019",
+        reviewRating: 4.9,
+        reviewCount: 128,
+        propertyCount: 12,
+        bio: {
+          en: "Hi! I'm Ahmed, a passionate host dedicated to providing exceptional stays along the beautiful coast. I personally ensure every guest has a comfortable and memorable experience.",
+          ar: "مرحباً، أنا أحمد، مضيف شغوف بتقديم إقامات استثنائية على الساحل الجميل. أحرص شخصياً على أن يحظى كل ضيف بتجربة مريحة لا تُنسى.",
+        },
+        contactHostEnabled: false,
       },
     },
     nearby: [
@@ -336,11 +356,50 @@ export const seedProperties: Property[] = [
     card: { status: "single" },
     ratings: { average: 4.5, count: 3 },
     host: {
-      name: { en: "Al Jazeera Properties", ar: "الجزيرة العقارية" },
-      title: { en: "Managed Property", ar: "وحدة مُدارة" },
+      type: "investor",
+      name: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+      title: { en: "Superhost", ar: "مضيف مميز" },
       description: {
-        en: "Licensed third-party managed property.",
-        ar: "وحدة تُدار بواسطة مزود مرخص.",
+        en: "Co-listed with Durrat guest services for a seamless stay.",
+        ar: "مع خدمات ضيوف درة لتجربة إقامة سلسة.",
+      },
+      operatedByLabel: {
+        en: "Operated by Saudi Company for Tourist Cities",
+        ar: "تشغيل شركة المدن السياحية السعودية",
+      },
+      ownerDetails: {
+        displayName: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+        isSuperhost: true,
+        showLicensedBadge: true,
+        memberSinceYear: "2019",
+        reviewRating: 4.9,
+        reviewCount: 128,
+        propertyCount: 12,
+        bio: {
+          en: "Hi! I'm Ahmed, a passionate host dedicated to providing exceptional stays along the beautiful coast. I personally ensure every guest has a comfortable and memorable experience.",
+          ar: "مرحباً، أنا أحمد، مضيف شغوف بتقديم إقامات استثنائية على الساحل الجميل. أحرص شخصياً على أن يحظى كل ضيف بتجربة مريحة لا تُنسى.",
+        },
+        contactHostEnabled: false,
+      },
+      investorManagementCard: {
+        brandName: { en: "DURRAT AL AROUS", ar: "درة العروس" },
+        badgeLabel: {
+          en: "Managed by Durrah Al Arous",
+          ar: "تُدار بواسطة درة العروس",
+        },
+        description: {
+          en: "This property is professionally managed by Durrat Al Arous, ensuring a high-quality guest experience.",
+          ar: "تُدار هذه الوحدة باحترافية من قبل درة العروس لضمان تجربة إقامة عالية الجودة.",
+        },
+        chips: [
+          { id: "c1", icon: "checkIn", labelKey: "mgmtChipCheckIn" },
+          { id: "c2", icon: "propertyKey", labelKey: "mgmtChipKey" },
+          {
+            id: "c3",
+            icon: "headphoneSupport",
+            labelKey: "mgmtChipSupport",
+          },
+        ],
       },
     },
     nearby: [
@@ -400,11 +459,16 @@ export const seedProperties: Property[] = [
     card: { status: "family" },
     ratings: { average: 4.7, count: 9 },
     host: {
+      type: "durrat",
       name: { en: "Durrat Al Arous", ar: "درة العروس" },
       title: { en: "Official Unit", ar: "وحدة رسمية" },
       description: {
         en: "Professionally managed by the Durrat team.",
         ar: "تُدار باحترافية من فريق درة.",
+      },
+      operatedByLabel: {
+        en: "Operated by Saudi Company for Tourist Cities",
+        ar: "تشغيل شركة المدن السياحية السعودية",
       },
       isOfficialUnit: true,
     },
@@ -453,8 +517,25 @@ export const seedProperties: Property[] = [
     card: { status: "single" },
     ratings: { average: 4.2, count: 5 },
     host: {
+      type: "owner",
       name: { en: "Commercial Management", ar: "إدارة تجارية" },
       title: { en: "Leasing Team", ar: "فريق التأجير" },
+      description: {
+        en: "Dedicated leasing specialists for retail and commercial units.",
+        ar: "متخصصون في التأجير لوحدات تجارية وتجزئة.",
+      },
+      ownerDetails: {
+        displayName: { en: "Commercial Management", ar: "إدارة تجارية" },
+        roleLabel: { en: "Listing representative", ar: "ممثل العرض" },
+        bio: {
+          en: "Dedicated leasing specialists for retail and commercial units.",
+          ar: "متخصصون في التأجير لوحدات تجارية وتجزئة.",
+        },
+        memberSinceYear: "2018",
+        responseRatePercent: 95,
+        responseTimeLabel: { en: "Within one business day", ar: "خلال يوم عمل" },
+        contactHostEnabled: false,
+      },
     },
     nearby: [
       { icon: "location", label: { en: "Main commercial strip", ar: "الشارع التجاري الرئيسي" } },
@@ -503,8 +584,25 @@ export const seedProperties: Property[] = [
     },
     ratings: { average: 4.9, count: 38 },
     host: {
+      type: "owner",
       name: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
       title: { en: "Superhost", ar: "مضيف مميز" },
+      description: {
+        en: "Local host with quick responses and curated marina recommendations.",
+        ar: "مضيف محلي بردود سريعة وتوصيات مخصصة للمرسى.",
+      },
+      ownerDetails: {
+        displayName: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+        roleLabel: { en: "Property owner", ar: "مالك الوحدة" },
+        bio: {
+          en: "Local host with quick responses and curated marina recommendations.",
+          ar: "مضيف محلي بردود سريعة وتوصيات مخصصة للمرسى.",
+        },
+        memberSinceYear: "2020",
+        responseRatePercent: 99,
+        responseTimeLabel: { en: "Within an hour", ar: "خلال ساعة" },
+        contactHostEnabled: true,
+      },
     },
     nearby: [
       { icon: "location", label: { en: "Durrah Marina", ar: "مرسى درة" } },

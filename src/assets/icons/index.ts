@@ -68,6 +68,22 @@ export {
 export { SearchIcon, type SearchIconProps } from "./SearchIcon";
 export { StarColoredIcon, type StarColoredIconProps } from "./StarColoredIcon";
 export { StarSlashIcon, type StarSlashIconProps } from "./StarSlashIcon";
+export {
+  HostCheckInIcon,
+  type HostCheckInIconProps,
+} from "./HostCheckInIcon";
+export {
+  HostHeadphoneSupportIcon,
+  type HostHeadphoneSupportIconProps,
+} from "./HostHeadphoneSupportIcon";
+export {
+  HostPropertyKeyIcon,
+  type HostPropertyKeyIconProps,
+} from "./HostPropertyKeyIcon";
+export {
+  HostVerifyLinearIcon,
+  type HostVerifyLinearIconProps,
+} from "./HostVerifyLinearIcon";
 export { HeartOutlineIcon, type HeartOutlineIconProps } from "./HeartOutlineIcon";
 export { ShareOutlineIcon, type ShareOutlineIconProps } from "./ShareOutlineIcon";
 export {
