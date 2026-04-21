@@ -329,6 +329,13 @@
   },
   "propertyDetails": {
     "unitInfo": "معلومات الوحدة وتفاصيلها",
+    "bedShort": "{count} غرفة نوم",
+    "bathShort": "{count} حمام",
+    "livingShort": "{count} صالة",
+    "kitchenShort": "{count} مطبخ",
+    "parkingSpaceShort": "{count} موقف",
+    "readMore": "اقرأ المزيد",
+    "readLess": "إخفاء",
     "premiumAmenities": "المرافق المميزة",
     "aboutHost": "عن المضيف",
     "officialUnit": "وحدة رسمية",

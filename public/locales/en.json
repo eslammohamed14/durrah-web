@@ -329,6 +329,13 @@
   },
   "propertyDetails": {
     "unitInfo": "Unit Information & Details",
+    "bedShort": "{count} Bed",
+    "bathShort": "{count} Bath",
+    "livingShort": "{count} Living",
+    "kitchenShort": "{count} Kitchen",
+    "parkingSpaceShort": "{count} Parking Space",
+    "readMore": "Read More",
+    "readLess": "Read Less",
     "premiumAmenities": "Premium Amenities",
     "aboutHost": "About the Host",
     "officialUnit": "Official Unit",

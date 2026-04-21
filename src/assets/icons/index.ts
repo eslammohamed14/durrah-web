@@ -13,6 +13,13 @@ export {
 export { DimensionIcon, type DimensionIconProps } from "./DimensionIcon";
 export { DiscountIcon, type DiscountIconProps } from "./DiscountIcon";
 export {
+  LocationOutlineIcon,
+  type LocationOutlineIconProps,
+} from "./LocationOutlineIcon";
+export { KitchenIcon, type KitchenIconProps } from "./KitchenIcon";
+export { LivingRoomIcon, type LivingRoomIconProps } from "./LivingRoomIcon";
+export { ParkingIcon, type ParkingIconProps } from "./ParkingIcon";
+export {
   InstagramSectionIcon,
   type InstagramSectionIconProps,
 } from "./InstagramSectionIcon";
