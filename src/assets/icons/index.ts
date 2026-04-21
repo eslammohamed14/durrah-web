@@ -11,6 +11,7 @@ export {
   type BlogsSectionIconProps,
 } from "./BlogsSectionIcon";
 export { DimensionIcon, type DimensionIconProps } from "./DimensionIcon";
+export { DiscountIcon, type DiscountIconProps } from "./DiscountIcon";
 export {
   InstagramSectionIcon,
   type InstagramSectionIconProps,
@@ -42,6 +43,10 @@ export {
   type NormalInstagramIconProps,
 } from "./NormalInstagramIcon";
 export { PeopleIcon, type PeopleIconProps } from "./PeopleIcon";
+export {
+  Profile2UserIcon,
+  type Profile2UserIconProps,
+} from "./Profile2UserIcon";
 export {
   PropertySectionIcon,
   type PropertySectionIconProps,

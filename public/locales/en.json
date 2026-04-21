@@ -319,7 +319,13 @@
     "share": "Share",
     "noReviews": "No reviews yet",
     "beachView": "Beach View",
-    "sqm": "sqm"
+    "sqm": "sqm",
+    "accommodationLine": "{rate} {currency} × {nightsLabel}",
+    "extraGuestFees": "Extra guest fees",
+    "pricingBreakdownTitle": "Price breakdown",
+    "guestsShort": "{count} Guests",
+    "guestPermitHelper": "Please make sure to select the correct number of guests, as the entry permit will be issued based on this selection.",
+    "discountPercentLabel": "{percent}% OFF"
   },
   "propertyDetails": {
     "unitInfo": "Unit Information & Details",

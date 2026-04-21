@@ -103,6 +103,10 @@ export interface Property {
     offerPercentage?: number;
     previewNights?: number;
     previewNightlyRate?: number;
+    /** Guests at or below this count incur no `extraGuestFeePerNight`. */
+    includedGuestsForPricing?: number;
+    /** Per-night surcharge for each guest above `includedGuestsForPricing`. */
+    extraGuestFeePerNight?: number;
   };
   amenities: string[];
   images: PropertyImage[];

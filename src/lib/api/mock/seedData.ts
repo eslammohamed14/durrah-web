@@ -120,6 +120,8 @@ export const seedProperties: Property[] = [
       offerPercentage: 20,
       previewNights: 3,
       previewNightlyRate: 750,
+      includedGuestsForPricing: 2,
+      extraGuestFeePerNight: 75,
       fees: [
         { name: "Cleaning Fees", amount: 120 },
         { name: "Service Fees", amount: 80 },
@@ -138,6 +140,9 @@ export const seedProperties: Property[] = [
       { id: "img-1", url: images.property1, alt: "Living room", order: 0 },
       { id: "img-2", url: images.property2, alt: "Bedroom", order: 1 },
       { id: "img-3", url: images.property3, alt: "Sea view", order: 2 },
+      { id: "img-4", url: images.property4, alt: "Kitchen area", order: 3 },
+      { id: "img-5", url: images.property5, alt: "Dining area", order: 4 },
+      { id: "img-6", url: images.property6, alt: "Outdoor seating", order: 5 },
     ],
     card: { status: "family" },
     availability: {

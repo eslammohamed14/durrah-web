@@ -319,7 +319,13 @@
     "share": "مشاركة",
     "noReviews": "لا توجد تقييمات بعد",
     "beachView": "إطلالة على البحر",
-    "sqm": "م²"
+    "sqm": "م²",
+    "accommodationLine": "{rate} {currency} × {nightsLabel}",
+    "extraGuestFees": "رسوم ضيوف إضافيين",
+    "pricingBreakdownTitle": "تفاصيل السعر",
+    "guestsShort": "{count} ضيوف",
+    "guestPermitHelper": "يرجى التأكد من اختيار العدد الصحيح للضيوف، حيث يُصدر تصريح الدخول بناءً على هذا الاختيار.",
+    "discountPercentLabel": "خصم {percent}%"
   },
   "propertyDetails": {
     "unitInfo": "معلومات الوحدة وتفاصيلها",
