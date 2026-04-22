@@ -9,7 +9,8 @@ interface HeroSectionProps {
 }
 
 export const HeroSection = ({ allProperties,t }: HeroSectionProps) => {
- 
+  const isLocalStaticImage = (url?: string) =>
+    Boolean(url) && (url!.startsWith("/") || url!.startsWith("/_next/static/media/"));
 
   return (
     <section
@@ -27,6 +28,7 @@ export const HeroSection = ({ allProperties,t }: HeroSectionProps) => {
         className="object-cover"
         style={{ objectPosition: "50% 25%" }}
         quality={70}
+        unoptimized={isLocalStaticImage(images.durrahHomeHero)}
       />
 
       {/* Dark overlay */}

@@ -3,7 +3,6 @@
 import type { Property, PropertyImage } from "@/lib/types";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import { Link } from "@/navigation";
 import {
   ArrowRightIcon,
@@ -12,12 +11,6 @@ import {
   DimensionIcon,
 } from "@/assets/icons";
 import { DEFAULT_IMAGE_SWIPER_SIZES } from "@/components/ui/ImageSwiper";
-
-// Swiper has DOM-dependent initialization — must be client-only
-const ImageSwiper = dynamic(
-  () => import("@/components/ui/ImageSwiper").then((m) => m.ImageSwiper),
-  { ssr: false },
-);
 
 const SQ_M_TO_SQ_FT = 10.7639;
 
@@ -29,8 +22,12 @@ function sortedImages(images: PropertyImage[]) {
   return [...images].sort((a, b) => a.order - b.order);
 }
 
+function isLocalStaticImage(url?: string): boolean {
+  return Boolean(url) && (url!.startsWith("/") || url!.startsWith("/_next/static/media/"));
+}
+
 export function PropertyCard({ property }: PropertyCardProps) {
-  const { t, locale, dir } = useLocale();
+  const { t, locale } = useLocale();
   const propertyHref = `/properties/${property.id}`;
   const title = property.title[locale] || property.title.en;
   const galleryImages = sortedImages(property.images);
@@ -64,7 +61,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
   return (
     <article className="flex min-w-0 w-full max-w-full flex-col overflow-hidden rounded-2xl border border-text-body-muted bg-white pb-4 shadow-[0_0_24px_0_rgba(0,0,0,0.06)]">
       <div className="relative h-[216px] min-h-[216px] min-w-0 overflow-hidden rounded-t-xl bg-gradient-to-br from-slate-300 to-slate-400">
-        {galleryImages.length === 0 ? null : galleryImages.length === 1 ? (
+        {galleryImages.length === 0 ? null : (
           <Image
             src={galleryImages[0].url}
             alt={galleryImages[0].alt ?? title}
@@ -72,13 +69,8 @@ export function PropertyCard({ property }: PropertyCardProps) {
             className="object-cover"
             sizes={DEFAULT_IMAGE_SWIPER_SIZES}
             quality={65}
-          />
-        ) : (
-          <ImageSwiper
-            slides={galleryImages}
-            dir={dir}
-            fallbackAlt={title}
-            imageQuality={65}
+            loading="lazy"
+            unoptimized={isLocalStaticImage(galleryImages[0].url)}
           />
         )}
         <div className="pointer-events-none absolute bottom-2.5 left-2.5 z-10 flex w-[calc(100%-20px)] items-center">

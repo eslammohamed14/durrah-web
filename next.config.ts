@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
     root: __dirname,
   },
   images: {
+    // Allow explicit qualities used in the UI components.
+    qualities: [65, 70, 75],
     // Serve modern formats (AVIF first, WebP fallback) for better compression
     formats: ["image/avif", "image/webp"],
     // Responsive breakpoints that match Tailwind's default screens

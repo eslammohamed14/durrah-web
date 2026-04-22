@@ -24,6 +24,8 @@ export default function PropertyHeroSection({
   const title = property.title[locale as "en" | "ar"] || property.title.en;
   const address =
     property.location.address[locale as "en" | "ar"] || property.location.address.en;
+  const isLocalStaticImage = (url?: string) =>
+    Boolean(url) && (url!.startsWith("/") || url!.startsWith("/_next/static/media/"));
 
   return (
     <section className="space-y-4 pt-10">
@@ -78,6 +80,8 @@ export default function PropertyHeroSection({
             priority
             sizes="(max-width: 1024px) 100vw, 893px"
             className="object-cover"
+            quality={65}
+            unoptimized={isLocalStaticImage(property.images[0]?.url)}
           />
           <span className="absolute bottom-5 right-5 hidden h-[42px] items-center gap-2 rounded-[24px] bg-white px-3 py-1 text-[14px] font-medium leading-[1.5] text-grey-700 lg:inline-flex">
             {t("common.viewAllImages")}
@@ -98,6 +102,8 @@ export default function PropertyHeroSection({
                 fill
                 sizes="291px"
                 className="object-cover"
+                quality={65}
+                unoptimized={isLocalStaticImage(image.url)}
               />
               {idx === 2 && property.images.length > 4 && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-[20px] font-semibold leading-[1.5] text-white">

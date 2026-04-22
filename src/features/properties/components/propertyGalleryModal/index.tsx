@@ -28,6 +28,8 @@ export default function PropertyGalleryModal({
   title,
 }: PropertyGalleryModalProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+  const isLocalStaticImage = (url?: string) =>
+    Boolean(url) && (url!.startsWith("/") || url!.startsWith("/_next/static/media/"));
 
   useEffect(() => {
     if (!isOpen) return;
@@ -94,6 +96,8 @@ export default function PropertyGalleryModal({
                       sizes="100vw"
                       className="object-cover"
                       priority={index === initialSlide}
+                      quality={65}
+                      unoptimized={isLocalStaticImage(image.url)}
                     />
                   </div>
                 </SwiperSlide>
@@ -125,6 +129,8 @@ export default function PropertyGalleryModal({
                       fill
                       sizes="220px"
                       className="object-cover"
+                      quality={65}
+                      unoptimized={isLocalStaticImage(image.url)}
                     />
                   </div>
                 </SwiperSlide>
