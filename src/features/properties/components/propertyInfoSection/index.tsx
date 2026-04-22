@@ -18,7 +18,9 @@ interface PropertyInfoSectionProps {
   property: Property;
 }
 
-export default function PropertyInfoSection({ property }: PropertyInfoSectionProps) {
+export default function PropertyInfoSection({
+  property,
+}: PropertyInfoSectionProps) {
   const locale = useLocale();
   const t = useTranslations();
   const description =
@@ -92,7 +94,12 @@ export default function PropertyInfoSection({ property }: PropertyInfoSectionPro
               icon={spec.icon}
               text={spec.value}
               showDivider={index < specs.length - 1}
-              className="text-[16px] leading-[1.6]"
+              className={[
+                "text-[16px] leading-[1.6]",
+                index > 0 ? "ps-3.5" : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
             />
           ))}
         </div>
@@ -105,7 +112,9 @@ export default function PropertyInfoSection({ property }: PropertyInfoSectionPro
             onClick={() => setExpanded((prev) => !prev)}
             className="text-[18px] font-semibold leading-[1.4] text-primary-blue-400"
           >
-            {expanded ? t("propertyDetails.readLess") : t("propertyDetails.readMore")}
+            {expanded
+              ? t("propertyDetails.readLess")
+              : t("propertyDetails.readMore")}
           </button>
         ) : null}
       </p>

@@ -57,7 +57,7 @@ export default function PropertyAmenitiesSection({
               className="flex h-[42px] items-center gap-3 rounded-xl border border-grey-50 bg-surface-primary px-3"
             >
               <PremiumAmenityIcon kind={row.icon} />
-              <span className="text-[12px] font-medium leading-[1.4] text-grey-700">
+              <span className="text-[12px] font-semibold leading-[1.4] text-grey-900">
                 {t(`propertyDetails.${row.labelKey}`)}
               </span>
             </li>

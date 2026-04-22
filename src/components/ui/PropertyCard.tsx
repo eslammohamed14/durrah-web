@@ -129,8 +129,8 @@ export function PropertyCard({ property }: PropertyCardProps) {
       <div className="flex flex-col gap-3 px-3 pt-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <Link href={propertyHref} className="transition-colors hover:text-primary-blue-400">
-              <h3 className="text-xl font-semibold leading-tight text-grey-800">
+            <Link href={propertyHref} className="group transition-colors">
+              <h3 className="text-xl font-semibold leading-tight text-grey-800 transition-colors group-hover:text-primary-blue-400">
                 {title}
               </h3>
             </Link>
