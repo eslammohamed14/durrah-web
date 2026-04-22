@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import CollapseSection from "@/components/ui/CollapseSection";
 import type { Property } from "@/lib/types";
 
 interface PropertyPoliciesSectionProps {
@@ -11,35 +11,47 @@ interface PropertyPoliciesSectionProps {
 export default function PropertyPoliciesSection({
   property,
 }: PropertyPoliciesSectionProps) {
-  const [showCancellation, setShowCancellation] = useState(false);
   const locale = useLocale();
   const t = useTranslations();
+  const selectedLocale = locale as "en" | "ar";
+  const houseRulesText = property.policies.houseRules[selectedLocale];
+  const cancellationText =
+    property.policies.cancellation?.description[selectedLocale];
+
+  const toBulletItems = (text: string) =>
+    text
+      .split(/\. (?=[A-Z\u0600-\u06FF])/)
+      .map((item) => item.trim())
+      .filter(Boolean)
+      .map((item) => (item.endsWith(".") ? item : `${item}.`));
 
   return (
-    <section className="space-y-5">
-      <div>
-        <h3 className="text-[28px] font-semibold leading-[1.4] text-grey-800">
-          {t("propertyDetails.reservationPolicy")}
-        </h3>
-        <p className="mt-3 text-[16px] leading-[1.6] text-grey-600">
-          {property.policies.houseRules[locale as "en" | "ar"]}
-        </p>
-      </div>
-      <div className="border-t border-border-default pt-4">
-        <button
-          type="button"
-          onClick={() => setShowCancellation((v) => !v)}
-          className="flex w-full items-center justify-between text-left text-[28px] font-semibold leading-[1.4] text-grey-800"
-        >
-          {t("propertyDetails.cancellationPolicy")}
-          <span className="text-[20px]">{showCancellation ? "▲" : "▼"}</span>
-        </button>
-        {showCancellation && property.policies.cancellation && (
-          <p className="mt-3 text-[16px] leading-[1.6] text-grey-600">
-            {property.policies.cancellation.description[locale as "en" | "ar"]}
+    <section>
+      <CollapseSection
+        title={t("propertyDetails.reservationPolicy")}
+        defaultOpen
+        content={
+          <ul className="space-y-2 text-[18px] text-grey-600 leading-[1.6]">
+            {toBulletItems(houseRulesText).map((rule, idx) => (
+              <li key={`${rule}-${idx}`} className="flex items-start gap-2">
+                <span
+                  aria-hidden
+                  className="mt-3 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-grey-500"
+                />
+                <span>{rule}</span>
+              </li>
+            ))}
+          </ul>
+        }
+      />
+      <CollapseSection
+        title={t("propertyDetails.cancellationPolicy")}
+        content={
+          <p className="text-[16px] leading-[1.6] text-grey-600">
+            {cancellationText ?? "-"}
           </p>
-        )}
-      </div>
+        }
+      />
     </section>
   );
 }

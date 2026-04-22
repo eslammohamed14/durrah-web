@@ -3,6 +3,8 @@ export {
   type ActivitiesSectionIconProps,
 } from "./ActivitiesSectionIcon";
 export { ArrowLeftIcon, type ArrowLeftIconProps } from "./ArrowLeftIcon";
+export { ArrowNormalDown, type ArrowNormalDownProps } from "./arrowNormalDown";
+export { ArrowNormalUp, type ArrowNormalUpProps } from "./arrowNormalUp";
 export { ArrowRightIcon, type ArrowRightIconProps } from "./ArrowRightIcon";
 export {
   ArrowRightLineIcon,
