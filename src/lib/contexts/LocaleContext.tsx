@@ -1,9 +1,9 @@
 "use client";
 
-import { useTransition } from "react";
+import { useCallback, useMemo, useTransition } from "react";
 import type { Locale } from "@/lib/types";
 import { useLocale as useNextIntlLocale, useTranslations } from "next-intl";
-import { usePathname, useRouter } from "@/lib/navigation";
+import { usePathname, useRouter } from "@/navigation";
 
 interface LocaleContextValue {
   locale: Locale;
@@ -22,18 +22,24 @@ export function useLocale(): LocaleContextValue {
 
   const dir: "ltr" | "rtl" = locale === "ar" ? "rtl" : "ltr";
 
-  const setLocale = (next: Locale) => {
-    if (next === locale || isPending) return;
-    startTransition(() => {
-      router.replace(pathname, { locale: next });
-    });
-  };
+  const setLocale = useCallback(
+    (next: Locale) => {
+      if (next === locale || isPending) return;
+      startTransition(() => {
+        router.replace(pathname, { locale: next });
+      });
+    },
+    [locale, isPending, router, pathname],
+  );
 
-  return {
-    locale,
-    setLocale,
-    t: (key, params) => tIntl(key, params),
-    dir,
-    isPending,
-  };
+  const t = useCallback(
+    (key: string, params?: Record<string, string | number>) =>
+      tIntl(key, params),
+    [tIntl],
+  );
+
+  return useMemo(
+    () => ({ locale, setLocale, t, dir, isPending }),
+    [locale, setLocale, t, dir, isPending],
+  );
 }

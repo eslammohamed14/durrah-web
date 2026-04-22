@@ -6,6 +6,52 @@
 
 export type Locale = 'en' | 'ar';
 
+/** Property details — About the host (Figma: Durrat vs owner vs investor). */
+export type PropertyHostType = 'durrat' | 'owner' | 'investor';
+
+export type PropertyHostInvestorServiceIcon =
+  | 'propertyKey'
+  | 'headphoneSupport'
+  | 'checkIn';
+
+export interface PropertyHostManagementChip {
+  id: string;
+  icon: PropertyHostInvestorServiceIcon;
+  /** `propertyDetails.<key>` — short label (e.g. “Key handover”). */
+  labelKey: string;
+  /** Guest support chip: dashed accent border in Figma. */
+  variant?: 'default' | 'emphasized';
+}
+
+/** Second card under owner profile when `host.type === 'investor'`. */
+export interface PropertyHostInvestorManagementCard {
+  /** Defaults to `host.name` when omitted. */
+  brandName?: Record<Locale, string>;
+  badgeLabel: Record<Locale, string>;
+  description: Record<Locale, string>;
+  chips: PropertyHostManagementChip[];
+}
+
+export interface PropertyHostOwnerDetails {
+  displayName: Record<Locale, string>;
+  roleLabel?: Record<Locale, string>;
+  bio?: Record<Locale, string>;
+  memberSinceYear?: string;
+  responseRatePercent?: number;
+  responseTimeLabel?: Record<Locale, string>;
+  isSuperhost?: boolean;
+  reviewRating?: number;
+  reviewCount?: number;
+  propertyCount?: number;
+  /** Green “Licensed by Ministry of Tourism” pill (Figma owner). */
+  showLicensedBadge?: boolean;
+  /**
+   * When `false`, “Message host” stays disabled (e.g. until booking confirmation).
+   */
+  contactHostEnabled?: boolean;
+  avatarUrl?: string;
+}
+
 // ─── User ────────────────────────────────────────────────────────────────────
 
 export type UserRole = 'guest' | 'investor' | 'owner';
@@ -60,6 +106,22 @@ export interface PropertyImage {
   order: number;
 }
 
+/** Icons for the Premium Amenities grid (Figma unit details). */
+export type PremiumAmenityIconKey =
+  | 'pool'
+  | 'marina'
+  | 'seaView'
+  | 'waterSports'
+  | 'dining'
+  | 'events';
+
+export interface PremiumAmenityHighlight {
+  id: string;
+  icon: PremiumAmenityIconKey;
+  /** `next-intl` key under `propertyDetails.*` (e.g. `premiumPrivatePool`). */
+  labelKey: string;
+}
+
 export interface Coordinates {
   lat: number;
   lng: number;
@@ -99,8 +161,18 @@ export interface Property {
     currency: string;
     priceType: 'per_night' | 'per_month' | 'total';
     fees?: { name: string; amount: number }[];
+    originalPrice?: number;
+    offerPercentage?: number;
+    previewNights?: number;
+    previewNightlyRate?: number;
+    /** Guests at or below this count incur no `extraGuestFeePerNight`. */
+    includedGuestsForPricing?: number;
+    /** Per-night surcharge for each guest above `includedGuestsForPricing`. */
+    extraGuestFeePerNight?: number;
   };
   amenities: string[];
+  /** Curated premium highlights with icons (Figma). Falls back to `amenities` when absent. */
+  premiumAmenities?: PremiumAmenityHighlight[];
   images: PropertyImage[];
   floorPlans?: string[];
   /**
@@ -114,6 +186,28 @@ export interface Property {
     average: number;
     count: number;
   };
+  host?: {
+    type?: PropertyHostType;
+    name: Record<Locale, string>;
+    title?: Record<Locale, string>;
+    description?: Record<Locale, string>;
+    isOfficialUnit?: boolean;
+    /** Durrat card subtitle (e.g. “Managed by …”). */
+    managedByLabel?: Record<Locale, string>;
+    /** Italic footer (Durrat + investor management card). */
+    operatedByLabel?: Record<Locale, string>;
+    /** Circular logo for Durrat / management card (defaults in UI). */
+    durratLogoUrl?: string;
+    /** Owner / investor profile card (Figma). */
+    ownerDetails?: PropertyHostOwnerDetails;
+    /** Investor-only: Durrat management card under the owner profile. */
+    investorManagementCard?: PropertyHostInvestorManagementCard;
+  };
+  nearby?: Array<{
+    icon: "location" | "shop" | "building";
+    label: Record<Locale, string>;
+  }>;
+  similarProperties?: string[];
   policies: {
     cancellation?: CancellationPolicy;
     houseRules: Record<Locale, string>;

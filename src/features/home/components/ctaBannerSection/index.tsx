@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { useEffect, useRef } from "react";
 import { ArrowRightIcon } from "@/assets/icons";
 import { useLocale } from "@/lib/contexts/LocaleContext";

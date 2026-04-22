@@ -14,14 +14,14 @@
 
 import React, { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import type { Property } from "@/lib/types";
 import type { BookingFormData } from "./BookingForm";
 import { PaymentForm } from "./PaymentForm";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Spinner } from "@/components/ui/Spinner";
-import { createPaymentIntent } from "@/app/checkout/[propertyId]/actions";
+import { createPaymentIntent } from "@/features/checkout/actions/createPaymentIntent";
 import { getAPIClient } from "@/lib/api";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 

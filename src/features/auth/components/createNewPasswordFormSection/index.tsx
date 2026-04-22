@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { ArrowLeftIcon, EyeSlashIcon } from "@/assets/icons";
 import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";
-import { useRouter } from "@/lib/navigation";
+import { useRouter } from "@/navigation";
 import { useBackToLoginFromPasswordResetFlow } from "../../hooks/useBackToLoginFromPasswordResetFlow";
 import {
   createNewPasswordSchema,

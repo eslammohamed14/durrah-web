@@ -1,23 +1,30 @@
-"use client";
-
-import { useRouter } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/navigation";
+import Image from "next/image";
 import images from "@/constant/images";
 import { ArrowRightIcon, SearchIcon, BeachesSectionIcon } from "@/assets/icons";
-import { Button } from "@/components/ui/Button";
-import { useLocale } from "@/lib/contexts/LocaleContext";
 import { SectionTag } from "@/features/home/components/sectionTag";
-import Image from "next/image";
 
-export function YachtSection() {
-  const router = useRouter();
-  const { t } = useLocale();
+export async function YachtSection() {
+  const t = await getTranslations();
+
+  const exploreCta = (extraClassName = "") => (
+    <Link
+      href="/search?category=yacht"
+      className={`inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-[#FF765E] px-4 text-base font-medium text-white transition-colors hover:bg-[#e8614a] active:bg-[#d45540] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E] focus-visible:ring-offset-2 ${extraClassName}`}
+    >
+      <SearchIcon className="h-6 w-6 shrink-0" />
+      {t("home.exploreMarina")}
+      <ArrowRightIcon className="h-6 w-6 shrink-0" />
+    </Link>
+  );
 
   return (
     <section
       aria-labelledby="yacht-heading"
       className="relative overflow-hidden bg-background px-4 py-10 sm:px-6 sm:py-16 lg:px-16 xl:py-0"
     >
-      {/* On xl+, restore the split background layout */}
+      {/* Desktop: split background */}
       <div className="hidden xl:block xl:absolute xl:left-0 xl:top-0 xl:h-full xl:w-[708px] xl:bg-surface-lavender" />
       <div className="hidden xl:block xl:absolute xl:left-0 xl:top-1/2 xl:w-[605px] xl:-translate-y-1/2 xl:opacity-40">
         <div className="h-[458px] w-[605px]">
@@ -49,17 +56,7 @@ export function YachtSection() {
                 {t("home.yachtSubtitle")}
               </p>
             </div>
-            <Button
-              type="button"
-              variant="primary"
-              backgroundColor="#FF765E"
-              onClick={() => {}}
-              className="h-12 w-full rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-primary-coral-400 sm:w-fit"
-              leftIcon={<SearchIcon className="h-6 w-6" />}
-              rightIcon={<ArrowRightIcon className="h-6 w-6" />}
-            >
-              {t("home.exploreMarina")}
-            </Button>
+            {exploreCta("w-full sm:w-fit")}
           </div>
         </div>
         <div className="relative h-56 overflow-hidden rounded-xl sm:h-72">
@@ -74,7 +71,7 @@ export function YachtSection() {
         </div>
       </div>
 
-      {/* Desktop: original absolute-positioned layout */}
+      {/* Desktop: absolute-positioned layout */}
       <div className="relative hidden h-[650px] xl:block">
         <div className="absolute left-[120px] top-1/2 z-10 w-[413px] -translate-y-1/2">
           <div className="flex flex-col gap-6">
@@ -94,17 +91,7 @@ export function YachtSection() {
                 {t("home.yachtSubtitle")}
               </p>
             </div>
-            <Button
-              type="button"
-              variant="primary"
-              backgroundColor="#FF765E"
-              onClick={() => {}}
-              className="h-12 w-fit rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-primary-coral-400"
-              leftIcon={<SearchIcon className="h-6 w-6" />}
-              rightIcon={<ArrowRightIcon className="h-6 w-6" />}
-            >
-              {t("home.exploreMarina")}
-            </Button>
+            {exploreCta("w-fit")}
           </div>
         </div>
         <div className="absolute left-[600px] top-1/2 h-[450px] w-[720px] -translate-y-1/2 overflow-hidden rounded-xl">

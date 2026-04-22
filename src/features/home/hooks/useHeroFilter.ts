@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { useRouter } from "@/lib/navigation";
+import { useRouter } from "@/navigation";
 import type { Property, PropertyCategory, PropertyType } from "@/lib/types";
 
 // ─── Types ────────────────────────────────────────────────────────────────────

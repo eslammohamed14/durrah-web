@@ -5,12 +5,13 @@ import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, useWatch } from "react-hook-form";
 import { useLocale, useTranslations } from "next-intl";
-import { AppleIcon, EyeSlashIcon, GoogleIcon } from "@/assets/icons";
+import { EyeSlashIcon } from "@/assets/icons";
 import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { PhoneNumberInput } from "@/components/ui/PhoneNumberInput";
-import { Link } from "@/lib/navigation";
+import { Link } from "@/navigation";
+import AuthSocialButtons from "../authSocialButtons";
 import {
   registerSchema,
   type RegisterFormValues,
@@ -61,14 +62,21 @@ export default function RegisterFormSection() {
   return (
     <section className="flex w-full flex-col gap-8">
       <div className="flex flex-col gap-4">
-        <Image
-          src={images.durrahLogoBlue}
-          alt={tAuth("layout.logoAlt")}
-          width={177}
-          height={57}
-          priority
-          className="h-auto w-[177px] max-w-full"
-        />
+        <Link
+          href="/"
+          replace
+          aria-label={tAuth("layout.logoAlt")}
+          className="w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-blue-400"
+        >
+          <Image
+            src={images.durrahLogoBlue}
+            alt={tAuth("layout.logoAlt")}
+            width={177}
+            height={57}
+            priority
+            className="h-auto w-[177px] max-w-full"
+          />
+        </Link>
 
         <div className="space-y-1">
           <h1 className="text-[32px] font-medium capitalize leading-[1.4] tracking-tight text-durrah-blue">
@@ -131,9 +139,7 @@ export default function RegisterFormSection() {
               autoComplete="email"
               placeholder={t("emailPlaceholder")}
               errorText={
-                errors.email
-                  ? tAuth(errors.email.message as string)
-                  : undefined
+                errors.email ? tAuth(errors.email.message as string) : undefined
               }
               {...register("email")}
               className={inputShell}
@@ -309,22 +315,13 @@ export default function RegisterFormSection() {
             <div className="h-px flex-1 bg-grey-100" aria-hidden />
           </div>
 
-          <div className="flex w-full gap-3">
-            <button
-              type="button"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-grey-100 bg-white px-3 py-3 text-sm text-grey-500 shadow-[0px_1px_3px_0px_rgba(9,8,7,0.05),0px_1px_2px_0px_rgba(9,8,7,0.03)]"
-            >
-              <span className="text-center">{t("apple")}</span>
-              <AppleIcon size={24} />
-            </button>
-            <button
-              type="button"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-grey-100 bg-white px-3 py-3 text-sm text-grey-500 shadow-[0px_1px_3px_0px_rgba(9,8,7,0.05),0px_1px_2px_0px_rgba(9,8,7,0.03)]"
-            >
-              <span className="text-center">{t("google")}</span>
-              <GoogleIcon size={24} />
-            </button>
-          </div>
+          <AuthSocialButtons
+            appleLabel={t("apple")}
+            googleLabel={t("google")}
+            containerClassName="flex w-full gap-3"
+            buttonClassName="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-white px-3 py-3 text-[14px] text-grey-500 shadow-[0px_1px_2px_0px_rgba(9,8,7,0.03),0px_1px_3px_0px_rgba(9,8,7,0.05)]"
+            labelClassName="text-center"
+          />
         </div>
 
         <p className="flex flex-wrap items-center justify-center gap-2 text-center text-sm">

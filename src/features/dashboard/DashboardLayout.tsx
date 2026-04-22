@@ -6,8 +6,7 @@
  */
 
 import React, { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/navigation";
 import { useAuth } from "@/lib/contexts/AuthContext";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import { Spinner } from "@/components/ui/Spinner";

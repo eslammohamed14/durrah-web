@@ -8,7 +8,7 @@ import { ArrowLeftIcon } from "@/assets/icons";
 import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { Link, useRouter } from "@/lib/navigation";
+import { Link, useRouter } from "@/navigation";
 import { useBackToLoginFromPasswordResetFlow } from "../../hooks/useBackToLoginFromPasswordResetFlow";
 import {
   forgotPasswordEmailSchema,

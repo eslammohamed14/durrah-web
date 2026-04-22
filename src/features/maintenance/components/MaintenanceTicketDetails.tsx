@@ -12,7 +12,7 @@
  */
 
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import type { MaintenanceTicket, TicketStatus } from "@/lib/types";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import { useAuth } from "@/lib/contexts/AuthContext";

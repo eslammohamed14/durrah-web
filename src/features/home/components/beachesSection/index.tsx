@@ -1,60 +1,19 @@
-"use client";
-
-import { useMemo } from "react";
+import { getTranslations } from "next-intl/server";
 import { BeachesSectionIcon } from "@/assets/icons";
 import images from "@/constant/images";
-import { useLocale } from "@/lib/contexts/LocaleContext";
 import { SectionTag } from "@/features/home/components/sectionTag";
 import { BeachesSlider } from "./BeachesSlider";
 
-export function BeachesSection() {
-  const { t } = useLocale();
+export async function BeachesSection() {
+  const t = await getTranslations();
 
-  const beachItems = useMemo(
-    () => [
-      {
-        id: "beach-1",
-        name: t("home.beachName"),
-        description: t("home.beachDesc"),
-        imageUrl: images.property1,
-        href: "/search?category=rent",
-        exploreLabel: t("home.explore"),
-      },
-      {
-        id: "beach-2",
-        name: t("home.beachName"),
-        description: t("home.beachDesc"),
-        imageUrl: images.property2,
-        href: "/search?category=rent",
-        exploreLabel: t("home.explore"),
-      },
-      {
-        id: "beach-3",
-        name: t("home.beachName"),
-        description: t("home.beachDesc"),
-        imageUrl: images.property3,
-        href: "/search?category=rent",
-        exploreLabel: t("home.explore"),
-      },
-      {
-        id: "beach-4",
-        name: t("home.beachName"),
-        description: t("home.beachDesc"),
-        imageUrl: images.property4,
-        href: "/search?category=rent",
-        exploreLabel: t("home.explore"),
-      },
-      {
-        id: "beach-5",
-        name: t("home.beachName"),
-        description: t("home.beachDesc"),
-        imageUrl: images.property5,
-        href: "/search?category=rent",
-        exploreLabel: t("home.explore"),
-      },
-    ],
-    [t],
-  );
+  const beachItems = [
+    { id: "beach-1", name: t("home.beachName"), description: t("home.beachDesc"), imageUrl: images.property1, href: "/search?category=rent", exploreLabel: t("home.explore") },
+    { id: "beach-2", name: t("home.beachName"), description: t("home.beachDesc"), imageUrl: images.property2, href: "/search?category=rent", exploreLabel: t("home.explore") },
+    { id: "beach-3", name: t("home.beachName"), description: t("home.beachDesc"), imageUrl: images.property3, href: "/search?category=rent", exploreLabel: t("home.explore") },
+    { id: "beach-4", name: t("home.beachName"), description: t("home.beachDesc"), imageUrl: images.property4, href: "/search?category=rent", exploreLabel: t("home.explore") },
+    { id: "beach-5", name: t("home.beachName"), description: t("home.beachDesc"), imageUrl: images.property5, href: "/search?category=rent", exploreLabel: t("home.explore") },
+  ];
 
   return (
     <section
@@ -80,6 +39,7 @@ export function BeachesSection() {
           </div>
         </div>
 
+        {/* BeachesSlider stays Client — owns the prev/next carousel state */}
         <BeachesSlider items={beachItems} />
       </div>
     </section>

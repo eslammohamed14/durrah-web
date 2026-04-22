@@ -2,17 +2,15 @@ import Image from "next/image";
 import images from "@/constant/images";
 import { FilterContainer } from "./filter-container";
 import type { Property } from "@/lib/types";
-import {createTranslator} from "@/lib/utils/i18n";
-
-
 
 interface HeroSectionProps {
   allProperties: Property[];
-  t:ReturnType<typeof createTranslator>;
+  t: (key: string, params?: Record<string, string | number>) => string;
 }
 
 export const HeroSection = ({ allProperties,t }: HeroSectionProps) => {
- 
+  const isLocalStaticImage = (url?: string) =>
+    Boolean(url) && (url!.startsWith("/") || url!.startsWith("/_next/static/media/"));
 
   return (
     <section
@@ -27,9 +25,10 @@ export const HeroSection = ({ allProperties,t }: HeroSectionProps) => {
         priority
         fetchPriority="high" // 🔥 ADD THIS
         sizes="100vw"
-
         className="object-cover"
         style={{ objectPosition: "50% 25%" }}
+        quality={70}
+        unoptimized={isLocalStaticImage(images.durrahHomeHero)}
       />
 
       {/* Dark overlay */}

@@ -3,14 +3,44 @@ export {
   type ActivitiesSectionIconProps,
 } from "./ActivitiesSectionIcon";
 export { ArrowLeftIcon, type ArrowLeftIconProps } from "./ArrowLeftIcon";
+export { ArrowNormalDown, type ArrowNormalDownProps } from "./arrowNormalDown";
+export { ArrowNormalUp, type ArrowNormalUpProps } from "./arrowNormalUp";
 export { ArrowRightIcon, type ArrowRightIconProps } from "./ArrowRightIcon";
+export {
+  ArrowRightLineIcon,
+  type ArrowRightLineIconProps,
+} from "./ArrowRightLineIcon";
 export { BathroomIcon, type BathroomIconProps } from "./BathroomIcon";
 export { BedIcon, type BedIconProps } from "./BedIcon";
 export {
   BlogsSectionIcon,
   type BlogsSectionIconProps,
 } from "./BlogsSectionIcon";
+export { CloseSquareIcon, type CloseSquareIconProps } from "./CloseSquareIcon";
 export { DimensionIcon, type DimensionIconProps } from "./DimensionIcon";
+export { DiscountIcon, type DiscountIconProps } from "./DiscountIcon";
+export { DiningIcon, type DiningIconProps } from "./DiningIcon";
+export { EventsIcon, type EventsIconProps } from "./EventsIcon";
+export { PoolPremiumIcon, type PoolPremiumIconProps } from "./PoolPremiumIcon";
+export {
+  SeaViewPremiumIcon,
+  type SeaViewPremiumIconProps,
+} from "./SeaViewPremiumIcon";
+export {
+  LocationOutlineIcon,
+  type LocationOutlineIconProps,
+} from "./LocationOutlineIcon";
+export {
+  PropertyNearbyBuildingIcon,
+  type PropertyNearbyBuildingIconProps,
+} from "./PropertyNearbyBuildingIcon";
+export {
+  PropertyNearbyShopIcon,
+  type PropertyNearbyShopIconProps,
+} from "./PropertyNearbyShopIcon";
+export { KitchenIcon, type KitchenIconProps } from "./KitchenIcon";
+export { LivingRoomIcon, type LivingRoomIconProps } from "./LivingRoomIcon";
+export { ParkingIcon, type ParkingIconProps } from "./ParkingIcon";
 export {
   InstagramSectionIcon,
   type InstagramSectionIconProps,
@@ -43,11 +73,38 @@ export {
 } from "./NormalInstagramIcon";
 export { PeopleIcon, type PeopleIconProps } from "./PeopleIcon";
 export {
+  Profile2UserIcon,
+  type Profile2UserIconProps,
+} from "./Profile2UserIcon";
+export {
   PropertySectionIcon,
   type PropertySectionIconProps,
 } from "./PropertySectionIcon";
 export { SearchIcon, type SearchIconProps } from "./SearchIcon";
 export { StarColoredIcon, type StarColoredIconProps } from "./StarColoredIcon";
+export { StarSlashIcon, type StarSlashIconProps } from "./StarSlashIcon";
+export {
+  HostCheckInIcon,
+  type HostCheckInIconProps,
+} from "./HostCheckInIcon";
+export {
+  HostHeadphoneSupportIcon,
+  type HostHeadphoneSupportIconProps,
+} from "./HostHeadphoneSupportIcon";
+export {
+  HostPropertyKeyIcon,
+  type HostPropertyKeyIconProps,
+} from "./HostPropertyKeyIcon";
+export {
+  HostVerifyLinearIcon,
+  type HostVerifyLinearIconProps,
+} from "./HostVerifyLinearIcon";
+export { HeartOutlineIcon, type HeartOutlineIconProps } from "./HeartOutlineIcon";
+export { ShareOutlineIcon, type ShareOutlineIconProps } from "./ShareOutlineIcon";
+export {
+  ImageOutlineIcon,
+  type ImageOutlineIconProps,
+} from "./ImageOutlineIcon";
 export { WorkBagIcon, type WorkBagIconProps } from "./WorkBagIcon";
 export { VerifyIcon, type VerifyIconProps } from "./VerifyIcon";
 export { Xshap, type XshapProps } from "./xshap";

@@ -6,7 +6,7 @@
 "use client";
 
 import { useLocale } from "@/lib/contexts/LocaleContext";
-import { useRouter } from "@/lib/navigation";
+import { useRouter } from "@/navigation";
 import { DashboardLayout } from "@/features/dashboard/DashboardLayout";
 import { ProfileContent } from "@/features/dashboard/ProfileContent";
 import { getSharedNavItems } from "@/features/dashboard/dashboardNavItems";

@@ -28,8 +28,9 @@ class RealAPIClient
   private users: UsersAPI;
 
   constructor() {
-    super({ baseURL: env.apiBaseURL, maxRetries: 2 });
-    const cfg = { baseURL: env.apiBaseURL, maxRetries: 2 };
+    // Fail faster in production to avoid long SSR stalls when API is degraded.
+    super({ baseURL: env.apiBaseURL, timeout: 5000, maxRetries: 1 });
+    const cfg = { baseURL: env.apiBaseURL, timeout: 5000, maxRetries: 1 };
     this.properties = new PropertiesAPI(cfg);
     this.bookings = new BookingsAPI(cfg);
     this.maintenance = new MaintenanceAPI(cfg);

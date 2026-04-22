@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import { Link } from "@/navigation";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import images from "@/constant/images";
 import Image from "next/image";
@@ -23,19 +23,23 @@ export function Header({ transparent = false }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const baseClasses = transparent
-    ? "absolute top-0 left-0 right-0 z-50"
-    : "sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm";
+    ? "absolute top-0 left-0 right-0 z-50 pt-6"
+    : "relative z-50 bg-transparent pt-6";
 
-  const bgClasses = transparent ? "bg-transparent" : "bg-white";
+  const bgClasses = transparent
+    ? ""
+    : "bg-white rounded-[100px] px-6 py-4";
 
   const linkClasses = transparent
     ? "text-white/90 hover:text-white"
-    : "text-text-dark hover:text-text-dark/80";
+    : "text-primary-blue-400 hover:text-primary-blue-300";
 
   return (
     <header className={baseClasses}>
-      <div className={`${bgClasses} w-full`}>
-        <div className="mx-auto flex h-[90px] w-full max-w-[1540px] items-center justify-between px-4 pt-[20px] sm:px-6 lg:px-8 xl:px-10">
+      <div className="w-full">
+        <div
+          className={`mx-auto flex w-full max-w-[1200px] items-center justify-between ${bgClasses}`}
+        >
           {/* Logo */}
           <Link
             href="/"
@@ -43,7 +47,7 @@ export function Header({ transparent = false }: HeaderProps) {
             aria-label="Durrah — home"
           >
             <Image
-              src={images.durrahLogo}
+              src={transparent ? images.durrahLogo : images.durrahLogoBlue}
               alt="Durrah Logo"
               className="object-contain"
               width={130}
@@ -54,7 +58,7 @@ export function Header({ transparent = false }: HeaderProps) {
           {/* Desktop nav */}
           <nav
             aria-label="Main navigation"
-            className="hidden items-center gap-18 md:flex bg-white/10 backdrop-blur-[18px] rounded-full p-2 px-10 py-5"
+            className={`hidden items-center rounded-full md:flex ${transparent ? "gap-18 bg-white/10 p-2 px-10 py-5 backdrop-blur-[18px]" : "gap-8 bg-grey-50 px-6 py-3 shadow-[0_0_24px_0_rgba(0,0,0,0.06)]"}`}
             dir={dir}
           >
             {NAV_LINKS.map((item) => {
@@ -65,7 +69,7 @@ export function Header({ transparent = false }: HeaderProps) {
                 <div key={key} className="flex items-center gap-1">
                   <Link
                     href={href}
-                    className={`text-sm  transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${linkClasses} ${key === "home" ? "border-b border-current pb-1 font-semibold" : "font-medium"}`}
+                    className={`text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${linkClasses} ${key === "home" ? "border-b border-current pb-1 font-semibold leading-[1.5]" : "font-normal leading-[1.6]"}`}
                   >
                     {t(`nav.${key}`)}
                   </Link>
@@ -94,21 +98,21 @@ export function Header({ transparent = false }: HeaderProps) {
           <div className="flex items-center gap-6">
             {/* Language toggle */}
             <div
-              className={`flex items-center gap-1 rounded-full h-[52px] w-[98px] px-2 py-1 ${transparent ? "bg-white/10 backdrop-blur-[18px]" : "bg-gray-100"} ${isPending ? "opacity-50 pointer-events-none" : ""}`}
+              className={`flex h-[42px] w-[98px] items-center gap-1 rounded-full px-2 py-1 ${transparent ? "bg-white/10 backdrop-blur-[18px]" : "bg-grey-50 shadow-[0_0_24px_0_rgba(0,0,0,0.06)]"} ${isPending ? "pointer-events-none opacity-50" : ""}`}
             >
               <button
                 type="button"
                 onClick={() => setLocale("en")}
                 disabled={locale === "en" || isPending}
                 aria-pressed={locale === "en"}
-                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 ${
+                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed ${
                   locale === "en"
                     ? transparent
-                      ? "bg-white text-primary-blue-400"
-                      : "bg-text-dark text-white"
+                      ? "bg-white text-primary-coral-400"
+                      : "bg-primary-blue-400 text-white"
                     : transparent
                       ? "text-white/70 hover:text-white"
-                      : "text-gray-500 hover:text-gray-700"
+                      : "text-primary-blue-400 hover:text-primary-blue-300"
                 }`}
               >
                 EN
@@ -118,14 +122,14 @@ export function Header({ transparent = false }: HeaderProps) {
                 onClick={() => setLocale("ar")}
                 disabled={locale === "ar" || isPending}
                 aria-pressed={locale === "ar"}
-                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 ${
+                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed ${
                   locale === "ar"
                     ? transparent
-                      ? "bg-white text-primary-blue-400"
-                      : "bg-text-dark text-white"
+                      ? "bg-white text-primary-coral-400"
+                      : "bg-primary-blue-400 text-white"
                     : transparent
                       ? "text-surface-primary hover:text-surface-primary/80"
-                      : "text-gray-500 hover:text-gray-700"
+                      : "text-primary-blue-400 hover:text-primary-blue-300"
                 }`}
               >
                 AR
@@ -136,13 +140,13 @@ export function Header({ transparent = false }: HeaderProps) {
             <div className="hidden items-center gap-2 md:flex">
               <Link
                 href="/login"
-                className={`rounded-lg border px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "border-white text-white hover:bg-white/10" : "border-text-dark text-text-dark hover:bg-gray-50"}`}
+                className={`rounded-lg border px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "border-white text-white hover:bg-white/10" : "border-primary-blue-400 text-primary-blue-400 hover:bg-grey-50"}`}
               >
                 {t("nav.login")}
               </Link>
               <Link
                 href="/register"
-                className={`rounded-xl px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "bg-white text-primary-blue-400 hover:bg-white/90" : "bg-text-dark text-white hover:bg-text-dark/90"}`}
+                className={`rounded-xl px-7 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${transparent ? "bg-white text-primary-coral-400 hover:bg-white/90" : "bg-primary-blue-400 text-white hover:bg-primary-blue-300"}`}
               >
                 {t("nav.signUp")}
               </Link>

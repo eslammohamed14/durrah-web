@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import type { Booking, Property, CancellationPolicy } from "@/lib/types";
 import type { AvailabilityCalendar as AvailabilityData } from "@/lib/types";
 import { useAuth } from "@/lib/contexts/AuthContext";

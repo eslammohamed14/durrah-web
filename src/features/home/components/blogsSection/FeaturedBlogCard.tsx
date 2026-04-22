@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { ArrowRightIcon } from "@/assets/icons";
 import Image from "next/image";
 

@@ -41,7 +41,7 @@ export const seedUsers: User[] = [
   },
   {
     id: "user-owner-1",
-    name: "Sara Al-Otaibi",
+    name: "DURRAT AL AROUS",
     email: "sara@example.com",
     phoneNumber: "+966509876543",
     roles: ["owner", "investor"],
@@ -93,8 +93,8 @@ export const seedProperties: Property[] = [
     id: "prop-rent-1",
     title: { en: "Luxury Beachfront Apartment", ar: "شقة فاخرة على الشاطئ" },
     description: {
-      en: "Stunning 2-bedroom apartment with panoramic sea views in Durrah Al-Arus.",
-      ar: "شقة فاخرة من غرفتين مع إطلالات بحرية بانورامية في درة العروس.",
+      en: "Tucked away in a breathtaking location, our resort is designed to offer more than just a place to stay. From peaceful mornings with stunning views to exciting activities and vibrant evenings, every moment is created to make your experience truly special.",
+      ar: "يقع هذا المكان في موقع خلاب ليقدم أكثر من مجرد إقامة. من صباحات هادئة بإطلالات رائعة إلى أنشطة مميزة وأمسيات نابضة بالحياة، كل لحظة صُممت لتجربة استثنائية.",
     },
     category: "rent",
     type: "apartment",
@@ -106,19 +106,25 @@ export const seedProperties: Property[] = [
       area: "Durrah Al-Arus",
     },
     specifications: {
-      size: 120,
-      rooms: 2,
-      bathrooms: 2,
+      size: 390,
+      rooms: 4,
+      bathrooms: 3,
       beachView: true,
-      maxGuests: 6,
+      maxGuests: 3,
     },
     pricing: {
-      basePrice: 850,
+      basePrice: 400,
       currency: "SAR",
       priceType: "per_night",
+      originalPrice: 400,
+      offerPercentage: 20,
+      previewNights: 3,
+      previewNightlyRate: 750,
+      includedGuestsForPricing: 2,
+      extraGuestFeePerNight: 75,
       fees: [
-        { name: "Cleaning fee", amount: 150 },
-        { name: "Service fee", amount: 85 },
+        { name: "Cleaning Fees", amount: 120 },
+        { name: "Service Fees", amount: 80 },
       ],
     },
     amenities: [
@@ -130,10 +136,21 @@ export const seedProperties: Property[] = [
       "Kitchen",
       "Washer",
     ],
+    premiumAmenities: [
+      { id: "pa-1", icon: "pool", labelKey: "premiumPrivatePool" },
+      { id: "pa-2", icon: "marina", labelKey: "premiumNearMarina" },
+      { id: "pa-3", icon: "seaView", labelKey: "premiumSeaView" },
+      { id: "pa-4", icon: "waterSports", labelKey: "premiumWaterSports" },
+      { id: "pa-5", icon: "dining", labelKey: "premiumCloseToDining" },
+      { id: "pa-6", icon: "events", labelKey: "premiumEventFriendly" },
+    ],
     images: [
       { id: "img-1", url: images.property1, alt: "Living room", order: 0 },
       { id: "img-2", url: images.property2, alt: "Bedroom", order: 1 },
       { id: "img-3", url: images.property3, alt: "Sea view", order: 2 },
+      { id: "img-4", url: images.property4, alt: "Kitchen area", order: 3 },
+      { id: "img-5", url: images.property5, alt: "Dining area", order: 4 },
+      { id: "img-6", url: images.property6, alt: "Outdoor seating", order: 5 },
     ],
     card: { status: "family" },
     availability: {
@@ -144,6 +161,44 @@ export const seedProperties: Property[] = [
       maxStay: 30,
     },
     ratings: { average: 4.8, count: 24 },
+    host: {
+      type: "durrat",
+      name: { en: "DURRAT AL AROUS", ar: "درة العروس" },
+      title: { en: "Official Unit", ar: "وحدة رسمية" },
+      description: {
+        en: "This property is part of the official Durrat Al Arous resort experience.",
+        ar: "هذه الوحدة جزء من تجربة منتجع درة العروس الرسمية.",
+      },
+      operatedByLabel: {
+        en: "Operated by Saudi Company for Tourist Cities",
+        ar: "تشغيل شركة المدن السياحية السعودية",
+      },
+      isOfficialUnit: true,
+    },
+    nearby: [
+      {
+        icon: "location",
+        label: {
+          en: "Next to Usman Super Store",
+          ar: "بجوار سوبر ماركت عثمان",
+        },
+      },
+      {
+        icon: "shop",
+        label: {
+          en: "5 minutes to Reda Al Arous",
+          ar: "5 دقائق إلى رضا العروس",
+        },
+      },
+      {
+        icon: "building",
+        label: {
+          en: "10 min to City Center Mall",
+          ar: "10 دقائق إلى سيتي سنتر مول",
+        },
+      },
+    ],
+    similarProperties: ["prop-rent-2", "prop-buy-1", "prop-buy-2"],
     policies: {
       cancellation: {
         type: "moderate",
@@ -158,8 +213,8 @@ export const seedProperties: Property[] = [
         ],
       },
       houseRules: {
-        en: "No smoking. No pets. Quiet hours after 10pm.",
-        ar: "ممنوع التدخين. ممنوع الحيوانات الأليفة. ساعات الهدوء بعد الساعة 10 مساءً.",
+        en: "All reservations must be made with accurate and complete information. A booking is confirmed only after receiving a confirmation email or message. A deposit or full payment may be required to secure the reservation. Prices are subject to change until the booking is confirmed. Guests must adhere to the maximum occupancy stated in the reservation. Check-in and check-out times must be respected.",
+        ar: "يجب أن تتم جميع الحجوزات بمعلومات دقيقة وكاملة. لا يعتبر الحجز مؤكداً إلا بعد استلام رسالة تأكيد. قد يلزم دفع عربون أو المبلغ كاملاً لتثبيت الحجز. الأسعار قابلة للتغيير حتى تأكيد الحجز. يجب الالتزام بالحد الأقصى للإشغال ومواعيد الدخول والخروج.",
       },
       minStay: 2,
     },
@@ -218,6 +273,41 @@ export const seedProperties: Property[] = [
       minStay: 3,
     },
     ratings: { average: 4.6, count: 11 },
+    host: {
+      type: "owner",
+      name: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+      title: { en: "Superhost", ar: "مضيف مميز" },
+      description: {
+        en: "Passionate host dedicated to exceptional stays along the coast.",
+        ar: "مضيف شغوف بتقديم إقامة استثنائية على الساحل.",
+      },
+      ownerDetails: {
+        displayName: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+        isSuperhost: true,
+        showLicensedBadge: true,
+        memberSinceYear: "2019",
+        reviewRating: 4.9,
+        reviewCount: 128,
+        propertyCount: 12,
+        bio: {
+          en: "Hi! I'm Ahmed, a passionate host dedicated to providing exceptional stays along the beautiful coast. I personally ensure every guest has a comfortable and memorable experience.",
+          ar: "مرحباً، أنا أحمد، مضيف شغوف بتقديم إقامات استثنائية على الساحل الجميل. أحرص شخصياً على أن يحظى كل ضيف بتجربة مريحة لا تُنسى.",
+        },
+        contactHostEnabled: false,
+      },
+    },
+    nearby: [
+      { icon: "location", label: { en: "Core Bay Beach", ar: "شاطئ كور باي" } },
+      {
+        icon: "shop",
+        label: { en: "Nearby Marina", ar: "بالقرب من المارينا" },
+      },
+      {
+        icon: "building",
+        label: { en: "City services 10 min", ar: "خدمات المدينة 10 دقائق" },
+      },
+    ],
+    similarProperties: ["prop-rent-1", "prop-buy-2", "prop-activity-1"],
     policies: {
       cancellation: {
         type: "strict",
@@ -271,6 +361,59 @@ export const seedProperties: Property[] = [
     ],
     card: { status: "single" },
     ratings: { average: 4.5, count: 3 },
+    host: {
+      type: "investor",
+      name: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+      title: { en: "Superhost", ar: "مضيف مميز" },
+      description: {
+        en: "Co-listed with Durrat guest services for a seamless stay.",
+        ar: "مع خدمات ضيوف درة لتجربة إقامة سلسة.",
+      },
+      operatedByLabel: {
+        en: "Operated by Saudi Company for Tourist Cities",
+        ar: "تشغيل شركة المدن السياحية السعودية",
+      },
+      ownerDetails: {
+        displayName: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+        isSuperhost: true,
+        showLicensedBadge: true,
+        memberSinceYear: "2019",
+        reviewRating: 4.9,
+        reviewCount: 128,
+        propertyCount: 12,
+        bio: {
+          en: "Hi! I'm Ahmed, a passionate host dedicated to providing exceptional stays along the beautiful coast. I personally ensure every guest has a comfortable and memorable experience.",
+          ar: "مرحباً، أنا أحمد، مضيف شغوف بتقديم إقامات استثنائية على الساحل الجميل. أحرص شخصياً على أن يحظى كل ضيف بتجربة مريحة لا تُنسى.",
+        },
+        contactHostEnabled: false,
+      },
+      investorManagementCard: {
+        brandName: { en: "DURRAT AL AROUS", ar: "درة العروس" },
+        badgeLabel: {
+          en: "Managed by Durrah Al Arous",
+          ar: "تُدار بواسطة درة العروس",
+        },
+        description: {
+          en: "This property is professionally managed by Durrat Al Arous, ensuring a high-quality guest experience.",
+          ar: "تُدار هذه الوحدة باحترافية من قبل درة العروس لضمان تجربة إقامة عالية الجودة.",
+        },
+        chips: [
+          { id: "c1", icon: "checkIn", labelKey: "mgmtChipCheckIn" },
+          { id: "c2", icon: "propertyKey", labelKey: "mgmtChipKey" },
+          {
+            id: "c3",
+            icon: "headphoneSupport",
+            labelKey: "mgmtChipSupport",
+          },
+        ],
+      },
+    },
+    nearby: [
+      { icon: "location", label: { en: "Sea promenade", ar: "ممشى البحر" } },
+      { icon: "shop", label: { en: "Retail district", ar: "منطقة تجارية" } },
+      { icon: "building", label: { en: "Business center", ar: "مركز أعمال" } },
+    ],
+    similarProperties: ["prop-buy-2", "prop-rent-1", "prop-rent-2"],
     policies: {
       houseRules: { en: "Inquire for details.", ar: "استفسر للتفاصيل." },
     },
@@ -321,6 +464,38 @@ export const seedProperties: Property[] = [
     ],
     card: { status: "family" },
     ratings: { average: 4.7, count: 9 },
+    host: {
+      type: "durrat",
+      name: { en: "Durrat Al Arous", ar: "درة العروس" },
+      title: { en: "Official Unit", ar: "وحدة رسمية" },
+      description: {
+        en: "Professionally managed by the Durrat team.",
+        ar: "تُدار باحترافية من فريق درة.",
+      },
+      operatedByLabel: {
+        en: "Operated by Saudi Company for Tourist Cities",
+        ar: "تشغيل شركة المدن السياحية السعودية",
+      },
+      isOfficialUnit: true,
+    },
+    nearby: [
+      { icon: "location", label: { en: "Core Bay Beach", ar: "شاطئ كور باي" } },
+      {
+        icon: "shop",
+        label: {
+          en: "5 minutes to Reda Al Arous",
+          ar: "5 دقائق إلى رضا العروس",
+        },
+      },
+      {
+        icon: "building",
+        label: {
+          en: "10 min to City Center Mall",
+          ar: "10 دقائق إلى سيتي سنتر مول",
+        },
+      },
+    ],
+    similarProperties: ["prop-rent-2", "prop-rent-1", "prop-buy-1"],
     policies: {
       houseRules: { en: "Viewing by appointment.", ar: "المعاينة بموعد مسبق." },
     },
@@ -359,6 +534,45 @@ export const seedProperties: Property[] = [
     ],
     card: { status: "single" },
     ratings: { average: 4.2, count: 5 },
+    host: {
+      type: "owner",
+      name: { en: "Commercial Management", ar: "إدارة تجارية" },
+      title: { en: "Leasing Team", ar: "فريق التأجير" },
+      description: {
+        en: "Dedicated leasing specialists for retail and commercial units.",
+        ar: "متخصصون في التأجير لوحدات تجارية وتجزئة.",
+      },
+      ownerDetails: {
+        displayName: { en: "Commercial Management", ar: "إدارة تجارية" },
+        roleLabel: { en: "Listing representative", ar: "ممثل العرض" },
+        bio: {
+          en: "Dedicated leasing specialists for retail and commercial units.",
+          ar: "متخصصون في التأجير لوحدات تجارية وتجزئة.",
+        },
+        memberSinceYear: "2018",
+        responseRatePercent: 95,
+        responseTimeLabel: {
+          en: "Within one business day",
+          ar: "خلال يوم عمل",
+        },
+        contactHostEnabled: false,
+      },
+    },
+    nearby: [
+      {
+        icon: "location",
+        label: { en: "Main commercial strip", ar: "الشارع التجاري الرئيسي" },
+      },
+      {
+        icon: "shop",
+        label: { en: "High foot traffic", ar: "حركة مرور عالية" },
+      },
+      {
+        icon: "building",
+        label: { en: "Adjacent services", ar: "خدمات مجاورة" },
+      },
+    ],
+    similarProperties: ["prop-buy-1", "prop-buy-2", "prop-rent-1"],
     policies: {
       houseRules: { en: "Commercial use only.", ar: "للاستخدام التجاري فقط." },
     },
@@ -383,7 +597,13 @@ export const seedProperties: Property[] = [
       coordinates: { lat: 16.893, lng: 42.557 },
       area: "Durrah Al-Arus",
     },
-    specifications: { size: 55, rooms: 1, bathrooms: 1, beachView: true, maxGuests: 2 },
+    specifications: {
+      size: 55,
+      rooms: 1,
+      bathrooms: 1,
+      beachView: true,
+      maxGuests: 2,
+    },
     pricing: { basePrice: 320, currency: "SAR", priceType: "per_night" },
     amenities: ["WiFi", "Kitchenette", "Marina Access", "Air Conditioning"],
     images: [
@@ -399,6 +619,36 @@ export const seedProperties: Property[] = [
       maxStay: 14,
     },
     ratings: { average: 4.9, count: 38 },
+    host: {
+      type: "owner",
+      name: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+      title: { en: "Superhost", ar: "مضيف مميز" },
+      description: {
+        en: "Local host with quick responses and curated marina recommendations.",
+        ar: "مضيف محلي بردود سريعة وتوصيات مخصصة للمرسى.",
+      },
+      ownerDetails: {
+        displayName: { en: "Ahmed Al-Rashid", ar: "أحمد الراشد" },
+        roleLabel: { en: "Property owner", ar: "مالك الوحدة" },
+        bio: {
+          en: "Local host with quick responses and curated marina recommendations.",
+          ar: "مضيف محلي بردود سريعة وتوصيات مخصصة للمرسى.",
+        },
+        memberSinceYear: "2020",
+        responseRatePercent: 99,
+        responseTimeLabel: { en: "Within an hour", ar: "خلال ساعة" },
+        contactHostEnabled: true,
+      },
+    },
+    nearby: [
+      { icon: "location", label: { en: "Durrah Marina", ar: "مرسى درة" } },
+      { icon: "shop", label: { en: "Seaside dining", ar: "مطاعم بحرية" } },
+      {
+        icon: "building",
+        label: { en: "City center access", ar: "قرب مركز المدينة" },
+      },
+    ],
+    similarProperties: ["prop-rent-1", "prop-rent-2", "prop-buy-1"],
     policies: {
       cancellation: {
         type: "flexible",

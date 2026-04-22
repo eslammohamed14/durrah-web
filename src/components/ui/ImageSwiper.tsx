@@ -5,7 +5,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export const DEFAULT_IMAGE_SWIPER_SIZES =
-  "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px";
+  "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw";
 
 /** Minimal slide shape; callers may pass richer objects (e.g. `PropertyImage`). */
 export interface ImageSwiperSlide {
@@ -20,6 +20,7 @@ export interface ImageSwiperProps {
   /** Used when a slide has no `alt`. */
   fallbackAlt: string;
   imageSizes?: string;
+  imageQuality?: number;
   /** Fixed slide height in pixels (matches gallery area). */
   slideHeightPx?: number;
 }
@@ -29,6 +30,7 @@ export function ImageSwiper({
   dir,
   fallbackAlt,
   imageSizes = DEFAULT_IMAGE_SWIPER_SIZES,
+  imageQuality = 65,
   slideHeightPx = 216,
 }: ImageSwiperProps) {
   const h = `${slideHeightPx}px`;
@@ -55,6 +57,7 @@ export function ImageSwiper({
               fill
               className="object-cover"
               sizes={imageSizes}
+              quality={imageQuality}
             />
           </div>
         </SwiperSlide>

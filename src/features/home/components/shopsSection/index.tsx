@@ -1,19 +1,15 @@
-"use client";
-
-import { useRouter } from "@/lib/navigation";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/navigation";
 import {
   ArrowRightIcon,
   BuildingColoredIcon,
   SearchIcon,
 } from "@/assets/icons";
-import { Button } from "@/components/ui/Button";
-import { useLocale } from "@/lib/contexts/LocaleContext";
 import { SectionTag } from "@/features/home/components/sectionTag";
 import { ShopGallery } from "./ShopGallery";
 
-export function ShopsSection() {
-  const router = useRouter();
-  const { t } = useLocale();
+export async function ShopsSection() {
+  const t = await getTranslations();
 
   return (
     <section
@@ -45,17 +41,15 @@ export function ShopsSection() {
             </p>
           </div>
 
-          <Button
-            type="button"
-            variant="primary"
-            backgroundColor="#FF765E"
-            onClick={() => router.push("/search?category=shop")}
-            className="h-12 w-full rounded-lg px-4 text-base font-medium text-white shadow-none hover:!bg-[#e8614a] active:!bg-[#d45540] focus-visible:!ring-primary-coral-400 sm:w-fit"
-            leftIcon={<SearchIcon className="h-6 w-6" />}
-            rightIcon={<ArrowRightIcon className="h-6 w-6" />}
+          {/* Link styled as a button — no client JS needed for navigation */}
+          <Link
+            href="/search?category=shop"
+            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#FF765E] px-4 text-base font-medium text-white transition-colors hover:bg-[#e8614a] active:bg-[#d45540] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E] focus-visible:ring-offset-2 sm:w-fit"
           >
+            <SearchIcon className="h-6 w-6 shrink-0" />
             {t("home.browseShops")}
-          </Button>
+            <ArrowRightIcon className="h-6 w-6 shrink-0" />
+          </Link>
         </div>
       </div>
     </section>

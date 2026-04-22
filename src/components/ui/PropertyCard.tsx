@@ -3,7 +3,7 @@
 import type { Property, PropertyImage } from "@/lib/types";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import Image from "next/image";
-import dynamic from "next/dynamic";
+import { Link } from "@/navigation";
 import {
   ArrowRightIcon,
   BathroomIcon,
@@ -12,45 +12,7 @@ import {
 } from "@/assets/icons";
 import { DEFAULT_IMAGE_SWIPER_SIZES } from "@/components/ui/ImageSwiper";
 
-// Swiper has DOM-dependent initialization — must be client-only
-const ImageSwiper = dynamic(
-  () => import("@/components/ui/ImageSwiper").then((m) => m.ImageSwiper),
-  { ssr: false },
-);
-
 const SQ_M_TO_SQ_FT = 10.7639;
-
-function ChevronRightButtonIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M10 8l6 4-6 4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function StarIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-    </svg>
-  );
-}
 
 export interface PropertyCardProps {
   property: Property;
@@ -60,8 +22,13 @@ function sortedImages(images: PropertyImage[]) {
   return [...images].sort((a, b) => a.order - b.order);
 }
 
+function isLocalStaticImage(url?: string): boolean {
+  return Boolean(url) && (url!.startsWith("/") || url!.startsWith("/_next/static/media/"));
+}
+
 export function PropertyCard({ property }: PropertyCardProps) {
-  const { t, locale, dir } = useLocale();
+  const { t, locale } = useLocale();
+  const propertyHref = `/properties/${property.id}`;
   const title = property.title[locale] || property.title.en;
   const galleryImages = sortedImages(property.images);
   const isForSale = property.category === "buy";
@@ -94,16 +61,17 @@ export function PropertyCard({ property }: PropertyCardProps) {
   return (
     <article className="flex min-w-0 w-full max-w-full flex-col overflow-hidden rounded-2xl border border-text-body-muted bg-white pb-4 shadow-[0_0_24px_0_rgba(0,0,0,0.06)]">
       <div className="relative h-[216px] min-h-[216px] min-w-0 overflow-hidden rounded-t-xl bg-gradient-to-br from-slate-300 to-slate-400">
-        {galleryImages.length === 0 ? null : galleryImages.length === 1 ? (
+        {galleryImages.length === 0 ? null : (
           <Image
             src={galleryImages[0].url}
             alt={galleryImages[0].alt ?? title}
             fill
             className="object-cover"
             sizes={DEFAULT_IMAGE_SWIPER_SIZES}
+            quality={65}
+            loading="lazy"
+            unoptimized={isLocalStaticImage(galleryImages[0].url)}
           />
-        ) : (
-          <ImageSwiper slides={galleryImages} dir={dir} fallbackAlt={title} />
         )}
         <div className="pointer-events-none absolute bottom-2.5 left-2.5 z-10 flex w-[calc(100%-20px)] items-center">
           <span
@@ -127,9 +95,11 @@ export function PropertyCard({ property }: PropertyCardProps) {
       <div className="flex flex-col gap-3 px-3 pt-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <h3 className="text-xl font-semibold leading-tight text-grey-800">
-              {title}
-            </h3>
+            <Link href={propertyHref} className="group transition-colors">
+              <h3 className="text-xl font-semibold leading-tight text-grey-800 transition-colors group-hover:text-primary-blue-400">
+                {title}
+              </h3>
+            </Link>
           </div>
           <div className="flex shrink-0 items-center gap-1">
             {cardStatus != null ? (
@@ -172,13 +142,13 @@ export function PropertyCard({ property }: PropertyCardProps) {
               {originalPrice} SAR
             </span>
           </div>
-          <button
-            type="button"
+          <Link
+            href={propertyHref}
             aria-label={t("home.viewPropertyDetails")}
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#F4F4F4] text-text-dark transition-colors hover:bg-[#e8e8e8]"
           >
             <ArrowRightIcon />
-          </button>
+          </Link>
         </div>
       </div>
     </article>

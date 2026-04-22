@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { useLocale } from "@/lib/contexts/LocaleContext";
-import { PropertyCard } from "@/features/properties/PropertyCard";
+import { PropertyCard } from "@/features/properties/components/propertyCard";
 import { SearchFilters } from "./SearchFilters";
 import { Spinner } from "@/components/ui/Spinner";
 import { getAPIClient } from "@/lib/api";

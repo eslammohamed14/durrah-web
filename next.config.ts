@@ -12,11 +12,17 @@ const nextConfig: NextConfig = {
     root: __dirname,
   },
   images: {
+    // In mock mode we serve bundled local assets; disabling optimizer avoids
+    // intermittent /_next/image 504s on smaller production instances.
+    unoptimized: process.env.NEXT_PUBLIC_USE_MOCK_API === "true",
+    // Allow explicit qualities used in the UI components.
+    qualities: [65, 70, 75],
     // Serve modern formats (AVIF first, WebP fallback) for better compression
     formats: ["image/avif", "image/webp"],
     // Responsive breakpoints that match Tailwind's default screens
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 176, 222, 256, 308, 384, 512],
+    // Keep an upper bound to avoid expensive 4K on-the-fly transforms
+    deviceSizes: [640, 750, 828, 1080, 1200, 1536, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 176, 222, 256, 320, 384],
     // Minimise layout shift: keep images in browser cache for 1 day
     minimumCacheTTL: 86400,
     remotePatterns: [
@@ -39,47 +45,6 @@ const nextConfig: NextConfig = {
     {
       source: "/register",
       destination: "/auth/register",
-    },
-  ],
-  // Cache-Control headers for static assets and API routes
-  headers: async () => [
-    {
-      // Immutable cache for Next.js static chunks (hashed filenames)
-      source: "/_next/static/:path*",
-      headers: [
-        {
-          key: "Cache-Control",
-          value: "public, max-age=31536000, immutable",
-        },
-      ],
-    },
-    {
-      // Longer cache for public static assets (images, fonts, videos)
-      source: "/images/:path*",
-      headers: [
-        {
-          key: "Cache-Control",
-          value: "public, max-age=86400, stale-while-revalidate=604800",
-        },
-      ],
-    },
-    {
-      source: "/videos/:path*",
-      headers: [
-        {
-          key: "Cache-Control",
-          value: "public, max-age=86400, stale-while-revalidate=604800",
-        },
-      ],
-    },
-    {
-      source: "/locales/:path*",
-      headers: [
-        {
-          key: "Cache-Control",
-          value: "public, max-age=3600, stale-while-revalidate=86400",
-        },
-      ],
     },
   ],
 };

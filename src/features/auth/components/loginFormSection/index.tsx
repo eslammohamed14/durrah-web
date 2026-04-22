@@ -4,12 +4,13 @@ import Image from "next/image";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { Link } from "@/lib/navigation";
+import { Link } from "@/navigation";
 import { markPasswordResetFlowStartedFromLogin } from "../../hooks/useBackToLoginFromPasswordResetFlow";
 import images from "@/constant/images";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { AppleIcon, EyeSlashIcon, GoogleIcon } from "@/assets/icons";
+import { EyeSlashIcon } from "@/assets/icons";
+import AuthSocialButtons from "../authSocialButtons";
 import { loginSchema, type LoginFormValues } from "../../utils/validations";
 
 /** Login form section matching the Figma screenshot structure. */
@@ -35,14 +36,21 @@ export default function LoginFormSection() {
 
   return (
     <section className="w-full">
-      <Image
-        src={images.durrahLogoBlue}
-        alt={t("layout.logoAlt")}
-        width={145}
-        height={42}
-        priority
-        className="h-auto w-[145px]"
-      />
+      <Link
+        href="/"
+        replace
+        aria-label={t("layout.logoAlt")}
+        className="w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-blue-400"
+      >
+        <Image
+          src={images.durrahLogoBlue}
+          alt={t("layout.logoAlt")}
+          width={145}
+          height={42}
+          priority
+          className="h-auto w-[145px]"
+        />
+      </Link>
 
       <h1 className="mt-6 text-[44px] font-semibold leading-[1.05] tracking-[-0.02em] text-durrah-blue">
         {t("loginPage.title")}
@@ -125,22 +133,12 @@ export default function LoginFormSection() {
           {t("signIn")}
         </Button>
 
-        <div className="grid grid-cols-2 gap-2 pt-3">
-          <button
-            type="button"
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-[#EAECF0] bg-white px-3 text-xs text-[#344054]"
-          >
-            <AppleIcon size={24} />
-            <span>{t("loginPage.apple")}</span>
-          </button>
-          <button
-            type="button"
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-[#EAECF0] bg-white px-3 text-xs text-[#344054]"
-          >
-            <GoogleIcon size={24} />
-            <span>{t("loginPage.google")}</span>
-          </button>
-        </div>
+        <AuthSocialButtons
+          appleLabel={t("loginPage.apple")}
+          googleLabel={t("loginPage.google")}
+          containerClassName="grid grid-cols-2 gap-2 pt-3"
+          buttonClassName="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-[#EAECF0] bg-white px-3 text-[14px] text-grey-500"
+        />
 
         <p className="pt-1 text-center text-xs text-[#667085]">
           {t("noAccount")}{" "}
