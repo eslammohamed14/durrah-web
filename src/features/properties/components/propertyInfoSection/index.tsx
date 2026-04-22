@@ -11,6 +11,7 @@ import {
   LocationOutlineIcon,
   ParkingIcon,
 } from "@/assets/icons";
+import InlineInfoItem from "@/components/ui/InlineInfoItem";
 import type { Property } from "@/lib/types";
 
 interface PropertyInfoSectionProps {
@@ -86,16 +87,13 @@ export default function PropertyInfoSection({ property }: PropertyInfoSectionPro
         </h2>
         <div className="flex flex-wrap items-center gap-y-2">
           {specs.map((spec, index) => (
-            <div
+            <InlineInfoItem
               key={spec.key}
-              className={[
-                "flex items-center gap-1.5 pe-2 text-[16px] leading-[1.6] text-grey-600",
-                index < specs.length - 1 ? "border-e border-grey-100" : "",
-              ].join(" ")}
-            >
-              {spec.icon}
-              <span>{spec.value}</span>
-            </div>
+              icon={spec.icon}
+              text={spec.value}
+              showDivider={index < specs.length - 1}
+              className="text-[16px] leading-[1.6]"
+            />
           ))}
         </div>
       </div>

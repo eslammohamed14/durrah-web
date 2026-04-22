@@ -4,6 +4,10 @@ export {
 } from "./ActivitiesSectionIcon";
 export { ArrowLeftIcon, type ArrowLeftIconProps } from "./ArrowLeftIcon";
 export { ArrowRightIcon, type ArrowRightIconProps } from "./ArrowRightIcon";
+export {
+  ArrowRightLineIcon,
+  type ArrowRightLineIconProps,
+} from "./ArrowRightLineIcon";
 export { BathroomIcon, type BathroomIconProps } from "./BathroomIcon";
 export { BedIcon, type BedIconProps } from "./BedIcon";
 export {
@@ -23,6 +27,14 @@ export {
   LocationOutlineIcon,
   type LocationOutlineIconProps,
 } from "./LocationOutlineIcon";
+export {
+  PropertyNearbyBuildingIcon,
+  type PropertyNearbyBuildingIconProps,
+} from "./PropertyNearbyBuildingIcon";
+export {
+  PropertyNearbyShopIcon,
+  type PropertyNearbyShopIconProps,
+} from "./PropertyNearbyShopIcon";
 export { KitchenIcon, type KitchenIconProps } from "./KitchenIcon";
 export { LivingRoomIcon, type LivingRoomIconProps } from "./LivingRoomIcon";
 export { ParkingIcon, type ParkingIconProps } from "./ParkingIcon";

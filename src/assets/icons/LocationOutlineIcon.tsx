@@ -3,10 +3,12 @@ import type { SVGProps } from "react";
 export interface LocationOutlineIconProps
   extends Omit<SVGProps<SVGSVGElement>, "width" | "height"> {
   size?: number;
+  color?: string;
 }
 
 export function LocationOutlineIcon({
   size = 24,
+  color = "#363C88",
   className,
   ...rest
 }: LocationOutlineIconProps) {
@@ -23,12 +25,12 @@ export function LocationOutlineIcon({
     >
       <path
         d="M11.9999 13.43C13.723 13.43 15.1199 12.0331 15.1199 10.31C15.1199 8.58687 13.723 7.19 11.9999 7.19C10.2768 7.19 8.87988 8.58687 8.87988 10.31C8.87988 12.0331 10.2768 13.43 11.9999 13.43Z"
-        stroke="#363C88"
+        stroke={color}
         strokeWidth="1.1"
       />
       <path
         d="M3.61971 8.49C5.58971 -0.169998 18.4197 -0.159997 20.3797 8.5C21.5297 13.58 18.3697 17.88 15.5997 20.54C13.5897 22.48 10.4097 22.48 8.38971 20.54C5.62971 17.88 2.46971 13.57 3.61971 8.49Z"
-        stroke="#363C88"
+        stroke={color}
         strokeWidth="1.5"
       />
     </svg>
