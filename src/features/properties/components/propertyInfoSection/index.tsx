@@ -1,7 +1,4 @@
-"use client";
-
-import { useMemo, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import {
   BathroomIcon,
   BedIcon,
@@ -13,67 +10,59 @@ import {
 } from "@/assets/icons";
 import InlineInfoItem from "@/components/ui/InlineInfoItem";
 import type { Property } from "@/lib/types";
+import { DescriptionToggle } from "./DescriptionToggle";
 
 interface PropertyInfoSectionProps {
   property: Property;
 }
 
-export default function PropertyInfoSection({
+export default async function PropertyInfoSection({
   property,
 }: PropertyInfoSectionProps) {
-  const locale = useLocale();
-  const t = useTranslations();
+  const t = await getTranslations();
+  const locale = (await getLocale()) as "en" | "ar";
+
   const description =
-    property.description[locale as "en" | "ar"] || property.description.en;
+    property.description[locale] || property.description.en;
   const area = property.location.area;
   const sqFt = Math.round(property.specifications.size * 10.7639);
-  const [expanded, setExpanded] = useState(false);
-  const shouldClampDescription = description.length > 260;
 
-  const specs = useMemo(
-    () => [
-      {
-        key: "size",
-        icon: <DimensionIcon size={24} color="#727272" />,
-        value: `${sqFt.toLocaleString("en-US")} sq.ft.`,
-      },
-      {
-        key: "rooms",
-        icon: <BedIcon size={24} color="#727272" />,
-        value: t("propertyDetails.bedShort", {
-          count: property.specifications.rooms ?? 0,
-        }),
-      },
-      {
-        key: "bathrooms",
-        icon: <BathroomIcon size={24} color="#727272" />,
-        value: t("propertyDetails.bathShort", {
-          count: property.specifications.bathrooms ?? 0,
-        }),
-      },
-      {
-        key: "living",
-        icon: <LivingRoomIcon size={24} />,
-        value: t("propertyDetails.livingShort", { count: 1 }),
-      },
-      {
-        key: "kitchen",
-        icon: <KitchenIcon size={24} />,
-        value: t("propertyDetails.kitchenShort", { count: 1 }),
-      },
-      {
-        key: "parking",
-        icon: <ParkingIcon size={24} />,
-        value: t("propertyDetails.parkingSpaceShort", { count: 1 }),
-      },
-    ],
-    [property.specifications.rooms, property.specifications.bathrooms, sqFt, t],
-  );
-
-  const visibleDescription =
-    shouldClampDescription && !expanded
-      ? `${description.slice(0, 260).trimEnd()}..`
-      : description;
+  const specs = [
+    {
+      key: "size",
+      icon: <DimensionIcon size={24} color="#727272" />,
+      value: `${sqFt.toLocaleString("en-US")} sq.ft.`,
+    },
+    {
+      key: "rooms",
+      icon: <BedIcon size={24} color="#727272" />,
+      value: t("propertyDetails.bedShort", {
+        count: property.specifications.rooms ?? 0,
+      }),
+    },
+    {
+      key: "bathrooms",
+      icon: <BathroomIcon size={24} color="#727272" />,
+      value: t("propertyDetails.bathShort", {
+        count: property.specifications.bathrooms ?? 0,
+      }),
+    },
+    {
+      key: "living",
+      icon: <LivingRoomIcon size={24} />,
+      value: t("propertyDetails.livingShort", { count: 1 }),
+    },
+    {
+      key: "kitchen",
+      icon: <KitchenIcon size={24} />,
+      value: t("propertyDetails.kitchenShort", { count: 1 }),
+    },
+    {
+      key: "parking",
+      icon: <ParkingIcon size={24} />,
+      value: t("propertyDetails.parkingSpaceShort", { count: 1 }),
+    },
+  ];
 
   return (
     <section className="space-y-6">
@@ -104,20 +93,8 @@ export default function PropertyInfoSection({
           ))}
         </div>
       </div>
-      <p className="text-[18px] leading-[1.6] text-grey-600">
-        {visibleDescription}{" "}
-        {shouldClampDescription ? (
-          <button
-            type="button"
-            onClick={() => setExpanded((prev) => !prev)}
-            className="text-[18px] font-semibold leading-[1.4] text-primary-blue-400"
-          >
-            {expanded
-              ? t("propertyDetails.readLess")
-              : t("propertyDetails.readMore")}
-          </button>
-        ) : null}
-      </p>
+      {/* Leaf client component: handles expand/collapse toggle */}
+      <DescriptionToggle description={description} />
     </section>
   );
 }

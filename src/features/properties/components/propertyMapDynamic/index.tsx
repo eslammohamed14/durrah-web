@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 import { MapSkeleton } from "@/components/ui/Skeleton";
 

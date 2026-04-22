@@ -1,6 +1,4 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { ArrowRightIcon } from "@/assets/icons";
 import { CtaNavigateButton } from "@/components/ui/CtaNavigateButton";
 import { PropertyCard } from "@/components/ui/PropertyCard";
@@ -10,10 +8,10 @@ interface PropertySimilarSectionProps {
   properties: Property[];
 }
 
-export default function PropertySimilarSection({
+export default async function PropertySimilarSection({
   properties,
 }: PropertySimilarSectionProps) {
-  const t = useTranslations();
+  const t = await getTranslations();
   if (properties.length === 0) return null;
 
   return (

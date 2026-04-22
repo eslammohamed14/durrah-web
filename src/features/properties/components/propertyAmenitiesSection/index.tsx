@@ -1,6 +1,4 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import {
   ActivitiesSectionIcon,
   BeachesSectionIcon,
@@ -38,10 +36,10 @@ interface PropertyAmenitiesSectionProps {
   property: Property;
 }
 
-export default function PropertyAmenitiesSection({
+export default async function PropertyAmenitiesSection({
   property,
 }: PropertyAmenitiesSectionProps) {
-  const t = useTranslations();
+  const t = await getTranslations();
   const premium = property.premiumAmenities;
 
   return (

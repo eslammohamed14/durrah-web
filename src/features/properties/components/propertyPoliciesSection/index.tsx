@@ -1,6 +1,4 @@
-"use client";
-
-import { useLocale, useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import CollapseSection from "@/components/ui/CollapseSection";
 import type { Property } from "@/lib/types";
 
@@ -8,15 +6,15 @@ interface PropertyPoliciesSectionProps {
   property: Property;
 }
 
-export default function PropertyPoliciesSection({
+export default async function PropertyPoliciesSection({
   property,
 }: PropertyPoliciesSectionProps) {
-  const locale = useLocale();
-  const t = useTranslations();
-  const selectedLocale = locale as "en" | "ar";
-  const houseRulesText = property.policies.houseRules[selectedLocale];
+  const t = await getTranslations();
+  const locale = (await getLocale()) as "en" | "ar";
+
+  const houseRulesText = property.policies.houseRules[locale];
   const cancellationText =
-    property.policies.cancellation?.description[selectedLocale];
+    property.policies.cancellation?.description[locale];
 
   const toBulletItems = (text: string) =>
     text

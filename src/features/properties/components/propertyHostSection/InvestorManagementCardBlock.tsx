@@ -1,7 +1,5 @@
-"use client";
-
 import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import images from "@/constant/images";
 import type { Property, PropertyHostInvestorManagementCard } from "@/lib/types";
 import { HostTrustPill } from "./HostTrustPill";
@@ -16,17 +14,17 @@ export interface InvestorManagementCardBlockProps {
   host: NonNullable<Property["host"]>;
 }
 
-export function InvestorManagementCardBlock({
+export async function InvestorManagementCardBlock({
   card,
   host,
 }: InvestorManagementCardBlockProps) {
-  const t = useTranslations();
-  const locale = useLocale();
+  const t = await getTranslations();
+  const locale = await getLocale();
+
   const brand = pick(card.brandName, locale) || pick(host.name, locale);
   const badge = pick(card.badgeLabel, locale);
   const description = pick(card.description, locale);
   const operated = pick(host.operatedByLabel, locale);
-
   const logoSrc = host.durratLogoUrl || images.durrahLogoBlue;
 
   return (

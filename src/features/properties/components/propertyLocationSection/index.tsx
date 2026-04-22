@@ -1,6 +1,4 @@
-"use client";
-
-import { useLocale, useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import {
   ArrowRightLineIcon,
   LocationOutlineIcon,
@@ -15,11 +13,12 @@ interface PropertyLocationSectionProps {
   property: Property;
 }
 
-export default function PropertyLocationSection({
+export default async function PropertyLocationSection({
   property,
 }: PropertyLocationSectionProps) {
-  const t = useTranslations();
-  const locale = useLocale() as "en" | "ar";
+  const t = await getTranslations();
+  const locale = (await getLocale()) as "en" | "ar";
+
   const nearbyItems = property.nearby || [];
   const { lat, lng } = property.location.coordinates;
   const directionsHref = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;

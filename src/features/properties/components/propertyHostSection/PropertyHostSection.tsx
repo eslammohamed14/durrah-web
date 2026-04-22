@@ -1,12 +1,5 @@
-"use client";
-
-/**
- * Host block — Figma Final UI, Unit Details Page "Host + Durrat":
- * https://www.figma.com/design/XKx3FF4Xw6ZpvooyvB71Kn/Durrah-Property-%F0%9F%8F%96%EF%B8%8F?node-id=1856-35675
- */
-
 import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import images from "@/constant/images";
 import type { Property } from "@/lib/types";
 import { HostTrustPill } from "./HostTrustPill";
@@ -26,18 +19,16 @@ export interface PropertyHostSectionProps {
   ownerName?: string;
 }
 
-export default function PropertyHostSection({
+export default async function PropertyHostSection({
   property,
   ownerName,
 }: PropertyHostSectionProps) {
-  const t = useTranslations();
-  const locale = useLocale();
+  const t = await getTranslations();
+  const locale = await getLocale();
   const host = property.host;
   const hostType = resolveHostType(host);
 
-  if (!host) {
-    return null;
-  }
+  if (!host) return null;
 
   if (hostType === "durrat") {
     const label =

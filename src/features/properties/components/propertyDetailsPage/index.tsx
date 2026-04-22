@@ -1,13 +1,9 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import images from "@/constant/images";
 import type { Property } from "@/lib/types";
+import PropertyGalleryController from "@/features/properties/components/propertyGalleryController";
 import PropertyAmenitiesSection from "@/features/properties/components/propertyAmenitiesSection";
 import PropertyBookingSidebar from "@/features/properties/components/propertyBookingSidebar";
-import PropertyGalleryModal from "@/features/properties/components/propertyGalleryModal";
-import PropertyHeroSection from "@/features/properties/components/propertyHeroSection";
 import PropertyHostSection from "@/features/properties/components/propertyHostSection";
 import PropertyInfoSection from "@/features/properties/components/propertyInfoSection";
 import PropertyLocationSection from "@/features/properties/components/propertyLocationSection";
@@ -20,14 +16,15 @@ interface PropertyDetailsPageProps {
   similarProperties: Property[];
 }
 
+/**
+ * Server Component: assembles the full property detail layout.
+ * Gallery state lives in the PropertyGalleryController leaf Client Component.
+ */
 export default function PropertyDetailsPage({
   property,
   ownerName,
   similarProperties,
 }: PropertyDetailsPageProps) {
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-
   return (
     <>
       <div className="relative">
@@ -40,13 +37,8 @@ export default function PropertyDetailsPage({
           className="pointer-events-none absolute hidden lg:block ltr:-right-[168px] rtl:-left-[168px] top-[52%] z-20"
         />
         <main className="relative z-10 w-full space-y-10 bg-surface-primary px-4 pb-10 sm:px-6 lg:px-[120px]">
-          <PropertyHeroSection
-            property={property}
-            onOpenGallery={(index) => {
-              setActiveImageIndex(index);
-              setIsGalleryOpen(true);
-            }}
-          />
+          {/* Client leaf: hero images + gallery modal share gallery-open state */}
+          <PropertyGalleryController property={property} />
 
           <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_384px] lg:items-start">
             <div className="space-y-8">
@@ -64,14 +56,6 @@ export default function PropertyDetailsPage({
       </div>
 
       <PropertySimilarSection properties={similarProperties} />
-
-      <PropertyGalleryModal
-        isOpen={isGalleryOpen}
-        onClose={() => setIsGalleryOpen(false)}
-        images={property.images}
-        initialSlide={activeImageIndex}
-        title={property.title.en}
-      />
     </>
   );
 }

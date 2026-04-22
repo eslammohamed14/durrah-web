@@ -1,6 +1,4 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import type { PropertyHostOwnerDetails } from "@/lib/types";
 import { pick } from "@/features/properties/utils/hostSection";
 
@@ -9,11 +7,11 @@ export interface LegacyHostStatsPanelProps {
   locale: string;
 }
 
-export function LegacyHostStatsPanel({
+export async function LegacyHostStatsPanel({
   details,
   locale,
 }: LegacyHostStatsPanelProps) {
-  const t = useTranslations();
+  const t = await getTranslations();
 
   return (
     <dl className="grid gap-4 rounded-xl bg-surface-primary p-5 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-grey-50 sm:p-6">
