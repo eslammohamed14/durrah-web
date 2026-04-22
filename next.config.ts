@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
     root: __dirname,
   },
   images: {
+    // In mock mode we serve bundled local assets; disabling optimizer avoids
+    // intermittent /_next/image 504s on smaller production instances.
+    unoptimized: process.env.NEXT_PUBLIC_USE_MOCK_API === "true",
     // Allow explicit qualities used in the UI components.
     qualities: [65, 70, 75],
     // Serve modern formats (AVIF first, WebP fallback) for better compression
