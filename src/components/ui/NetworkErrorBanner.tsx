@@ -9,7 +9,7 @@
  * Requirements: 21.1, 21.3
  */
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Spinner } from "@/components/ui/Spinner";
 
@@ -20,26 +20,18 @@ import { Spinner } from "@/components/ui/Spinner";
  * Returns `true` when online, `false` when offline.
  */
 export function useOnlineStatus(): boolean {
-  // Always start as true — only update after mount to avoid SSR/hydration mismatch
-  const [online, setOnline] = useState(true);
-
-  useEffect(() => {
-    // Sync with real status after hydration
-    setOnline(navigator.onLine);
-
-    const handleOnline = () => setOnline(true);
-    const handleOffline = () => setOnline(false);
-
-    window.addEventListener("online", handleOnline);
-    window.addEventListener("offline", handleOffline);
-
-    return () => {
-      window.removeEventListener("online", handleOnline);
-      window.removeEventListener("offline", handleOffline);
-    };
-  }, []);
-
-  return online;
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener("online", onStoreChange);
+      window.addEventListener("offline", onStoreChange);
+      return () => {
+        window.removeEventListener("online", onStoreChange);
+        window.removeEventListener("offline", onStoreChange);
+      };
+    },
+    () => navigator.onLine,
+    () => true,
+  );
 }
 
 // ─── OfflineBanner ────────────────────────────────────────────────────────────

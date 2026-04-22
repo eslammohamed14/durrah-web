@@ -23,11 +23,11 @@ export function Header({ transparent = false }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const baseClasses = transparent
-    ? "absolute top-0 left-0 right-0 z-50"
+    ? "absolute top-0 left-0 right-0 z-50 pt-6"
     : "relative z-50 bg-transparent pt-6";
 
   const bgClasses = transparent
-    ? "bg-white/10"
+    ? ""
     : "bg-white rounded-[100px] px-6 py-4";
 
   const linkClasses = transparent
@@ -105,7 +105,7 @@ export function Header({ transparent = false }: HeaderProps) {
                 onClick={() => setLocale("en")}
                 disabled={locale === "en" || isPending}
                 aria-pressed={locale === "en"}
-                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 ${
+                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed ${
                   locale === "en"
                     ? transparent
                       ? "bg-white text-primary-coral-400"
@@ -122,7 +122,7 @@ export function Header({ transparent = false }: HeaderProps) {
                 onClick={() => setLocale("ar")}
                 disabled={locale === "ar" || isPending}
                 aria-pressed={locale === "ar"}
-                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 ${
+                className={`rounded-full px-[10px] py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed ${
                   locale === "ar"
                     ? transparent
                       ? "bg-white text-primary-coral-400"
