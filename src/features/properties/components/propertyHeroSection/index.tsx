@@ -65,7 +65,7 @@ export default function PropertyHeroSection({
         </div>
       </div>
 
-      <div className="grid h-[420px] grid-cols-1 gap-4 lg:h-[611px] lg:grid-cols-[893px_291px]">
+      <div className="grid h-[420px] grid-cols-1 gap-4 lg:h-[611px] lg:grid-cols-[minmax(0,1fr)_291px]">
         <button
           type="button"
           onClick={() => onOpenGallery(0)}

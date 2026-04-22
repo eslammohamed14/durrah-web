@@ -37,9 +37,9 @@ export default function PropertyDetailsPage({
           width={252}
           height={252}
           aria-hidden
-          className="pointer-events-none absolute hidden lg:block ltr:-right-[178px] rtl:-left-[128px] top-[52%] z-0"
+          className="pointer-events-none absolute hidden lg:block ltr:-right-[168px] rtl:-left-[168px] top-[52%] z-20"
         />
-        <main className="relative z-10 mx-auto max-w-[1200px] space-y-10 bg-surface-primary px-4 pb-10 sm:px-6 lg:px-0">
+        <main className="relative z-10 w-full space-y-10 bg-surface-primary px-4 pb-10 sm:px-6 lg:px-[120px]">
           <PropertyHeroSection
             property={property}
             onOpenGallery={(index) => {
@@ -48,7 +48,7 @@ export default function PropertyDetailsPage({
             }}
           />
 
-          <section className="grid gap-6 lg:grid-cols-[792px_384px] lg:items-start">
+          <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_384px] lg:items-start">
             <div className="space-y-8">
               <PropertyInfoSection property={property} />
               <PropertyAmenitiesSection property={property} />

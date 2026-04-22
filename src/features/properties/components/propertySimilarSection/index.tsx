@@ -18,7 +18,7 @@ export default function PropertySimilarSection({
 
   return (
     <section className="bg-surface-primary py-16">
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-0">
+      <div className="w-full px-4 sm:px-6 lg:px-[120px]">
         <div className="flex items-center justify-between gap-4">
           <h2 className="text-[28px] font-semibold leading-[1.4] text-primary-blue-400">
             {t("propertyDetails.similarProperties")}
