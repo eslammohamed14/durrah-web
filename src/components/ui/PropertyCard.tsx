@@ -71,9 +71,15 @@ export function PropertyCard({ property }: PropertyCardProps) {
             fill
             className="object-cover"
             sizes={DEFAULT_IMAGE_SWIPER_SIZES}
+            quality={65}
           />
         ) : (
-          <ImageSwiper slides={galleryImages} dir={dir} fallbackAlt={title} />
+          <ImageSwiper
+            slides={galleryImages}
+            dir={dir}
+            fallbackAlt={title}
+            imageQuality={65}
+          />
         )}
         <div className="pointer-events-none absolute bottom-2.5 left-2.5 z-10 flex w-[calc(100%-20px)] items-center">
           <span

@@ -24,9 +24,9 @@ export const HeroSection = ({ allProperties,t }: HeroSectionProps) => {
         priority
         fetchPriority="high" // 🔥 ADD THIS
         sizes="100vw"
-
         className="object-cover"
         style={{ objectPosition: "50% 25%" }}
+        quality={70}
       />
 
       {/* Dark overlay */}

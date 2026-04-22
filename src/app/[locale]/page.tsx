@@ -84,8 +84,14 @@ async function getHomeData(): Promise<{
   allProperties: Property[];
 }> {
   const api = getAPIClient();
+  let allProperties: Property[] = [];
 
-  const allProperties = await api.searchProperties({});
+  try {
+    allProperties = await api.searchProperties({});
+  } catch (error) {
+    // Keep the homepage available even if upstream API is temporarily unavailable.
+    console.error("[HomePage] Failed to load properties:", error);
+  }
 
   const topRated = [...allProperties]
     .sort((a, b) => b.ratings.average - a.ratings.average)

@@ -15,8 +15,9 @@ const nextConfig: NextConfig = {
     // Serve modern formats (AVIF first, WebP fallback) for better compression
     formats: ["image/avif", "image/webp"],
     // Responsive breakpoints that match Tailwind's default screens
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 176, 222, 256, 308, 384, 512],
+    // Keep an upper bound to avoid expensive 4K on-the-fly transforms
+    deviceSizes: [640, 750, 828, 1080, 1200, 1536, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 176, 222, 256, 320, 384],
     // Minimise layout shift: keep images in browser cache for 1 day
     minimumCacheTTL: 86400,
     remotePatterns: [
