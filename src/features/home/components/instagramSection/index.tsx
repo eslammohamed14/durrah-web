@@ -1,13 +1,11 @@
-"use client";
-
+import { getTranslations } from "next-intl/server";
 import images from "@/constant/images";
 import { InstagramSectionIcon } from "@/assets/icons";
-import { useLocale } from "@/lib/contexts/LocaleContext";
 import { SectionTag } from "@/features/home/components/sectionTag";
 import { InstagramPhoto } from "./InstagramPhoto";
 
-export function InstagramSection() {
-  const { t } = useLocale();
+export async function InstagramSection() {
+  const t = await getTranslations();
 
   return (
     <section
@@ -57,41 +55,17 @@ export function InstagramSection() {
         <div className="hidden items-center gap-3 lg:flex">
           <div className="flex gap-3">
             <div className="flex w-[282px] flex-col gap-3">
-              <InstagramPhoto
-                imageUrl={images.property1}
-                widthClass="w-[282px]"
-                heightClass="h-[199px]"
-              />
-              <InstagramPhoto
-                imageUrl={images.property2}
-                widthClass="w-[282px]"
-                heightClass="h-[199px]"
-              />
+              <InstagramPhoto imageUrl={images.property1} widthClass="w-[282px]" heightClass="h-[199px]" />
+              <InstagramPhoto imageUrl={images.property2} widthClass="w-[282px]" heightClass="h-[199px]" />
             </div>
-            <InstagramPhoto
-              imageUrl={images.property3}
-              widthClass="w-[318px]"
-              heightClass="h-[411px]"
-            />
+            <InstagramPhoto imageUrl={images.property3} widthClass="w-[318px]" heightClass="h-[411px]" />
           </div>
 
           <div className="flex w-[576px] flex-col gap-3">
-            <InstagramPhoto
-              imageUrl={images.property4}
-              widthClass="w-[576px]"
-              heightClass="h-[199px]"
-            />
+            <InstagramPhoto imageUrl={images.property4} widthClass="w-[576px]" heightClass="h-[199px]" />
             <div className="flex gap-3">
-              <InstagramPhoto
-                imageUrl={images.property5}
-                widthClass="w-[282px]"
-                heightClass="h-[200px]"
-              />
-              <InstagramPhoto
-                imageUrl={images.property6}
-                widthClass="w-[282px]"
-                heightClass="h-[200px]"
-              />
+              <InstagramPhoto imageUrl={images.property5} widthClass="w-[282px]" heightClass="h-[200px]" />
+              <InstagramPhoto imageUrl={images.property6} widthClass="w-[282px]" heightClass="h-[200px]" />
             </div>
           </div>
         </div>

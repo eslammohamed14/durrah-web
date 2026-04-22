@@ -1,7 +1,5 @@
-"use client";
-
+import { getTranslations } from "next-intl/server";
 import type { Property } from "@/lib/types";
-import { useLocale } from "@/lib/contexts/LocaleContext";
 import { ArrowRightIcon, PropertySectionIcon } from "@/assets/icons";
 import { CtaNavigateButton } from "@/components/ui/CtaNavigateButton";
 import { PropertyCard } from "@/components/ui/PropertyCard";
@@ -11,8 +9,8 @@ export interface PropertiesSectionProps {
   properties: Property[];
 }
 
-export function PropertiesSection({ properties }: PropertiesSectionProps) {
-  const { t } = useLocale();
+export async function PropertiesSection({ properties }: PropertiesSectionProps) {
+  const t = await getTranslations();
 
   return (
     <section
@@ -43,7 +41,7 @@ export function PropertiesSection({ properties }: PropertiesSectionProps) {
             </p>
           </div>
           <CtaNavigateButton
-            href="/" // "search"
+            href="/"
             className="shrink-0 self-start sm:self-auto"
             rightIcon={<ArrowRightIcon className="h-6 w-6" />}
           >

@@ -1,14 +1,5 @@
-"use client";
-
-import type { ComponentType, SVGProps } from "react";
-import { useLocale } from "@/lib/contexts/LocaleContext";
+import { getTranslations } from "next-intl/server";
 import { MetricItem } from "./MetricItem";
-import {
-  AverageRatingMetricIcon,
-  CustomersMetricIcon,
-  PropertiesSoldMetricIcon,
-  YearsExperienceMetricIcon,
-} from "./metricIcons";
 import {
   BuildingColoredIcon,
   PeopleIcon,
@@ -16,42 +7,15 @@ import {
   WorkBagIcon,
 } from "@/assets/icons";
 
-export interface CompanyMetricDefinition {
-  id: string;
-  value: string;
-  labelKey: string;
-  Icon: React.ReactNode;
-}
+const COMPANY_METRICS = [
+  { id: "customers",       value: "+10M",  labelKey: "home.customers",       Icon: <PeopleIcon /> },
+  { id: "yearsExperience", value: "+90",   labelKey: "home.yearsExperience", Icon: <WorkBagIcon /> },
+  { id: "propertiesSold",  value: "1,200", labelKey: "home.propertiesSold",  Icon: <BuildingColoredIcon /> },
+  { id: "averageRating",   value: "5.0",   labelKey: "home.averageRating",   Icon: <StarColoredIcon /> },
+] as const;
 
-export const COMPANY_METRICS: CompanyMetricDefinition[] = [
-  {
-    id: "customers",
-    value: "+10M",
-    labelKey: "home.customers",
-    Icon: <PeopleIcon />,
-  },
-  {
-    id: "yearsExperience",
-    value: "+90",
-    labelKey: "home.yearsExperience",
-    Icon: <WorkBagIcon />,
-  },
-  {
-    id: "propertiesSold",
-    value: "1,200",
-    labelKey: "home.propertiesSold",
-    Icon: <BuildingColoredIcon />,
-  },
-  {
-    id: "averageRating",
-    value: "5.0",
-    labelKey: "home.averageRating",
-    Icon: <StarColoredIcon />,
-  },
-];
-
-export function CompanyMetricsSection() {
-  const { t } = useLocale();
+export async function CompanyMetricsSection() {
+  const t = await getTranslations();
 
   return (
     <section

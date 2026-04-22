@@ -1,5 +1,3 @@
-"use client";
-
 import { AppleIcon, GoogleIcon } from "@/assets/icons";
 
 interface AuthSocialButtonsProps {

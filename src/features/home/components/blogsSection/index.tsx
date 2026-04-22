@@ -1,9 +1,7 @@
-"use client";
-
-import { Link, useRouter } from "@/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/navigation";
 import images from "@/constant/images";
 import { ArrowRightIcon, BlogsSectionIcon } from "@/assets/icons";
-import { useLocale } from "@/lib/contexts/LocaleContext";
 import { SectionTag } from "@/features/home/components/sectionTag";
 import { BlogGridItem } from "./BlogGridItem";
 import { FeaturedBlogCard } from "./FeaturedBlogCard";
@@ -12,11 +10,10 @@ import { FeaturedBlogCard } from "./FeaturedBlogCard";
  * Home — Concept 1 blogs block from Figma **Final UI** → `489:5399` ("Blogs - 3").
  * @see https://www.figma.com/design/XKx3FF4Xw6ZpvooyvB71Kn/Durrah-Property?node-id=489-5399
  */
-export function BlogsSection() {
-  const router = useRouter();
-  const { t, locale } = useLocale();
-  const headlineCaps =
-    locale === "ar" ? "" : "capitalize";
+export async function BlogsSection() {
+  const t = await getTranslations();
+  const locale = await getLocale();
+  const headlineCaps = locale === "ar" ? "" : "capitalize";
 
   return (
     <section
@@ -43,14 +40,14 @@ export function BlogsSection() {
             </h2>
           </div>
 
-          <button
-            type="button"
-            onClick={() => router.push("/blogs")}
+          {/* Link styled as a button — no client JS needed for navigation */}
+          <Link
+            href="/blogs"
             className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2.5 rounded-lg bg-[#FF765E] px-4 py-4 text-base font-medium text-white transition hover:bg-[#e86a54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF765E] focus-visible:ring-offset-2 active:bg-[#d45540] sm:w-[177px]"
           >
             {t("home.viewAllBlogs")}
             <ArrowRightIcon size={24} className="shrink-0" aria-hidden />
-          </button>
+          </Link>
         </header>
 
         <div className="flex w-full flex-col gap-3 lg:flex-row lg:items-start">

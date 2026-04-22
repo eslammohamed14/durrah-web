@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import images from "@/constant/images";
-import AuthSlider, { type AuthSliderPaginationVariant } from "../AuthSlider";
+import AuthSlider, { type AuthSliderPaginationVariant } from "../AuthSliderDynamic";
 
 type BaseLayoutAuthProps = {
   children: ReactNode;

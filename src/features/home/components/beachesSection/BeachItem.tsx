@@ -1,5 +1,3 @@
-"use client";
-
 import { Link } from "@/navigation";
 import { ArrowRightIcon } from "@/assets/icons";
 

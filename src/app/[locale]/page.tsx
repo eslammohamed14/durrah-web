@@ -1,39 +1,13 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
-import { getAPIClient } from "@/lib/api";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { HomeContent } from "@/features/home/HomeContent";
-import type { Property } from "@/lib/types";
 
-/** Merge top-rated + distinguished, dedupe by id, then fill to `max` from the rest (by rating). */
-function buildFeaturedPropertiesGrid(
-  allProperties: Property[],
-  topRated: Property[],
-  distinguishedOffers: Property[],
-  max = 6,
-): Property[] {
-  const seen = new Set<string>();
-  const grid: Property[] = [];
-  for (const p of [...topRated, ...distinguishedOffers]) {
-    if (seen.has(p.id)) continue;
-    seen.add(p.id);
-    grid.push(p);
-    if (grid.length >= max) return grid;
-  }
-  const remainder = [...allProperties]
-    .filter((p) => !seen.has(p.id))
-    .sort((a, b) => b.ratings.average - a.ratings.average);
-  for (const p of remainder) {
-    if (grid.length >= max) break;
-    grid.push(p);
-  }
-  return grid;
-}
+// ISR: re-generate at most once per hour
+export const revalidate = 3600;
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://durrah.sa";
-
-// Revalidate the home page every hour (ISR)
-export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Durrah | Find Your Perfect Property",
@@ -79,49 +53,45 @@ function WebsiteStructuredData() {
   );
 }
 
-async function getHomeData(): Promise<{
-  featuredForGrid: Property[];
-  allProperties: Property[];
-}> {
-  const api = getAPIClient();
-  let allProperties: Property[] = [];
-
-  try {
-    allProperties = await api.searchProperties({});
-  } catch (error) {
-    // Keep the homepage available even if upstream API is temporarily unavailable.
-    console.error("[HomePage] Failed to load properties:", error);
-  }
-
-  const topRated = [...allProperties]
-    .sort((a, b) => b.ratings.average - a.ratings.average)
-    .slice(0, 3);
-
-  const distinguishedOffers = allProperties
-    .filter((p) => p.category === "rent" || p.category === "activity")
-    .sort((a, b) => b.ratings.count - a.ratings.count)
-    .slice(0, 3);
-
-  const featuredForGrid = buildFeaturedPropertiesGrid(
-    allProperties,
-    topRated,
-    distinguishedOffers,
+/**
+ * Hero-height skeleton shown while HomeContent resolves its data fetch.
+ * Lets <Header> and <Footer> stream to the browser immediately, improving
+ * perceived TTFB and allowing the browser to start loading the hero image.
+ */
+function HomeContentSkeleton() {
+  return (
+    <div className="relative overflow-x-hidden animate-pulse">
+      {/* Hero placeholder */}
+      <div className="relative flex min-h-[560px] flex-col bg-slate-800 sm:min-h-[700px] lg:min-h-[948px]" />
+      {/* Metrics placeholder */}
+      <div className="bg-background px-4 py-10 sm:px-6 md:py-16">
+        <div className="mx-auto grid max-w-screen-2xl grid-cols-2 gap-8 md:grid-cols-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="flex flex-col items-center gap-2">
+              <div className="h-6 w-6 rounded bg-slate-200" />
+              <div className="h-8 w-16 rounded bg-slate-200" />
+              <div className="h-4 w-24 rounded bg-slate-200" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
-
-  return { featuredForGrid, allProperties };
 }
 
-export default async function HomePage() {
-  const { featuredForGrid, allProperties } = await getHomeData();
-
+/**
+ * Page is NOT async — it doesn't fetch data itself.
+ * Data fetching happens inside <HomeContent> (async RSC) within the Suspense
+ * boundary, so the Header and Footer HTML stream to the client immediately.
+ */
+export default function HomePage() {
   return (
     <>
       <WebsiteStructuredData />
       <Header transparent />
-      <HomeContent
-        featuredForGrid={featuredForGrid}
-        allProperties={allProperties}
-      />
+      <Suspense fallback={<HomeContentSkeleton />}>
+        <HomeContent />
+      </Suspense>
       <Footer />
     </>
   );
