@@ -16,6 +16,7 @@ export {
   BlogsSectionIcon,
   type BlogsSectionIconProps,
 } from "./BlogsSectionIcon";
+export { CloseSquareIcon, type CloseSquareIconProps } from "./CloseSquareIcon";
 export { DimensionIcon, type DimensionIconProps } from "./DimensionIcon";
 export { DiscountIcon, type DiscountIconProps } from "./DiscountIcon";
 export { DiningIcon, type DiningIconProps } from "./DiningIcon";

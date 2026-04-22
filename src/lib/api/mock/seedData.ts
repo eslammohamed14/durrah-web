@@ -41,7 +41,7 @@ export const seedUsers: User[] = [
   },
   {
     id: "user-owner-1",
-    name: "Sara Al-Otaibi",
+    name: "DURRAT AL AROUS",
     email: "sara@example.com",
     phoneNumber: "+966509876543",
     roles: ["owner", "investor"],
@@ -298,8 +298,14 @@ export const seedProperties: Property[] = [
     },
     nearby: [
       { icon: "location", label: { en: "Core Bay Beach", ar: "شاطئ كور باي" } },
-      { icon: "shop", label: { en: "Nearby Marina", ar: "بالقرب من المارينا" } },
-      { icon: "building", label: { en: "City services 10 min", ar: "خدمات المدينة 10 دقائق" } },
+      {
+        icon: "shop",
+        label: { en: "Nearby Marina", ar: "بالقرب من المارينا" },
+      },
+      {
+        icon: "building",
+        label: { en: "City services 10 min", ar: "خدمات المدينة 10 دقائق" },
+      },
     ],
     similarProperties: ["prop-rent-1", "prop-buy-2", "prop-activity-1"],
     policies: {
@@ -474,8 +480,20 @@ export const seedProperties: Property[] = [
     },
     nearby: [
       { icon: "location", label: { en: "Core Bay Beach", ar: "شاطئ كور باي" } },
-      { icon: "shop", label: { en: "5 minutes to Reda Al Arous", ar: "5 دقائق إلى رضا العروس" } },
-      { icon: "building", label: { en: "10 min to City Center Mall", ar: "10 دقائق إلى سيتي سنتر مول" } },
+      {
+        icon: "shop",
+        label: {
+          en: "5 minutes to Reda Al Arous",
+          ar: "5 دقائق إلى رضا العروس",
+        },
+      },
+      {
+        icon: "building",
+        label: {
+          en: "10 min to City Center Mall",
+          ar: "10 دقائق إلى سيتي سنتر مول",
+        },
+      },
     ],
     similarProperties: ["prop-rent-2", "prop-rent-1", "prop-buy-1"],
     policies: {
@@ -533,14 +551,26 @@ export const seedProperties: Property[] = [
         },
         memberSinceYear: "2018",
         responseRatePercent: 95,
-        responseTimeLabel: { en: "Within one business day", ar: "خلال يوم عمل" },
+        responseTimeLabel: {
+          en: "Within one business day",
+          ar: "خلال يوم عمل",
+        },
         contactHostEnabled: false,
       },
     },
     nearby: [
-      { icon: "location", label: { en: "Main commercial strip", ar: "الشارع التجاري الرئيسي" } },
-      { icon: "shop", label: { en: "High foot traffic", ar: "حركة مرور عالية" } },
-      { icon: "building", label: { en: "Adjacent services", ar: "خدمات مجاورة" } },
+      {
+        icon: "location",
+        label: { en: "Main commercial strip", ar: "الشارع التجاري الرئيسي" },
+      },
+      {
+        icon: "shop",
+        label: { en: "High foot traffic", ar: "حركة مرور عالية" },
+      },
+      {
+        icon: "building",
+        label: { en: "Adjacent services", ar: "خدمات مجاورة" },
+      },
     ],
     similarProperties: ["prop-buy-1", "prop-buy-2", "prop-rent-1"],
     policies: {
@@ -567,7 +597,13 @@ export const seedProperties: Property[] = [
       coordinates: { lat: 16.893, lng: 42.557 },
       area: "Durrah Al-Arus",
     },
-    specifications: { size: 55, rooms: 1, bathrooms: 1, beachView: true, maxGuests: 2 },
+    specifications: {
+      size: 55,
+      rooms: 1,
+      bathrooms: 1,
+      beachView: true,
+      maxGuests: 2,
+    },
     pricing: { basePrice: 320, currency: "SAR", priceType: "per_night" },
     amenities: ["WiFi", "Kitchenette", "Marina Access", "Air Conditioning"],
     images: [
@@ -607,7 +643,10 @@ export const seedProperties: Property[] = [
     nearby: [
       { icon: "location", label: { en: "Durrah Marina", ar: "مرسى درة" } },
       { icon: "shop", label: { en: "Seaside dining", ar: "مطاعم بحرية" } },
-      { icon: "building", label: { en: "City center access", ar: "قرب مركز المدينة" } },
+      {
+        icon: "building",
+        label: { en: "City center access", ar: "قرب مركز المدينة" },
+      },
     ],
     similarProperties: ["prop-rent-1", "prop-rent-2", "prop-buy-1"],
     policies: {
