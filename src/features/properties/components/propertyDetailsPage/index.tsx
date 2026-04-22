@@ -37,7 +37,7 @@ export default function PropertyDetailsPage({
           }}
         />
 
-        <section className="grid gap-6 lg:grid-cols-[792px_384px]">
+        <section className="grid gap-6 lg:grid-cols-[792px_384px] lg:items-start">
           <div className="space-y-8">
             <PropertyInfoSection property={property} />
             <PropertyAmenitiesSection property={property} />
@@ -45,7 +45,9 @@ export default function PropertyDetailsPage({
             <PropertyLocationSection property={property} />
             <PropertyPoliciesSection property={property} />
           </div>
-          <PropertyBookingSidebar property={property} />
+          <div className="h-fit lg:sticky lg:top-24">
+            <PropertyBookingSidebar property={property} />
+          </div>
         </section>
       </main>
 

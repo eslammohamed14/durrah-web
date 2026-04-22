@@ -154,7 +154,7 @@ export default function PropertyBookingSidebar({
   }, [dateRange.from, dateRange.to, guests, property.id]);
 
   return (
-    <aside className="pt-10 lg:sticky lg:top-24">
+    <aside className="pt-10">
       <div className="w-full rounded-[12px] border border-grey-50 bg-white px-4 py-6 shadow-[0_0_24px_0_rgba(0,0,0,0.06)]">
         <div className="space-y-1">
           {property.pricing.originalPrice && (
