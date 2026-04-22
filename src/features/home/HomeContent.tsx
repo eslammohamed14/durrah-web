@@ -92,6 +92,10 @@ export async function HomeContent() {
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <SharedHeroSection
           allProperties={allProperties}
+          headerText="home.heroHeadline"
+          paragraphText="home.heroSubheadline"
+          sectionClassName="relative flex min-h-[560px] flex-col pb-[30px] sm:min-h-[700px] lg:min-h-[948px]"
+          contentClassName="relative mx-auto mt-auto w-full max-w-[1540px] px-4 pb-0 sm:px-6 lg:px-8 x"
           t={t}
           image={images.durrahHomeHero}
         >

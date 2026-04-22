@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from '@/navigation';
+import { useRouter } from '@/lib/navigation';
 import { useLocale } from '@/lib/contexts/LocaleContext';
 import { Button } from '@/components/ui/Button';
 import type { PropertyCategory } from '@/lib/types';

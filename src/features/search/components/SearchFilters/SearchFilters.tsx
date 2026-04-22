@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useRouter } from "@/navigation";
 import { useSearchParams } from "next/navigation";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import { Button } from "@/components/ui/Button";
@@ -10,6 +9,7 @@ import type {
   PropertyType,
   SearchFilters,
 } from "@/lib/types";
+import { useRouter } from "@/navigation";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -191,13 +191,8 @@ export function SearchFilters({
     parseFiltersFromParams(searchParams),
   );
 
+  // Debounce URL updates to avoid excessive navigation
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-    };
-  }, []);
 
   const applyFilters = useCallback(
     (next: SearchFilters) => {

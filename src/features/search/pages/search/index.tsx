@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { getAPIClient } from "@/lib/api";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import SearchHeroSection from "@/features/search/components/searchHeroSection";
-import { SearchResults } from "@/features/search/SearchResults";
-import { Spinner } from "@/components/ui/Spinner";
+
+
 import images from "@/constant/images";
 
 import type {
@@ -14,7 +10,8 @@ import type {
   SearchFilters,
 } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
-import { SharedHeroSection } from "@/components/shared/ui/SharedHeroSections";
+
+import SearchContent from "../../SearchContent";
 
 // Search results are always dynamic — filtered by URL params
 export const dynamic = "force-dynamic";
@@ -87,22 +84,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const t = await getTranslations();
 
   return (
-    <>
-      <Header transparent />
-      <main>
-        {/* <SearchHeroSection t={t} /> */}
-        <SharedHeroSection allProperties={[]} image={images.searchHero} t={t} />
-        <Suspense
-          fallback={
-            <div className="flex min-h-[60vh] items-center justify-center">
-              <Spinner size="lg" />
-            </div>
-          }
-        >
-          <SearchResults initialProperties={properties} />
-        </Suspense>
-      </main>
-      <Footer />
-    </>
+    <SearchContent
+      image={images.searchHero}
+      properties={properties}
+      t={t}
+    />
   );
 }

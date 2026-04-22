@@ -3,11 +3,11 @@
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { useLocale } from "@/lib/contexts/LocaleContext";
-import { PropertyCard } from "@/features/properties/components/propertyCard";
-import { SearchFilters } from "./SearchFilters";
+import { SearchFilters } from "../SearchFilters/SearchFilters";
 import { Spinner } from "@/components/ui/Spinner";
 import { getAPIClient } from "@/lib/api";
 import type { Property, SearchFilters as SearchFiltersType } from "@/lib/types";
+import { PropertyCard } from "@/features/properties/components/propertyCard";
 
 const PAGE_SIZE = 12;
 
@@ -48,7 +48,8 @@ interface SearchResultsProps {
   initialProperties: Property[];
 }
 
-export function SearchResults({ initialProperties }: SearchResultsProps) {
+export function 
+SearchResults({ initialProperties }: SearchResultsProps) {
   const { t } = useLocale();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
@@ -91,7 +92,7 @@ export function SearchResults({ initialProperties }: SearchResultsProps) {
       {/* Mobile filter toggle */}
       <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3 lg:hidden">
         <p className="text-sm text-gray-600">
-          {t("search.results").replace("{{count}}", String(properties.length))}
+          {t("search.results", { count: properties.length })}
         </p>
         <button
           type="button"
@@ -147,10 +148,7 @@ export function SearchResults({ initialProperties }: SearchResultsProps) {
                     {t("common.loading")}
                   </span>
                 ) : (
-                  t("search.results").replace(
-                    "{{count}}",
-                    String(properties.length),
-                  )
+                  t("search.results", { count: properties.length })
                 )}
               </p>
             </div>
@@ -202,7 +200,11 @@ export function SearchResults({ initialProperties }: SearchResultsProps) {
   );
 }
 
-function EmptyState({ t }: { t: (k: string) => string }) {
+function EmptyState({
+  t,
+}: {
+  t: (key: string, params?: Record<string, string | number>) => string;
+}) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
       <div className="mb-4 rounded-full bg-gray-100 p-5">

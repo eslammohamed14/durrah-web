@@ -296,7 +296,8 @@
     "checkOut": "تاريخ المغادرة",
     "guests": "الضيوف",
     "adults": "البالغون",
-    "children": "الأطفال"
+    "children": "الأطفال",
+    "barPlaceholder": "ابحث حسب الموقع أو اسم العقار...."
   },
   "property": {
     "details": "تفاصيل العقار",
