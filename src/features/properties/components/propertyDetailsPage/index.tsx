@@ -28,14 +28,16 @@ export default function PropertyDetailsPage({
   return (
     <>
       <div className="relative">
-        <Image
-          src={images.homeDecorativeWave}
-          alt=""
-          width={252}
-          height={252}
-          aria-hidden
-          className="pointer-events-none absolute hidden lg:block ltr:-right-[168px] rtl:-left-[168px] top-[52%] z-20"
-        />
+        <div className="pointer-events-none absolute inset-0 hidden overflow-x-hidden lg:block">
+          <Image
+            src={images.homeDecorativeWave}
+            alt=""
+            width={252}
+            height={252}
+            aria-hidden
+            className="absolute top-[52%] z-20 ltr:-right-[168px] rtl:-left-[168px]"
+          />
+        </div>
         <main className="relative z-10 w-full space-y-10 bg-surface-primary px-4 pb-10 sm:px-6 lg:px-[120px]">
           {/* Client leaf: hero images + gallery modal share gallery-open state */}
           <PropertyGalleryController property={property} />
