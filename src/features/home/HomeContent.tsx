@@ -15,33 +15,7 @@ import { HomeDecorativeRightEdge } from "@/features/home/components/homeDecorati
 
 // ─── Data Fetching ────────────────────────────────────────────────────────────
 
-/** Merge top-rated + distinguished, dedupe by id, then fill to `max` from the rest (by rating). */
-function buildFeaturedPropertiesGrid(
-  allProperties: Property[],
-  topRated: Property[],
-  distinguishedOffers: Property[],
-  max = 6,
-): Property[] {
-  const seen = new Set<string>();
-  const grid: Property[] = [];
-  for (const p of [...topRated, ...distinguishedOffers]) {
-    if (seen.has(p.id)) continue;
-    seen.add(p.id);
-    grid.push(p);
-    if (grid.length >= max) return grid;
-  }
-  const remainder = [...allProperties]
-    .filter((p) => !seen.has(p.id))
-    .sort((a, b) => b.ratings.average - a.ratings.average);
-  for (const p of remainder) {
-    if (grid.length >= max) break;
-    grid.push(p);
-  }
-  return grid;
-}
-
 async function getHomeData(): Promise<{
-  featuredForGrid: Property[];
   allProperties: Property[];
 }> {
   const api = getAPIClient();
@@ -54,22 +28,7 @@ async function getHomeData(): Promise<{
     console.error("[HomePage] Failed to load properties:", error);
   }
 
-  const topRated = [...allProperties]
-    .sort((a, b) => b.ratings.average - a.ratings.average)
-    .slice(0, 3);
-
-  const distinguishedOffers = allProperties
-    .filter((p) => p.category === "rent" || p.category === "activity")
-    .sort((a, b) => b.ratings.count - a.ratings.count)
-    .slice(0, 3);
-
-  const featuredForGrid = buildFeaturedPropertiesGrid(
-    allProperties,
-    topRated,
-    distinguishedOffers,
-  );
-
-  return { featuredForGrid, allProperties };
+  return { allProperties };
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
@@ -79,7 +38,7 @@ async function getHomeData(): Promise<{
  * letting the Header and Footer stream to the client while this resolves.
  */
 export async function HomeContent() {
-  const [t, { featuredForGrid, allProperties }] = await Promise.all([
+  const [t, { allProperties }] = await Promise.all([
     getTranslations(),
     getHomeData(),
   ]);
@@ -94,7 +53,7 @@ export async function HomeContent() {
         <CompanyMetricsSection />
 
         {/* ── Properties Section ────────────────────────────────────────────── */}
-        <PropertiesSection properties={featuredForGrid} />
+        <PropertiesSection />
 
         {/* ── Activities Section ────────────────────────────────────────────── */}
         <ActivitiesSection />

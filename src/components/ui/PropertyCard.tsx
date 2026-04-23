@@ -1,6 +1,6 @@
 "use client";
 
-import type { Property, PropertyImage } from "@/lib/types";
+import type { PropertyCard as ApiPropertyCard } from "@/features/properties/type/propertyApiTypes";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import Image from "next/image";
 import { Link } from "@/navigation";
@@ -15,46 +15,75 @@ import { DEFAULT_IMAGE_SWIPER_SIZES } from "@/components/ui/ImageSwiper";
 const SQ_M_TO_SQ_FT = 10.7639;
 
 export interface PropertyCardProps {
-  property: Property;
-}
-
-function sortedImages(images: PropertyImage[]) {
-  return [...images].sort((a, b) => a.order - b.order);
+  property: ApiPropertyCard;
 }
 
 function isLocalStaticImage(url?: string): boolean {
-  return Boolean(url) && (url!.startsWith("/") || url!.startsWith("/_next/static/media/"));
+  return (
+    Boolean(url) &&
+    (url!.startsWith("/") || url!.startsWith("/_next/static/media/"))
+  );
+}
+
+function normalizeTypeLabel(type?: string): string {
+  if (!type) {
+    return "";
+  }
+
+  return type
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function resolveApiImageUrl(path: string | null): string | null {
+  if (!path) return null;
+  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
+  return `${apiBaseUrl}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
 export function PropertyCard({ property }: PropertyCardProps) {
   const { t, locale } = useLocale();
-  const propertyHref = `/properties/${property.id}`;
-  const title = property.title[locale] || property.title.en;
-  const galleryImages = sortedImages(property.images);
-  const isForSale = property.category === "buy";
-  const badgeLabel = isForSale ? t("home.forSale") : t("home.forRent");
-  const badgeBg = isForSale ? "bg-text-dark" : "bg-primary-coral-400";
-  const typeLabel = property.type
-    .split("_")
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
+  const propertyHref = `/properties/${property.slug}`;
+  const title = property.title;
+
+  const galleryImages =
+    property.images.length > 0
+      ? property.images.map((image) => ({
+          id: "api-cover",
+          url: resolveApiImageUrl(image)!,
+          alt: property.title,
+          order: 0,
+        }))
+      : [];
+
+  const badgeLabel = "";
+
+  const typeLabel = normalizeTypeLabel(property.type);
+
+  const basePrice = property.price_per_day;
+
+  const currency = "SAR";
+  const originalBasePrice: number | undefined = undefined;
+  const hasOffer =
+    typeof originalBasePrice === "number" && originalBasePrice > basePrice;
+
   const price = new Intl.NumberFormat(
     locale === "ar" ? "ar-SA" : "en-SA",
-  ).format(property.pricing.basePrice);
+  ).format(basePrice);
   const originalPrice = new Intl.NumberFormat(
     locale === "ar" ? "ar-SA" : "en-SA",
-  ).format(Math.round(property.pricing.basePrice * 1.27));
+  ).format(originalBasePrice ?? basePrice);
 
-  const sqFt = Math.round(property.specifications.size * SQ_M_TO_SQ_FT);
-  const sqFtFmt = new Intl.NumberFormat(
-    locale === "ar" ? "ar-SA" : "en-SA",
-  ).format(sqFt);
-  const sqFtLabel = t("home.specSqFt", { n: sqFtFmt });
-  const rooms = property.specifications.rooms;
-  const bathrooms = property.specifications.bathrooms;
-  const cardStatus = property.card?.status;
+  const sqFtLabel = t("home.specSqFt", { n: property.total_area.toString() });
+
+  const rooms = property.rooms;
+  const bathrooms = property.bathrooms;
+
   const occupancyBadgeClass =
-    cardStatus === "family"
+    property.category === "Family"
       ? "bg-[#EDE9FF] text-primary-blue-300"
       : "bg-[#FFF0E8] text-[#C45C3E]";
 
@@ -73,22 +102,26 @@ export function PropertyCard({ property }: PropertyCardProps) {
             unoptimized={isLocalStaticImage(galleryImages[0].url)}
           />
         )}
-        <div className="pointer-events-none absolute bottom-2.5 left-2.5 z-10 flex w-[calc(100%-20px)] items-center">
-          <span
-            className={`rounded-lg px-2 py-1 text-xs font-medium text-white ${badgeBg}`}
-          >
-            {badgeLabel}
-          </span>
-        </div>
-        <div className="pointer-events-none absolute left-2.5 top-2.5 z-10 flex w-[calc(100%-20px)] items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="rounded-full bg-white px-2 py-1 text-xs font-medium text-grey-700">
-              {typeLabel}
+        {badgeLabel ? (
+          <div className="pointer-events-none absolute bottom-2.5 left-2.5 z-10 flex w-[calc(100%-20px)] items-center">
+            <span className="rounded-lg bg-primary-coral-400 px-2 py-1 text-xs font-medium text-white">
+              {badgeLabel}
             </span>
           </div>
-          <span className="rounded-full bg-white px-2 py-1 text-xs font-medium text-primary-coral-400">
-            {t("home.offer")}
-          </span>
+        ) : null}
+        <div className="pointer-events-none absolute left-2.5 top-2.5 z-10 flex w-[calc(100%-20px)] items-center justify-between">
+          <div className="flex items-center gap-2">
+            {typeLabel ? (
+              <span className="rounded-full bg-white px-2 py-1 text-xs font-medium text-grey-700">
+                {typeLabel}
+              </span>
+            ) : null}
+          </div>
+          {hasOffer ? (
+            <span className="rounded-full bg-white px-2 py-1 text-xs font-medium text-primary-coral-400">
+              {t("home.offer")}
+            </span>
+          ) : null}
         </div>
       </div>
 
@@ -102,11 +135,11 @@ export function PropertyCard({ property }: PropertyCardProps) {
             </Link>
           </div>
           <div className="flex shrink-0 items-center gap-1">
-            {cardStatus != null ? (
+            {property.category != null ? (
               <span
                 className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${occupancyBadgeClass}`}
               >
-                {cardStatus === "family"
+                {property.category === "Family"
                   ? t("home.cardStatusFamily")
                   : t("home.cardStatusSingle")}
               </span>
@@ -136,11 +169,16 @@ export function PropertyCard({ property }: PropertyCardProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-[22px] font-semibold text-text-dark">
-              {price} SAR
+              {price} {currency}
             </span>
-            <span className="text-sm text-grey-300 line-through">
-              {originalPrice} SAR
+            <span className="text-sm text-grey-600">
+              / {t("property.perNight")}
             </span>
+            {hasOffer ? (
+              <span className="text-sm text-grey-300 line-through">
+                {originalPrice} {currency}
+              </span>
+            ) : null}
           </div>
           <Link
             href={propertyHref}

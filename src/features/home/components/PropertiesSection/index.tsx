@@ -1,16 +1,20 @@
 import { getTranslations } from "next-intl/server";
-import type { Property } from "@/lib/types";
 import { ArrowRightIcon, PropertySectionIcon } from "@/assets/icons";
+import { serverFetch } from "@/api/serverFetch";
 import { CtaNavigateButton } from "@/components/ui/CtaNavigateButton";
 import { PropertyCard } from "@/components/ui/PropertyCard";
+import type { AvailablePropertiesResponse } from "@/features/properties/type/propertyApiTypes";
 import { SectionTag } from "@/features/home/components/sectionTag";
 
-export interface PropertiesSectionProps {
-  properties: Property[];
-}
+export async function PropertiesSection() {
+  const [t, propertiesResponse] = await Promise.all([
+    getTranslations(),
+    serverFetch<AvailablePropertiesResponse>("/api/property/available", {
+      searchParams: { page_size: 6 },
+    }),
+  ]);
 
-export async function PropertiesSection({ properties }: PropertiesSectionProps) {
-  const t = await getTranslations();
+  const properties = propertiesResponse.properties.slice(0, 6);
 
   return (
     <section
@@ -50,9 +54,12 @@ export async function PropertiesSection({ properties }: PropertiesSectionProps) 
         </div>
 
         <div className="grid min-w-0 grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {properties.slice(0, 6).map((p) => (
-            <div key={p.id} className="min-w-0">
-              <PropertyCard property={p} />
+          {properties.map((property, index) => (
+            <div
+              key={`${property.slug || "no-slug"}-${property.id || "no-id"}-${index}`}
+              className="min-w-0"
+            >
+              <PropertyCard property={property} />
             </div>
           ))}
         </div>

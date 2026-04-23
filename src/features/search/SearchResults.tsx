@@ -3,11 +3,12 @@
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { useLocale } from "@/lib/contexts/LocaleContext";
-import { PropertyCard } from "@/features/properties/components/propertyCard";
+import { PropertyCard } from "@/components/ui/PropertyCard";
 import { SearchFilters } from "./SearchFilters";
 import { Spinner } from "@/components/ui/Spinner";
 import { getAPIClient } from "@/lib/api";
 import type { Property, SearchFilters as SearchFiltersType } from "@/lib/types";
+import type { PropertyCard as ApiPropertyCard } from "@/features/properties/type/propertyApiTypes";
 
 const PAGE_SIZE = 12;
 
@@ -48,12 +49,33 @@ interface SearchResultsProps {
   initialProperties: Property[];
 }
 
+function toApiPropertyCard(property: Property): ApiPropertyCard {
+  return {
+    id: Number(property.id) || 0,
+    slug: property.id,
+    title: property.title.en || property.title.ar || "Property",
+    image: property.images[0]?.url ?? null,
+    city: property.location.area || "",
+    district: property.location.address.en || property.location.address.ar || "",
+    total_area: property.specifications.size ?? 0,
+    price_per_day: property.pricing.basePrice ?? 0,
+    price_per_week: undefined,
+    price_per_month: undefined,
+    bedrooms: property.specifications.rooms ?? 0,
+    bathrooms: property.specifications.bathrooms ?? 0,
+    guests: property.specifications.maxGuests ?? 0,
+    property_type: property.type,
+  };
+}
+
 export function SearchResults({ initialProperties }: SearchResultsProps) {
   const { t } = useLocale();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  const [properties, setProperties] = useState<Property[]>(initialProperties);
+  const [properties, setProperties] = useState<ApiPropertyCard[]>(
+    initialProperties.map(toApiPropertyCard)
+  );
   const [page, setPage] = useState(1);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -65,7 +87,7 @@ export function SearchResults({ initialProperties }: SearchResultsProps) {
       try {
         const api = getAPIClient();
         const results = await api.searchProperties(filters);
-        setProperties(results);
+        setProperties(results.map(toApiPropertyCard));
         setPage(1);
       } catch {
         // Keep previous results on error
@@ -168,11 +190,7 @@ export function SearchResults({ initialProperties }: SearchResultsProps) {
                   ].join(" ")}
                 >
                   {visibleProperties.map((property) => (
-                    <PropertyCard
-                      key={property.id}
-                      property={property}
-                      variant="grid"
-                    />
+                    <PropertyCard key={property.id} property={property} />
                   ))}
                 </div>
 
