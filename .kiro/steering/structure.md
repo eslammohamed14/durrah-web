@@ -23,6 +23,17 @@ src/
 │       └── password-reset-success/
 │           └── page.tsx          # Thin routing wrapper
 │
+├── api/                          # Global API engine (framework-agnostic core)
+│   ├── config.ts                 # Base URL and client defaults
+│   ├── serverFetch.ts            # Server Component data reads (GET)
+│   ├── secureClient.ts           # Authenticated axios client + refresh queue
+│   ├── publicClient.ts           # Public axios client
+│   ├── tokenManager.ts           # Access/refresh token cookie helpers
+│   └── errorHandler.ts           # Shared API error mapping
+│
+├── providers/                    # Global app providers
+│   └── QueryProvider.tsx         # TanStack Query provider + devtools
+│
 ├── assets/                       # Static assets
 │   ├── icons/                    # SVG icon components
 │   └── images/                   # Image assets
@@ -77,6 +88,7 @@ src/
 │   │   │   └── password-reset-success/
 │   │   │       └── index.tsx     # Actual page implementation
 │   │   ├── hooks/                # Auth-specific hooks (e.g., useOTP.ts)
+│   │   ├── api/                  # Feature-specific React Query hooks and query keys
 │   │   ├── utils/                # Auth-specific utilities
 │   │   └── types/                # Auth-specific types
 │   │
@@ -122,6 +134,7 @@ src/
 │   │   │   └── yachtSection/
 │   │   │       └── index.tsx
 │   │   ├── hooks/                # Home-specific hooks (e.g., useHeroFilter.ts)
+│   │   ├── api/                  # Feature-specific React Query hooks and query keys
 │   │   ├── utils/                # Home-specific utilities (optional)
 │   │   ├── types/                # Home-specific types (optional)
 │   │   └── HomeContent.tsx       # Feature entry: composes section components from components/
@@ -134,6 +147,7 @@ src/
 │   │   │   └── map-view/
 │   │   │       └── index.tsx
 │   │   ├── hooks/                # e.g., useProperty.ts, usePropertyFilters.ts
+│   │   ├── api/                  # Feature-specific React Query hooks and query keys
 │   │   ├── utils/                # e.g., formatPropertyPrice.ts
 │   │   └── types/                # e.g., Property, PropertyFilter types
 │   │
@@ -144,6 +158,7 @@ src/
 │   │   │       └── …             # subcomponents used only by this section
 │   │   ├── pages/                # If search spans multiple routes
 │   │   ├── hooks/                # e.g., useSearch.ts, useSearchFilters.ts
+│   │   ├── api/                  # Feature-specific React Query hooks and query keys
 │   │   ├── utils/                # e.g., buildSearchQuery.ts
 │   │   └── types/                # e.g., SearchFilters, SearchResult types
 │   │
@@ -154,6 +169,7 @@ src/
 │   │   │       └── …
 │   │   ├── pages/                # e.g., checkout steps as separate routes
 │   │   ├── hooks/                # e.g., useBooking.ts, useAvailability.ts
+│   │   ├── api/                  # Feature-specific React Query hooks and query keys
 │   │   ├── utils/                # e.g., calculateBookingPrice.ts
 │   │   └── types/                # e.g., Booking, BookingStatus types
 │   │
@@ -161,6 +177,7 @@ src/
 │   │   ├── components/
 │   │   ├── pages/                # If split across dashboard URLs
 │   │   ├── hooks/
+│   │   ├── api/
 │   │   ├── utils/
 │   │   └── types/
 │   │
@@ -168,6 +185,7 @@ src/
 │       ├── components/
 │       ├── pages/
 │       ├── hooks/
+│       ├── api/
 │       ├── utils/
 │       └── types/
 │
@@ -233,6 +251,7 @@ Every feature under `src/features/{feature-name}/` **must** include at least:
 features/{feature-name}/
 ├── components/       # REQUIRED — all feature UI is organized here (see below)
 ├── hooks/            # Feature-only hooks (optional folder if empty)
+├── api/              # Feature-specific React Query hooks and query keys
 ├── utils/            # Feature-only pure helpers (optional)
 ├── types/            # Feature-only TypeScript types (optional)
 └── {Feature}Content.tsx   # OPTIONAL but recommended: single composer that imports sections from components/
@@ -336,6 +355,51 @@ export default LoginPage;
 ```
 
 The real screen composition for sign-in lives in `src/features/auth/pages/login/index.tsx` (and that file pulls in `components/` sections per **Feature Module Structure**).
+
+## Golden Rule: RSC Boundaries
+
+This project enforces a strict Server/Client separation for data fetching.
+
+### 1) Server Components (default)
+
+- Use Server Components for read-focused page data (GET requests).
+- Do **not** add `"use client"` unless interactivity is truly needed.
+- Do **not** use React Query or Axios in Server Components.
+- Use `async/await` with `src/api/serverFetch.ts` for server-side reads.
+
+### 2) Client Components (`"use client"`)
+
+- Use Client Components only for interactive behavior (POST/PUT/DELETE, local UI state, effects, event handlers).
+- Use feature-level React Query hooks from `src/features/{feature}/api/`.
+- Those hooks should use Axios clients from `src/api/publicClient.ts` or `src/api/secureClient.ts`.
+
+### 3) Composition rule
+
+- If a page mainly reads data but contains a small interactive control, keep the page as a Server Component.
+- Extract only the interactive part into a small Client Component and compose it into the server-rendered page.
+
+### 4) Boundary Guard Imports
+
+Every file in `src/api/` and `src/providers/` **must** declare its runtime context at the very top:
+
+| Context | Guard import | When to use |
+| --- | --- | --- |
+| Server-only | `import "server-only"` | File uses `cookies()`, `headers()`, or other Node/Next server APIs (e.g., `serverFetch.ts`) |
+| Client-only | `import "client-only"` | File uses browser APIs, `js-cookie`, Axios interceptors, React state/effects (e.g., `tokenManager.ts`, `secureClient.ts`, `publicClient.ts`, `errorHandler.ts`) |
+
+Importing across boundaries is a **build-time error**, not a runtime surprise.
+
+### 5) Auth Cookie Security Trade-offs
+
+Tokens are stored via `js-cookie` (non-`HttpOnly`) so the Axios request interceptor can read and attach them from JavaScript. This is a deliberate trade-off:
+
+- **Risk:** An XSS vulnerability could exfiltrate the access token from `document.cookie`.
+- **Mitigations:**
+  - The access token has a short TTL (1 day); the refresh token has a 30-day TTL.
+  - `secure: true` in production prevents transmission over HTTP.
+  - `sameSite: "lax"` blocks cross-site POST requests while still allowing top-level navigations (OAuth callbacks, email links, Stripe return URLs).
+  - CSP headers, input sanitization, and framework-level XSS protection reduce the attack surface.
+- **Future option:** If the backend supports `Set-Cookie: HttpOnly` for token storage, migrate to that and remove `js-cookie` for tokens entirely.
 
 ### Public Routes (SSR)
 
