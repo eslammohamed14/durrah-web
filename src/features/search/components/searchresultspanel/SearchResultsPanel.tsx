@@ -2,7 +2,8 @@ import { MapIcon } from "@/assets/icons/MapIcon";
 import ViewModeButton from "../ViewModeButton";
 import { ListIcon } from "@/assets/icons/ListIcon";
 import { GridIcon } from "@/assets/icons/GridIcon";
-import PropertyCardSearch from "../propertyCard/PropertyCardSearch";
+import { PropertyCard } from "@/components/ui/PropertyCard";
+import { seedProperties } from "@/lib/api/mock/seedData";
 
 export default function SearchResultsPanel() {
   return (
@@ -33,23 +34,10 @@ export default function SearchResultsPanel() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <PropertyCardSearch
-          badge="Apartment"
-          title="Skyline Residence"
-          tag="Family"
-          location="core bay beach"
-          sqft="4,200 sq.ft."
-          price="AED 2,450,000"
-        />
-        <PropertyCardSearch
-          badge="Villa"
-          title="Palm Horizon Villa"
-          tag="Luxury"
-          location="marina walk"
-          sqft="6,800 sq.ft."
-          price="AED 5,200,000"
-        />
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
+        {seedProperties.map((property) => (
+          <PropertyCard key={property.id} property={property} />
+        ))}
       </div>
     </>
   );

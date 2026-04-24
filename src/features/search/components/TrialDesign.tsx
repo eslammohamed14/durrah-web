@@ -1,6 +1,5 @@
 import SearchCalender from "./searchCalender/SearchCalender";
 import { SearchBar2 } from "./searchBar/SearchBar2";
-import FilterSection from "./filterSection/FilterSection";
 import TrialFiltersPanel from "./searchfilterspanel/SearchFiltersPanel";
 import SearchResultsPanel from "./searchresultspanel/SearchResultsPanel";
 
