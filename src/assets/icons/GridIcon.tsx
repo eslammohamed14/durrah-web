@@ -1,10 +1,55 @@
-export function GridIcon() {
+import type { SVGProps } from "react";
+
+export interface GridIconProps
+  extends Omit<SVGProps<SVGSVGElement>, "width" | "height"> {
+  size?: number;
+  color?: string;
+}
+
+export function GridIcon({
+  size = 17,
+  color = "#262626",
+  className,
+  ...rest
+}: GridIconProps) {
   return (
-    <svg className="size-[18px]" viewBox="0 0 18 18" fill="none" aria-hidden>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden
+      {...rest}
+    >
       <path
-        d="M7.5 3h-3a1.5 1.5 0 00-1.5 1.5v3A1.5 1.5 0 004.5 9h3A1.5 1.5 0 009 7.5v-3A1.5 1.5 0 007.5 3zM16.5 3h-3A1.5 1.5 0 0012 4.5v3A1.5 1.5 0 0013.5 9h3A1.5 1.5 0 0018 7.5v-3A1.5 1.5 0 0016.5 3zM7.5 12h-3A1.5 1.5 0 003 13.5v3A1.5 1.5 0 004.5 18h3A1.5 1.5 0 009 16.5v-3A1.5 1.5 0 007.5 12zM16.5 12h-3a1.5 1.5 0 00-1.5 1.5v3a1.5 1.5 0 001.5 1.5h3a1.5 1.5 0 001.5-1.5v-3a1.5 1.5 0 00-1.5-1.5z"
-        stroke="currentColor"
-        strokeWidth={1.1}
+        d="M22 8.52V3.98C22 2.57 21.36 2 19.77 2H15.73C14.14 2 13.5 2.57 13.5 3.98V8.51C13.5 9.93 14.14 10.49 15.73 10.49H19.77C21.36 10.5 22 9.93 22 8.52Z"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M22 19.77V15.73C22 14.14 21.36 13.5 19.77 13.5H15.73C14.14 13.5 13.5 14.14 13.5 15.73V19.77C13.5 21.36 14.14 22 15.73 22H19.77C21.36 22 22 21.36 22 19.77Z"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10.5 8.52V3.98C10.5 2.57 9.86 2 8.27 2H4.23C2.64 2 2 2.57 2 3.98V8.51C2 9.93 2.64 10.49 4.23 10.49H8.27C9.86 10.5 10.5 9.93 10.5 8.52Z"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10.5 19.77V15.73C10.5 14.14 9.86 13.5 8.27 13.5H4.23C2.64 13.5 2 14.14 2 15.73V19.77C2 21.36 2.64 22 4.23 22H8.27C9.86 22 10.5 21.36 10.5 19.77Z"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

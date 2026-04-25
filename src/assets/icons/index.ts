@@ -16,6 +16,10 @@ export {
   BlogsSectionIcon,
   type BlogsSectionIconProps,
 } from "./BlogsSectionIcon";
+export {
+  CloseFilterIcon,
+  type CloseFilterIconProps,
+} from "./CloseFilterIcon";
 export { CloseSquareIcon, type CloseSquareIconProps } from "./CloseSquareIcon";
 export { DimensionIcon, type DimensionIconProps } from "./DimensionIcon";
 export { DiscountIcon, type DiscountIconProps } from "./DiscountIcon";

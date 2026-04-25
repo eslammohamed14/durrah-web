@@ -111,6 +111,7 @@ export const seedProperties: Property[] = [
       bathrooms: 3,
       beachView: true,
       maxGuests: 3,
+      furnishing: "Furnished",
     },
     pricing: {
       basePrice: 400,
@@ -245,6 +246,7 @@ export const seedProperties: Property[] = [
       bathrooms: 4,
       beachView: false,
       maxGuests: 12,
+      furnishing: "Semi-Furnished",
     },
     pricing: {
       basePrice: 2200,
@@ -348,7 +350,7 @@ export const seedProperties: Property[] = [
       coordinates: { lat: 16.887, lng: 42.564 },
       area: "Durrah Al-Arus",
     },
-    specifications: { size: 180, rooms: 3, bathrooms: 3, beachView: true },
+    specifications: { size: 180, rooms: 3, bathrooms: 3, beachView: true, furnishing: "Unfurnished" },
     pricing: { basePrice: 1_200_000, currency: "SAR", priceType: "total" },
     amenities: ["Parking", "Security", "Gym", "Pool", "Elevator"],
     images: [
@@ -447,6 +449,7 @@ export const seedProperties: Property[] = [
       bathrooms: 5,
       beachView: false,
       floors: 2,
+      furnishing: "Furnished",
     },
     pricing: { basePrice: 4_100_000, currency: "SAR", priceType: "total" },
     amenities: [
@@ -526,7 +529,7 @@ export const seedProperties: Property[] = [
       coordinates: { lat: 16.891, lng: 42.56 },
       area: "Durrah Al-Arus",
     },
-    specifications: { size: 80 },
+    specifications: { size: 80, furnishing: "Unfurnished" },
     pricing: { basePrice: 15_000, currency: "SAR", priceType: "per_month" },
     amenities: ["Parking", "Security", "Air Conditioning", "Storage Room"],
     images: [
@@ -603,6 +606,7 @@ export const seedProperties: Property[] = [
       bathrooms: 1,
       beachView: true,
       maxGuests: 2,
+      furnishing: "Furnished",
     },
     pricing: { basePrice: 320, currency: "SAR", priceType: "per_night" },
     amenities: ["WiFi", "Kitchenette", "Marina Access", "Air Conditioning"],

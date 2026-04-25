@@ -155,6 +155,7 @@ export interface Property {
     floors?: number;
     beachView?: boolean;
     maxGuests?: number;
+    furnishing?: string;
   };
   pricing: {
     basePrice: number;

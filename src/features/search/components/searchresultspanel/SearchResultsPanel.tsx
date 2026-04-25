@@ -3,14 +3,20 @@ import ViewModeButton from "../ViewModeButton";
 import { ListIcon } from "@/assets/icons/ListIcon";
 import { GridIcon } from "@/assets/icons/GridIcon";
 import { PropertyCard } from "@/components/ui/PropertyCard";
-import { seedProperties } from "@/lib/api/mock/seedData";
+import type { Property } from "@/lib/types";
 
-export default function SearchResultsPanel() {
+export default function SearchResultsPanel({
+  properties,
+}: {
+  properties: Property[];
+}) {
+  const count = properties.length;
+
   return (
     <>
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-lg font-semibold leading-6 text-text-dark">
-          24 Properties Found
+          {count} {count === 1 ? "Property" : "Properties"} Found
         </p>
         <div className="flex flex-wrap items-center gap-3">
           <div className="inline-flex items-center rounded-lg bg-grey-50 p-1 ring-1 ring-black/[0.06]">
@@ -35,13 +41,14 @@ export default function SearchResultsPanel() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
-        {seedProperties.map((property) => (
+        {properties.map((property) => (
           <PropertyCard key={property.id} property={property} />
         ))}
       </div>
     </>
   );
 }
+
 function ChevronDownIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden>
