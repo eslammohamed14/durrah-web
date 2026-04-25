@@ -39,7 +39,15 @@ export default function SearchContent({ image, properties, t }: SearchContentPro
     >
       <SearchResults initialProperties={properties} />
     </Suspense> */}
-    <TrialDesign/>
+    <Suspense
+      fallback={
+        <div className="flex min-h-[40vh] items-center justify-center">
+          <Spinner size="lg" />
+        </div>
+      }
+    >
+      <TrialDesign />
+    </Suspense>
   </main>
   <Footer />
 </>

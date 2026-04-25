@@ -1,5 +1,7 @@
 "use client";
 
+import { useCallback, useMemo } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import FilterSection from "../filterSection/FilterSection";
 import CheckboxRow, {
   type CheckboxRowChangeDetail,
@@ -7,64 +9,127 @@ import CheckboxRow, {
 import RadioRow from "../RadioRow";
 import { seedProperties } from "@/lib/api/mock/seedData";
 import { CloseFilterIcon } from "@/assets/icons";
-import type { CheckboxFilterMap } from "@/features/search/lib/filterSeedProperties";
+import {
+  TRIAL_FILTER_SEARCH_KEYS,
+  parseCommaSeparatedParam,
+} from "@/features/search/lib/filterSeedProperties";
 
-export type SearchFiltersPanelProps = {
-  unitTypesChecked: CheckboxFilterMap;
-  amenitiesChecked: CheckboxFilterMap;
-  furnishingChecked: CheckboxFilterMap;
-  onUnitTypeChange: (detail: CheckboxRowChangeDetail) => void;
-  onAmenityChange: (detail: CheckboxRowChangeDetail) => void;
-  onFurnishingChange: (detail: CheckboxRowChangeDetail) => void;
-  onClearAll: () => void;
-};
+function getSpecOptions(
+  properties: typeof seedProperties,
+  key: keyof (typeof seedProperties)[number]["specifications"],
+) {
+  const set = new Set<number>();
+  properties.forEach((property) => {
+    const value = property?.specifications?.[key];
+    if (typeof value === "number") {
+      set.add(value);
+    }
+  });
+  return Array.from(set).sort((a, b) => a - b);
+}
 
-export default function TrialFiltersPanel({
-  unitTypesChecked,
-  amenitiesChecked,
-  furnishingChecked,
-  onUnitTypeChange,
-  onAmenityChange,
-  onFurnishingChange,
-  onClearAll,
-}: SearchFiltersPanelProps) {
+function getAmenitiesOptions(properties: typeof seedProperties): string[] {
+  const amenitySet = new Set<string>();
+  properties.forEach((property) => {
+    property.amenities.forEach((amenity) => {
+      amenitySet.add(amenity);
+    });
+  });
+  return Array.from(amenitySet).sort();
+}
+
+function getFurnishingOptions(properties: typeof seedProperties): string[] {
+  const set = new Set<string>();
+  properties.forEach((property) => {
+    const f = property.specifications.furnishing;
+    if (typeof f === "string" && f.length > 0) {
+      set.add(f);
+    }
+  });
+  return Array.from(set).sort();
+}
+
+export default function SearchFiltersPanel() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const unitTypesActive = useMemo(
+    () => parseCommaSeparatedParam(searchParams, TRIAL_FILTER_SEARCH_KEYS.unitTypes),
+    [searchParams],
+  );
+  const amenitiesActive = useMemo(
+    () => parseCommaSeparatedParam(searchParams, TRIAL_FILTER_SEARCH_KEYS.amenities),
+    [searchParams],
+  );
+  const furnishingActive = useMemo(
+    () => parseCommaSeparatedParam(searchParams, TRIAL_FILTER_SEARCH_KEYS.furnishing),
+    [searchParams],
+  );
+
+  const replaceParams = useCallback(
+    (next: URLSearchParams) => {
+      const qs = next.toString();
+      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    },
+    [pathname, router],
+  );
+
+  const toggleFilter = useCallback(
+    (paramKey: string, value: string) => {
+      const next = new URLSearchParams(searchParams.toString());
+      const current = parseCommaSeparatedParam(next, paramKey);
+      const exists = current.includes(value);
+      const updated = exists ? current.filter((v) => v !== value) : [...current, value];
+      if (updated.length === 0) {
+        next.delete(paramKey);
+      } else {
+        next.set(paramKey, updated.join(","));
+      }
+      replaceParams(next);
+    },
+    [replaceParams, searchParams],
+  );
+
+  const clearCategory = useCallback(
+    (paramKey: string) => {
+      const next = new URLSearchParams(searchParams.toString());
+      next.delete(paramKey);
+      replaceParams(next);
+    },
+    [replaceParams, searchParams],
+  );
+
+  const resetAll = useCallback(() => {
+    router.replace(pathname, { scroll: false });
+  }, [pathname, router]);
+
+  const utKey = TRIAL_FILTER_SEARCH_KEYS.unitTypes;
+  const amKey = TRIAL_FILTER_SEARCH_KEYS.amenities;
+  const fuKey = TRIAL_FILTER_SEARCH_KEYS.furnishing;
+
+  const onUnitTypeChange = useCallback(
+    (_detail: CheckboxRowChangeDetail) => {
+      toggleFilter(utKey, _detail.value);
+    },
+    [toggleFilter, utKey],
+  );
+
+  const onAmenityChange = useCallback(
+    (_detail: CheckboxRowChangeDetail) => {
+      toggleFilter(amKey, _detail.value);
+    },
+    [toggleFilter, amKey],
+  );
+
+  const onFurnishingChange = useCallback(
+    (_detail: CheckboxRowChangeDetail) => {
+      toggleFilter(fuKey, _detail.value);
+    },
+    [toggleFilter, fuKey],
+  );
+
   const unitTypes = Array.from(new Set(seedProperties.map((p) => p.type)));
-
-  function getSpecOptions(
-    properties: typeof seedProperties,
-    key: keyof (typeof seedProperties)[number]["specifications"],
-  ) {
-    const set = new Set<number>();
-    properties.forEach((property) => {
-      const value = property?.specifications?.[key];
-      if (typeof value === "number") {
-        set.add(value);
-      }
-    });
-    return Array.from(set).sort((a, b) => a - b);
-  }
-
-  function getAmenitiesOptions(properties: typeof seedProperties): string[] {
-    const amenitySet = new Set<string>();
-    properties.forEach((property) => {
-      property.amenities.forEach((amenity) => {
-        amenitySet.add(amenity);
-      });
-    });
-    return Array.from(amenitySet).sort();
-  }
-
-  function getFurnishingOptions(properties: typeof seedProperties): string[] {
-    const set = new Set<string>();
-    properties.forEach((property) => {
-      const f = property.specifications.furnishing;
-      if (typeof f === "string" && f.length > 0) {
-        set.add(f);
-      }
-    });
-    return Array.from(set).sort();
-  }
-
   const roomOptions = getSpecOptions(seedProperties, "rooms");
   const bathroomOptions = getSpecOptions(seedProperties, "bathrooms");
   const amenitiesOptions = getAmenitiesOptions(seedProperties);
@@ -79,7 +144,7 @@ export default function TrialFiltersPanel({
         <button
           type="button"
           className="inline-flex items-center gap-1.5 text-xs font-normal leading-[18px] text-grey-600 transition-colors hover:text-primary-coral-500"
-          onClick={onClearAll}
+          onClick={resetAll}
         >
           Clear All
           <CloseFilterIcon />
@@ -92,7 +157,7 @@ export default function TrialFiltersPanel({
             key={type}
             label={type}
             value={type}
-            checked={unitTypesChecked[type] ?? false}
+            checked={unitTypesActive.includes(type)}
             onCheckedChange={onUnitTypeChange}
           />
         ))}
@@ -152,7 +217,7 @@ export default function TrialFiltersPanel({
             key={option}
             label={option}
             value={option}
-            checked={furnishingChecked[option] ?? false}
+            checked={furnishingActive.includes(option)}
             onCheckedChange={onFurnishingChange}
           />
         ))}
@@ -170,7 +235,7 @@ export default function TrialFiltersPanel({
               key={amenity}
               label={amenity}
               value={amenity}
-              checked={amenitiesChecked[amenity] ?? false}
+              checked={amenitiesActive.includes(amenity)}
               onCheckedChange={onAmenityChange}
             />
           ))}

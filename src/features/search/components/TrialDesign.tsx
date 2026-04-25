@@ -1,63 +1,31 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import SearchCalender from "./searchCalender/SearchCalender";
 import { SearchBar2 } from "./searchBar/SearchBar2";
-import TrialFiltersPanel from "./searchfilterspanel/SearchFiltersPanel";
+import SearchFiltersPanel from "./searchfilterspanel/SearchFiltersPanel";
 import SearchResultsPanel from "./searchresultspanel/SearchResultsPanel";
 import { seedProperties } from "@/lib/api/mock/seedData";
 import {
   filterPropertiesByTrialFilters,
-  type CheckboxFilterMap,
+  trialFiltersFromSearchParams,
 } from "@/features/search/lib/filterSeedProperties";
-import type { CheckboxRowChangeDetail } from "./CheckboxRow";
 
 /**
  * Layout trial from Figma `1070:16801` (Frame 2147236618): 1200px search page —
  * top row (date 320 + search 856, gap 24), then filters column 320 + results 856.
  */
 export default function TrialDesign() {
-  const [unitTypesChecked, setUnitTypesChecked] = useState<CheckboxFilterMap>({});
-  const [amenitiesChecked, setAmenitiesChecked] =
-    useState<CheckboxFilterMap>({});
-  const [furnishingChecked, setFurnishingChecked] =
-    useState<CheckboxFilterMap>({});
-
-  const handleUnitTypeChange = useCallback(
-    ({ value, checked }: CheckboxRowChangeDetail) => {
-      setUnitTypesChecked((prev) => ({ ...prev, [value]: checked }));
-    },
-    [],
-  );
-
-  const handleAmenityChange = useCallback(
-    ({ value, checked }: CheckboxRowChangeDetail) => {
-      setAmenitiesChecked((prev) => ({ ...prev, [value]: checked }));
-    },
-    [],
-  );
-
-  const handleFurnishingChange = useCallback(
-    ({ value, checked }: CheckboxRowChangeDetail) => {
-      setFurnishingChecked((prev) => ({ ...prev, [value]: checked }));
-    },
-    [],
-  );
-
-  const clearFilters = useCallback(() => {
-    setUnitTypesChecked({});
-    setAmenitiesChecked({});
-    setFurnishingChecked({});
-  }, []);
+  const searchParams = useSearchParams();
 
   const filteredProperties = useMemo(
     () =>
-      filterPropertiesByTrialFilters(seedProperties, {
-        unitTypes: unitTypesChecked,
-        amenities: amenitiesChecked,
-        furnishing: furnishingChecked,
-      }),
-    [unitTypesChecked, amenitiesChecked, furnishingChecked],
+      filterPropertiesByTrialFilters(
+        seedProperties,
+        trialFiltersFromSearchParams(searchParams),
+      ),
+    [searchParams],
   );
 
   return (
@@ -71,15 +39,7 @@ export default function TrialDesign() {
 
       <div className="mt-6 flex flex-col gap-6 lg:mt-8 lg:flex-row lg:items-start lg:gap-6">
         <aside className="w-full shrink-0 lg:w-80">
-          <TrialFiltersPanel
-            unitTypesChecked={unitTypesChecked}
-            amenitiesChecked={amenitiesChecked}
-            furnishingChecked={furnishingChecked}
-            onUnitTypeChange={handleUnitTypeChange}
-            onAmenityChange={handleAmenityChange}
-            onFurnishingChange={handleFurnishingChange}
-            onClearAll={clearFilters}
-          />
+          <SearchFiltersPanel />
         </aside>
 
         <section className="min-w-0 flex-1 lg:max-w-[856px]">

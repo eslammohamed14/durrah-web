@@ -1,18 +1,55 @@
+import type { ReadonlyURLSearchParams } from "next/navigation";
 import type { Property, PropertyType } from "@/lib/types";
 
 export type CheckboxFilterMap = Record<string, boolean>;
 
-function activeKeys(record: CheckboxFilterMap): string[] {
-  return Object.entries(record)
-    .filter(([, on]) => on)
-    .map(([key]) => key);
-}
+/** URL query keys for trial search checkbox filters (comma-separated values). */
+export const TRIAL_FILTER_SEARCH_KEYS = {
+  unitTypes: "unitTypes",
+  amenities: "amenities",
+  furnishing: "furnishing",
+} as const;
+
+export type TrialFilterSearchKey =
+  (typeof TRIAL_FILTER_SEARCH_KEYS)[keyof typeof TRIAL_FILTER_SEARCH_KEYS];
 
 export type SearchTrialFilters = {
   unitTypes: CheckboxFilterMap;
   amenities: CheckboxFilterMap;
   furnishing: CheckboxFilterMap;
 };
+
+export function parseCommaSeparatedParam(
+  searchParams: ReadonlyURLSearchParams | URLSearchParams,
+  key: string,
+): string[] {
+  const raw = searchParams.get(key);
+  if (!raw) return [];
+  return raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+export function trialFiltersFromSearchParams(
+  searchParams: ReadonlyURLSearchParams | URLSearchParams,
+): SearchTrialFilters {
+  const toMap = (paramKey: string): CheckboxFilterMap => {
+    const values = parseCommaSeparatedParam(searchParams, paramKey);
+    return Object.fromEntries(values.map((v) => [v, true] as const));
+  };
+  return {
+    unitTypes: toMap(TRIAL_FILTER_SEARCH_KEYS.unitTypes),
+    amenities: toMap(TRIAL_FILTER_SEARCH_KEYS.amenities),
+    furnishing: toMap(TRIAL_FILTER_SEARCH_KEYS.furnishing),
+  };
+}
+
+function activeKeys(record: CheckboxFilterMap): string[] {
+  return Object.entries(record)
+    .filter(([, on]) => on)
+    .map(([key]) => key);
+}
 
 function propertyFurnishing(p: Property): string | undefined {
   const f = p.specifications.furnishing;
