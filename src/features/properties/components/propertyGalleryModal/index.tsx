@@ -1,32 +1,25 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-// NOTE: createPortal renders into document.body to escape any ancestor stacking context.
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { FreeMode, Keyboard, Navigation, Thumbs } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper/types";
 import { ArrowLeftIcon, ArrowRightIcon, CloseSquareIcon } from "@/assets/icons";
-import type { PropertyImage } from "@/lib/types";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import { getImageUrl, isLocalStaticImageSrc } from "@/utils/getImageUrl";
+import { useBodyScrollLock } from "@/lib/hooks/useBodyScrollLock";
 
 interface PropertyGalleryModalProps {
   isOpen: boolean;
   onClose: () => void;
-  images: PropertyImage[];
+  images: string[];
   initialSlide?: number;
   title: string;
-}
-
-function isLocalStaticImage(url?: string): boolean {
-  return (
-    Boolean(url) &&
-    (url!.startsWith("/") || url!.startsWith("/_next/static/media/"))
-  );
 }
 
 export default function PropertyGalleryModal({
@@ -37,9 +30,13 @@ export default function PropertyGalleryModal({
   title,
 }: PropertyGalleryModalProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
-  const prevOpen = useRef(false);
+  const prevRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
+  const normalizedImages = useMemo(
+    () => images.map((image) => getImageUrl(image)).filter((url) => url !== ""),
+    [images],
+  );
 
-  // Keyboard: Escape to close
   useEffect(() => {
     if (!isOpen) return;
     const handleKey = (e: KeyboardEvent) => {
@@ -49,32 +46,9 @@ export default function PropertyGalleryModal({
     return () => window.removeEventListener("keydown", handleKey);
   }, [isOpen, onClose]);
 
-  // Lock body scroll while open so the page doesn't scroll behind the modal
-  useEffect(() => {
-    if (isOpen === prevOpen.current) return;
-    prevOpen.current = isOpen;
+  useBodyScrollLock(isOpen);
 
-    if (isOpen) {
-      const scrollY = window.scrollY;
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = "100%";
-      document.body.style.overflowY = "scroll";
-    } else {
-      const scrollY = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      document.body.style.overflowY = "";
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || "0") * -1);
-      }
-    }
-  }, [isOpen]);
-
-  // isOpen always starts as false (useState in PropertyGalleryController),
-  // so document.body is never accessed during SSR.
-  if (!isOpen || images.length === 0) return null;
+  if (!isOpen || normalizedImages.length === 0) return null;
 
   /**
    * Render into document.body via a Portal so this element sits at the top
@@ -108,15 +82,17 @@ export default function PropertyGalleryModal({
           {/* Main swiper — grows to fill remaining space */}
           <div className="relative min-h-0 flex-1 overflow-hidden rounded-t-2xl">
             <button
+              ref={prevRef}
               type="button"
-              className="gallery-modal-prev absolute left-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-grey-700 shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition-colors hover:bg-white"
+              className="absolute left-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-grey-700 shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition-colors hover:bg-white"
               aria-label="Previous image"
             >
               <ArrowLeftIcon size={24} />
             </button>
             <button
+              ref={nextRef}
               type="button"
-              className="gallery-modal-next absolute right-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-grey-700 shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition-colors hover:bg-white"
+              className="absolute right-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-grey-700 shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition-colors hover:bg-white"
               aria-label="Next image"
             >
               <ArrowRightIcon size={24} />
@@ -124,9 +100,16 @@ export default function PropertyGalleryModal({
 
             <Swiper
               modules={[Navigation, Thumbs, Keyboard]}
-              navigation={{
-                prevEl: ".gallery-modal-prev",
-                nextEl: ".gallery-modal-next",
+              onInit={(swiper) => {
+                if (
+                  typeof swiper.params.navigation === "object" &&
+                  swiper.params.navigation
+                ) {
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  swiper.params.navigation.nextEl = nextRef.current;
+                  swiper.navigation.init();
+                  swiper.navigation.update();
+                }
               }}
               keyboard={{ enabled: true }}
               loop
@@ -137,18 +120,18 @@ export default function PropertyGalleryModal({
               }}
               className="h-full w-full"
             >
-              {images.map((image, index) => (
-                <SwiperSlide key={image.id}>
+              {normalizedImages.map((image, index) => (
+                <SwiperSlide key={`main-${index}`}>
                   <div className="relative h-full w-full overflow-hidden">
                     <Image
-                      src={image.url}
-                      alt={image.alt || `${title} ${index + 1}`}
+                      src={image}
+                      alt={`${title} ${index + 1}`}
                       fill
                       sizes="(max-width: 640px) 100vw, 1135px"
                       className="object-cover"
                       priority={index === initialSlide}
                       quality={65}
-                      unoptimized={isLocalStaticImage(image.url)}
+                      unoptimized={isLocalStaticImageSrc(image)}
                     />
                   </div>
                 </SwiperSlide>
@@ -171,17 +154,17 @@ export default function PropertyGalleryModal({
                 1024: { slidesPerView: 5 },
               }}
             >
-              {images.map((image, index) => (
-                <SwiperSlide key={`${image.id}-thumb`}>
+              {normalizedImages.map((image, index) => (
+                <SwiperSlide key={`thumb-${index}`}>
                   <div className="relative h-[120px] w-full overflow-hidden rounded-xl border-2 border-transparent transition-all hover:border-primary-blue-300 sm:h-[138px]">
                     <Image
-                      src={image.url}
-                      alt={image.alt || `${title} ${index + 1}`}
+                      src={image}
+                      alt={`${title} ${index + 1}`}
                       fill
                       sizes="220px"
                       className="object-cover"
                       quality={65}
-                      unoptimized={isLocalStaticImage(image.url)}
+                      unoptimized={isLocalStaticImageSrc(image)}
                     />
                   </div>
                 </SwiperSlide>

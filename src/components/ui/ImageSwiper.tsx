@@ -12,6 +12,8 @@ export interface ImageSwiperSlide {
   id: string;
   url: string;
   alt?: string;
+  /** Forwarded to `next/image` (e.g. local `/public` or mock assets). */
+  unoptimized?: boolean;
 }
 
 export interface ImageSwiperProps {
@@ -58,6 +60,7 @@ export function ImageSwiper({
               className="object-cover"
               sizes={imageSizes}
               quality={imageQuality}
+              unoptimized={slide.unoptimized ?? false}
             />
           </div>
         </SwiperSlide>

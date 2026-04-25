@@ -54,34 +54,50 @@ export interface PropertyAmenity {
 }
 
 export interface PropertyCancellationPolicy {
+  type: string;
   text: string;
 }
 
+export interface PropertyLocation {
+  latitude?: number;
+  longitude?: number;
+  sector: string;
+  beach: string;
+  street: string;
+  country: string;
+}
+
+export interface PropertyFee {
+  administration: number;
+  sector: number;
+  note: string;
+}
 export interface PropertyDetails {
   id: number;
   slug: string;
   title: string;
-  image: string | null;
-  gallery: string[];
-  city: string;
-  district: string;
-  location_text?: string;
-  latitude?: number;
-  longitude?: number;
-  property_type: string;
   description_html: string;
-  cancellation_policy: PropertyCancellationPolicy;
-  check_in_time_12h: string;
-  check_out_time_12h: string;
-  total_area: number;
-  built_area?: number;
+  images: string[];
   price_per_day: number;
-  price_per_week?: number;
-  price_per_month?: number;
-  bedrooms: number;
+  license_number: string;
+  investor_name: string;
+  rooms: number;
   bathrooms: number;
-  guests: number;
   amenities: PropertyAmenity[];
+  total_area: number;
+  category: string;
+  category_key: string;
+  type: string;
+  sale_lease_label: string;
+  managed_by_durra: boolean;
+  location: PropertyLocation;
+  cancellation_policy: PropertyCancellationPolicy;
+  terms_and_conditions: string;
+  check_in_time: number;
+  check_in_time_12h: string;
+  check_out_time: number;
+  check_out_time_12h: string;
+  fees: PropertyFee;
 }
 
 export interface InvestorPortfolioQuery {
@@ -92,9 +108,9 @@ export interface InvestorPortfolioQuery {
 export interface InvestorDetails {
   id: number;
   name: string;
-  image?: string | null;
   email?: string;
   phone?: string;
+  properties: PropertyCard[];
 }
 
 export interface InvestorPortfolioResponse {

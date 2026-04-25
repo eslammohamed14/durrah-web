@@ -1,27 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import DOMPurify from "isomorphic-dompurify";
 import { useTranslations } from "next-intl";
+import { stripHtml } from "@/lib/utils/stripHtml";
 
 const CLAMP_LENGTH = 260;
 
 interface DescriptionToggleProps {
-  description: string;
+  descriptionHtml: string;
 }
 
-export function DescriptionToggle({ description }: DescriptionToggleProps) {
+export function DescriptionToggle({ descriptionHtml }: DescriptionToggleProps) {
   const t = useTranslations();
   const [expanded, setExpanded] = useState(false);
-  const shouldClamp = description.length > CLAMP_LENGTH;
+  const sanitizedHtml = useMemo(
+    () => DOMPurify.sanitize(descriptionHtml),
+    [descriptionHtml],
+  );
+  const plainText = useMemo(() => stripHtml(sanitizedHtml), [sanitizedHtml]);
+  const shouldClamp = plainText.length > CLAMP_LENGTH;
 
-  const visibleDescription =
+  const visibleText =
     shouldClamp && !expanded
-      ? `${description.slice(0, CLAMP_LENGTH).trimEnd()}..`
-      : description;
+      ? `${plainText.slice(0, CLAMP_LENGTH).trimEnd()}..`
+      : plainText;
 
   return (
-    <p className="text-[18px] leading-[1.6] text-grey-600">
-      {visibleDescription}{" "}
+    <div className="text-[18px] leading-[1.6] text-grey-600">
+      <div
+        dangerouslySetInnerHTML={{
+          __html: shouldClamp && !expanded ? visibleText : sanitizedHtml,
+        }}
+      />{" "}
       {shouldClamp ? (
         <button
           type="button"
@@ -33,6 +44,6 @@ export function DescriptionToggle({ description }: DescriptionToggleProps) {
             : t("propertyDetails.readMore")}
         </button>
       ) : null}
-    </p>
+    </div>
   );
 }

@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import { PropertyCard } from "@/components/ui/PropertyCard";
@@ -9,6 +16,7 @@ import { Spinner } from "@/components/ui/Spinner";
 import { getAPIClient } from "@/lib/api";
 import type { Property, SearchFilters as SearchFiltersType } from "@/lib/types";
 import type { PropertyCard as ApiPropertyCard } from "@/features/properties/type/propertyApiTypes";
+import { toApiPropertyCard } from "@/features/properties/utils/toApiPropertyCard";
 
 const PAGE_SIZE = 12;
 
@@ -45,55 +53,50 @@ function parseFiltersFromParams(params: URLSearchParams): SearchFiltersType {
 }
 
 interface SearchResultsProps {
-  /** Initial properties fetched server-side */
   initialProperties: Property[];
-}
-
-function toApiPropertyCard(property: Property): ApiPropertyCard {
-  return {
-    id: Number(property.id) || 0,
-    slug: property.id,
-    title: property.title.en || property.title.ar || "Property",
-    image: property.images[0]?.url ?? null,
-    city: property.location.area || "",
-    district: property.location.address.en || property.location.address.ar || "",
-    total_area: property.specifications.size ?? 0,
-    price_per_day: property.pricing.basePrice ?? 0,
-    price_per_week: undefined,
-    price_per_month: undefined,
-    bedrooms: property.specifications.rooms ?? 0,
-    bathrooms: property.specifications.bathrooms ?? 0,
-    guests: property.specifications.maxGuests ?? 0,
-    property_type: property.type,
-  };
 }
 
 export function SearchResults({ initialProperties }: SearchResultsProps) {
   const { t } = useLocale();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const [isFetching, setIsFetching] = useState(false);
 
-  const [properties, setProperties] = useState<ApiPropertyCard[]>(
-    initialProperties.map(toApiPropertyCard)
+  const initialApiProperties = useMemo(
+    () => initialProperties.map(toApiPropertyCard),
+    [initialProperties],
   );
+  const [properties, setProperties] =
+    useState<ApiPropertyCard[]>(initialApiProperties);
   const [page, setPage] = useState(1);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   // Track the last fetched params string to avoid duplicate fetches
   const lastParamsRef = useRef(searchParams.toString());
+  const requestIdRef = useRef(0);
 
   const fetchResults = useCallback((filters: SearchFiltersType) => {
-    startTransition(async () => {
+    const requestId = ++requestIdRef.current;
+    setIsFetching(true);
+
+    void (async () => {
       try {
-        const api = getAPIClient();
-        const results = await api.searchProperties(filters);
-        setProperties(results.map(toApiPropertyCard));
-        setPage(1);
+        const results = await getAPIClient().searchProperties(filters);
+        if (requestId !== requestIdRef.current) return;
+
+        startTransition(() => {
+          setProperties(results.map(toApiPropertyCard));
+          setPage(1);
+        });
       } catch {
         // Keep previous results on error
+      } finally {
+        if (requestId === requestIdRef.current) {
+          setIsFetching(false);
+        }
       }
-    });
-  }, []);
+    })();
+  }, [startTransition]);
 
   // Re-fetch when URL search params change (e.g. from SearchBar or filter updates)
   useEffect(() => {
@@ -158,12 +161,12 @@ export function SearchResults({ initialProperties }: SearchResultsProps) {
             className="min-w-0 flex-1"
             id="search-results"
             aria-live="polite"
-            aria-busy={isPending}
+            aria-busy={isFetching || isPending}
           >
             {/* Result count + loading indicator */}
             <div className="mb-5 flex items-center justify-between">
               <p className="text-sm text-gray-600">
-                {isPending ? (
+                {isFetching || isPending ? (
                   <span className="flex items-center gap-2">
                     <Spinner size="sm" />
                     {t("common.loading")}
@@ -178,7 +181,7 @@ export function SearchResults({ initialProperties }: SearchResultsProps) {
             </div>
 
             {/* Grid */}
-            {!isPending && properties.length === 0 ? (
+            {!isFetching && !isPending && properties.length === 0 ? (
               <EmptyState t={t} />
             ) : (
               <>
@@ -186,7 +189,7 @@ export function SearchResults({ initialProperties }: SearchResultsProps) {
                   className={[
                     "grid gap-5 transition-opacity duration-200",
                     "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3",
-                    isPending ? "opacity-50" : "opacity-100",
+                    isFetching || isPending ? "opacity-50" : "opacity-100",
                   ].join(" ")}
                 >
                   {visibleProperties.map((property) => (

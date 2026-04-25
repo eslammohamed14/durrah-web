@@ -7,12 +7,15 @@ import {
   PoolPremiumIcon,
   SeaViewPremiumIcon,
 } from "@/assets/icons";
-import type { PremiumAmenityIconKey, Property } from "@/lib/types";
+import type {
+  PropertyAmenity,
+  PropertyDetails,
+} from "@/features/properties/type/propertyApiTypes";
 
 const ICON_SIZE = 24;
 
-function PremiumAmenityIcon({ kind }: { kind: PremiumAmenityIconKey }) {
-  switch (kind) {
+function PremiumAmenityIcon({ amenity }: { amenity: PropertyAmenity }) {
+  switch (amenity.title) {
     case "pool":
       return <PoolPremiumIcon size={ICON_SIZE} className="shrink-0" />;
     case "marina":
@@ -25,54 +28,38 @@ function PremiumAmenityIcon({ kind }: { kind: PremiumAmenityIconKey }) {
       return <DiningIcon size={ICON_SIZE} className="shrink-0" />;
     case "events":
       return <EventsIcon size={ICON_SIZE} className="shrink-0" />;
-    default: {
-      const _exhaustive: never = kind;
-      return _exhaustive;
-    }
+    default:
+      return null;
   }
 }
 
 interface PropertyAmenitiesSectionProps {
-  property: Property;
+  property: PropertyDetails;
 }
 
 export default async function PropertyAmenitiesSection({
   property,
 }: PropertyAmenitiesSectionProps) {
   const t = await getTranslations();
-  const premium = property.premiumAmenities;
 
   return (
     <section className="space-y-4">
       <h2 className="text-[22px] font-semibold leading-[1.4] text-primary-blue-400">
         {t("propertyDetails.premiumAmenities")}
       </h2>
-      {premium?.length ? (
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {premium.map((row) => (
-            <li
-              key={row.id}
-              className="flex h-[42px] items-center gap-3 rounded-xl border border-grey-50 bg-surface-primary px-3"
-            >
-              <PremiumAmenityIcon kind={row.icon} />
-              <span className="text-[12px] font-semibold leading-[1.4] text-grey-900">
-                {t(`propertyDetails.${row.labelKey}`)}
-              </span>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {property.amenities.map((amenity) => (
-            <li
-              key={amenity}
-              className="flex h-[42px] items-center rounded-xl border border-grey-50 bg-surface-primary px-3 text-[12px] font-medium leading-[1.4] text-grey-700"
-            >
-              {amenity}
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {property.amenities.map((amenity, index) => (
+          <li
+            key={`${amenity.title}-${index}`}
+            className="flex h-[42px] items-center gap-3 rounded-xl border border-grey-50 bg-surface-primary px-3"
+          >
+            <PremiumAmenityIcon amenity={amenity} />
+            <span className="text-[12px] font-semibold leading-[1.4] text-grey-900">
+              {amenity.title}
+            </span>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

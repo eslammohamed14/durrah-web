@@ -1,29 +1,18 @@
 import Image from "next/image";
 import images from "@/constant/images";
-import type { Property } from "@/lib/types";
 import PropertyGalleryController from "@/features/properties/components/propertyGalleryController";
 import PropertyAmenitiesSection from "@/features/properties/components/propertyAmenitiesSection";
-import PropertyBookingSidebar from "@/features/properties/components/propertyBookingSidebar";
-import PropertyHostSection from "@/features/properties/components/propertyHostSection";
 import PropertyInfoSection from "@/features/properties/components/propertyInfoSection";
-import PropertyLocationSection from "@/features/properties/components/propertyLocationSection";
-import PropertyPoliciesSection from "@/features/properties/components/propertyPoliciesSection";
-import PropertySimilarSection from "@/features/properties/components/propertySimilarSection";
+import type { PropertyDetails } from "@/features/properties/type/propertyApiTypes";
 
 interface PropertyDetailsPageProps {
-  property: Property;
-  ownerName?: string;
-  similarProperties: Property[];
+  property: PropertyDetails;
+  //similarProperties: Property[];
 }
 
-/**
- * Server Component: assembles the full property detail layout.
- * Gallery state lives in the PropertyGalleryController leaf Client Component.
- */
 export default function PropertyDetailsPage({
   property,
-  ownerName,
-  similarProperties,
+  //similarProperties,
 }: PropertyDetailsPageProps) {
   return (
     <>
@@ -46,18 +35,18 @@ export default function PropertyDetailsPage({
             <div className="space-y-8">
               <PropertyInfoSection property={property} />
               <PropertyAmenitiesSection property={property} />
-              <PropertyHostSection property={property} ownerName={ownerName} />
-              <PropertyLocationSection property={property} />
-              <PropertyPoliciesSection property={property} />
+              {/* <PropertyHostSection property={property} ownerName={ownerName} /> */}
+              {/* <PropertyLocationSection property={property} /> */}
+              {/* <PropertyPoliciesSection property={property} /> */}
             </div>
-            <div className="h-fit lg:sticky lg:top-24">
+            {/* <div className="h-fit lg:sticky lg:top-24">
               <PropertyBookingSidebar property={property} />
-            </div>
+            </div> */}
           </section>
         </main>
       </div>
 
-      <PropertySimilarSection properties={similarProperties} />
+      {/*<PropertySimilarSection properties={similarProperties} />*/}
     </>
   );
 }

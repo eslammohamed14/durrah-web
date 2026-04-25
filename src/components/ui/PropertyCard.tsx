@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import type { PropertyCard as ApiPropertyCard } from "@/features/properties/type/propertyApiTypes";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import Image from "next/image";
@@ -10,19 +11,14 @@ import {
   BedIcon,
   DimensionIcon,
 } from "@/assets/icons";
-import { DEFAULT_IMAGE_SWIPER_SIZES } from "@/components/ui/ImageSwiper";
-
-const SQ_M_TO_SQ_FT = 10.7639;
+import {
+  DEFAULT_IMAGE_SWIPER_SIZES,
+  ImageSwiper,
+} from "@/components/ui/ImageSwiper";
+import { getImageUrl, isLocalStaticImageSrc } from "@/utils/getImageUrl";
 
 export interface PropertyCardProps {
   property: ApiPropertyCard;
-}
-
-function isLocalStaticImage(url?: string): boolean {
-  return (
-    Boolean(url) &&
-    (url!.startsWith("/") || url!.startsWith("/_next/static/media/"))
-  );
 }
 
 function normalizeTypeLabel(type?: string): string {
@@ -36,28 +32,25 @@ function normalizeTypeLabel(type?: string): string {
     .join(" ");
 }
 
-function resolveApiImageUrl(path: string | null): string | null {
-  if (!path) return null;
-  if (path.startsWith("http://") || path.startsWith("https://")) return path;
-
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
-  return `${apiBaseUrl}${path.startsWith("/") ? path : `/${path}`}`;
-}
-
 export function PropertyCard({ property }: PropertyCardProps) {
-  const { t, locale } = useLocale();
+  const { t, locale, dir } = useLocale();
   const propertyHref = `/properties/${property.slug}`;
   const title = property.title;
-
-  const galleryImages =
-    property.images.length > 0
-      ? property.images.map((image) => ({
-          id: "api-cover",
-          url: resolveApiImageUrl(image)!,
-          alt: property.title,
-          order: 0,
-        }))
-      : [];
+  const galleryImages = useMemo(
+    () =>
+      property.images
+        .map((image, index) => {
+          const url = getImageUrl(image);
+          return {
+            id: `${property.slug}-${index}`,
+            url,
+            alt: property.title,
+            unoptimized: isLocalStaticImageSrc(url),
+          };
+        })
+        .filter((item) => item.url !== ""),
+    [property.images, property.slug, property.title],
+  );
 
   const badgeLabel = "";
 
@@ -70,12 +63,12 @@ export function PropertyCard({ property }: PropertyCardProps) {
   const hasOffer =
     typeof originalBasePrice === "number" && originalBasePrice > basePrice;
 
-  const price = new Intl.NumberFormat(
-    locale === "ar" ? "ar-SA" : "en-SA",
-  ).format(basePrice);
-  const originalPrice = new Intl.NumberFormat(
-    locale === "ar" ? "ar-SA" : "en-SA",
-  ).format(originalBasePrice ?? basePrice);
+  const priceFormatter = useMemo(
+    () => new Intl.NumberFormat(locale === "ar" ? "ar-SA" : "en-SA"),
+    [locale],
+  );
+  const price = priceFormatter.format(basePrice);
+  const originalPrice = priceFormatter.format(originalBasePrice ?? basePrice);
 
   const sqFtLabel = t("home.specSqFt", { n: property.total_area.toString() });
 
@@ -90,7 +83,16 @@ export function PropertyCard({ property }: PropertyCardProps) {
   return (
     <article className="flex min-w-0 w-full max-w-full flex-col overflow-hidden rounded-2xl border border-text-body-muted bg-white pb-4 shadow-[0_0_24px_0_rgba(0,0,0,0.06)]">
       <div className="relative h-[216px] min-h-[216px] min-w-0 overflow-hidden rounded-t-xl bg-gradient-to-br from-slate-300 to-slate-400">
-        {galleryImages.length === 0 ? null : (
+        {galleryImages.length === 0 ? null : galleryImages.length > 1 ? (
+          <ImageSwiper
+            slides={galleryImages}
+            dir={dir}
+            fallbackAlt={title}
+            imageSizes={DEFAULT_IMAGE_SWIPER_SIZES}
+            imageQuality={65}
+            slideHeightPx={216}
+          />
+        ) : (
           <Image
             src={galleryImages[0].url}
             alt={galleryImages[0].alt ?? title}
@@ -99,7 +101,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
             sizes={DEFAULT_IMAGE_SWIPER_SIZES}
             quality={65}
             loading="lazy"
-            unoptimized={isLocalStaticImage(galleryImages[0].url)}
+            unoptimized={Boolean(galleryImages[0].unoptimized)}
           />
         )}
         {badgeLabel ? (

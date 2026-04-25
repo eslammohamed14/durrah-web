@@ -3,29 +3,10 @@ import { ArrowRightIcon } from "@/assets/icons";
 import { CtaNavigateButton } from "@/components/ui/CtaNavigateButton";
 import { PropertyCard } from "@/components/ui/PropertyCard";
 import type { Property } from "@/lib/types";
-import type { PropertyCard as ApiPropertyCard } from "@/features/properties/type/propertyApiTypes";
+import { toApiPropertyCard } from "@/features/properties/utils/toApiPropertyCard";
 
 interface PropertySimilarSectionProps {
   properties: Property[];
-}
-
-function toApiPropertyCard(property: Property): ApiPropertyCard {
-  return {
-    id: Number(property.id) || 0,
-    slug: property.id,
-    title: property.title.en || property.title.ar || "Property",
-    image: property.images[0]?.url ?? null,
-    city: property.location.area || "",
-    district: property.location.address.en || property.location.address.ar || "",
-    total_area: property.specifications.size ?? 0,
-    price_per_day: property.pricing.basePrice ?? 0,
-    price_per_week: undefined,
-    price_per_month: undefined,
-    bedrooms: property.specifications.rooms ?? 0,
-    bathrooms: property.specifications.bathrooms ?? 0,
-    guests: property.specifications.maxGuests ?? 0,
-    property_type: property.type,
-  };
 }
 
 export default async function PropertySimilarSection({

@@ -1,4 +1,4 @@
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import {
   BathroomIcon,
   BedIcon,
@@ -9,23 +9,23 @@ import {
   ParkingIcon,
 } from "@/assets/icons";
 import InlineInfoItem from "@/components/ui/InlineInfoItem";
-import type { Property } from "@/lib/types";
+import type { PropertyDetails } from "@/features/properties/type/propertyApiTypes";
 import { DescriptionToggle } from "./DescriptionToggle";
 
 interface PropertyInfoSectionProps {
-  property: Property;
+  property: PropertyDetails;
 }
 
 export default async function PropertyInfoSection({
   property,
 }: PropertyInfoSectionProps) {
   const t = await getTranslations();
-  const locale = (await getLocale()) as "en" | "ar";
 
-  const description =
-    property.description[locale] || property.description.en;
-  const area = property.location.area;
-  const sqFt = Math.round(property.specifications.size * 10.7639);
+  const descriptionHtml = property.description_html ?? "";
+  const area = [property.location.sector, property.location.beach]
+    .filter(Boolean)
+    .join(", ");
+  const sqFt = Math.round(property.total_area * 10.7639);
 
   const specs = [
     {
@@ -37,14 +37,14 @@ export default async function PropertyInfoSection({
       key: "rooms",
       icon: <BedIcon size={24} color="#727272" />,
       value: t("propertyDetails.bedShort", {
-        count: property.specifications.rooms ?? 0,
+        count: property.rooms ?? 0,
       }),
     },
     {
       key: "bathrooms",
       icon: <BathroomIcon size={24} color="#727272" />,
       value: t("propertyDetails.bathShort", {
-        count: property.specifications.bathrooms ?? 0,
+        count: property.bathrooms ?? 0,
       }),
     },
     {
@@ -94,7 +94,7 @@ export default async function PropertyInfoSection({
         </div>
       </div>
       {/* Leaf client component: handles expand/collapse toggle */}
-      <DescriptionToggle description={description} />
+      <DescriptionToggle descriptionHtml={descriptionHtml} />
     </section>
   );
 }

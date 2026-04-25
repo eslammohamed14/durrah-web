@@ -7,6 +7,24 @@ const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
+const apiImageRemotePattern = (() => {
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  if (!apiBaseUrl) return null;
+
+  try {
+    const url = new URL(apiBaseUrl);
+    if (url.protocol !== "http:" && url.protocol !== "https:") return null;
+
+    return {
+      protocol: url.protocol.slice(0, -1) as "http" | "https",
+      hostname: url.hostname,
+      pathname: "/web/image/**",
+    };
+  } catch {
+    return null;
+  }
+})();
+
 const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname,
@@ -35,6 +53,7 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "firebasestorage.googleapis.com",
       },
+      ...(apiImageRemotePattern ? [apiImageRemotePattern] : []),
     ],
   },
   rewrites: async () => [

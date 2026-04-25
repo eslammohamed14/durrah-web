@@ -1,40 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import PropertyHeroSection from "@/features/properties/components/propertyHeroSection";
 import PropertyGalleryModal from "@/features/properties/components/propertyGalleryModal";
-import type { Property } from "@/lib/types";
+import type { PropertyDetails } from "@/features/properties/type/propertyApiTypes";
 
 interface PropertyGalleryControllerProps {
-  property: Property;
+  property: PropertyDetails;
 }
 
-/**
- * Leaf Client Component: owns only the gallery open/index state.
- * Composes PropertyHeroSection (the trigger) and PropertyGalleryModal (the overlay)
- * so they can share the same state without polluting the RSC parent.
- */
 export default function PropertyGalleryController({
   property,
 }: PropertyGalleryControllerProps) {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
+  const handleOpenGallery = useCallback((index: number) => {
+    setActiveImageIndex(index);
+    setIsGalleryOpen(true);
+  }, []);
+
+  const handleCloseGallery = useCallback(() => setIsGalleryOpen(false), []);
+
   return (
     <>
       <PropertyHeroSection
         property={property}
-        onOpenGallery={(index) => {
-          setActiveImageIndex(index);
-          setIsGalleryOpen(true);
-        }}
+        onOpenGallery={handleOpenGallery}
       />
       <PropertyGalleryModal
         isOpen={isGalleryOpen}
-        onClose={() => setIsGalleryOpen(false)}
+        onClose={handleCloseGallery}
         images={property.images}
         initialSlide={activeImageIndex}
-        title={property.title.en}
+        title={property.title}
       />
     </>
   );
