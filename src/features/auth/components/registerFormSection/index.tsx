@@ -90,7 +90,7 @@ export default function RegisterFormSection() {
               id="register-full-name-label"
             >
               <span>{t("fullNameLabel")}</span>
-              <span className="text-danger" aria-hidden>
+              <span className="text-red-500" aria-hidden>
                 {" "}
                 *
               </span>
@@ -117,7 +117,7 @@ export default function RegisterFormSection() {
               id="register-email-label"
             >
               <span>{t("emailLabel")}</span>
-              <span className="text-danger" aria-hidden>
+              <span className="text-red-500" aria-hidden>
                 {" "}
                 *
               </span>
@@ -143,7 +143,7 @@ export default function RegisterFormSection() {
               id="register-national-id-label"
             >
               <span>{t("nationalIdLabel")}</span>
-              <span className="text-danger" aria-hidden>
+              <span className="text-red-500" aria-hidden>
                 {" "}
                 *
               </span>
@@ -172,7 +172,7 @@ export default function RegisterFormSection() {
               id="register-phone-label"
             >
               <span>{t("phoneLabel")}</span>
-              <span className="text-danger" aria-hidden>
+              <span className="text-red-500" aria-hidden>
                 {" "}
                 *
               </span>

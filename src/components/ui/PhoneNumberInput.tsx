@@ -58,6 +58,10 @@ export const PhoneNumberInput = React.forwardRef<
               +966
             </span>
           </div>
+          <span
+            className="my-auto h-6 w-px shrink-0 bg-grey-200"
+            aria-hidden
+          />
 
           <input
             ref={ref}

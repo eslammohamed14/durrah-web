@@ -59,7 +59,11 @@ export default function LoginFormSection() {
       >
         <div className="space-y-1">
           <label htmlFor="login-phone" className="text-sm font-medium text-[#344054]">
-            {t("loginPage.phoneLabel")}
+            {t("loginPage.phoneLabel").replace(" *", "").replace("*", "")}
+            <span className="text-red-500" aria-hidden>
+              {" "}
+              *
+            </span>
           </label>
           <PhoneNumberInput
             id="login-phone"

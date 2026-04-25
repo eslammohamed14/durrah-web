@@ -48,11 +48,6 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
-      // Allow Firestore / Storage CDN (added when real backend is wired up)
-      {
-        protocol: "https",
-        hostname: "firebasestorage.googleapis.com",
-      },
       ...(apiImageRemotePattern ? [apiImageRemotePattern] : []),
     ],
   },

@@ -20,20 +20,8 @@ let _storageService: IFileStorageService | null = null;
 export async function getAuthService(): Promise<IAuthService> {
   if (_authService) return _authService;
 
-  switch (env.authProvider) {
-    case 'mock': {
-      const { MockAuthAdapter } = await import('@/lib/services/auth/MockAuthAdapter');
-      _authService = new MockAuthAdapter();
-      break;
-    }
-    case 'firebase': {
-      const { FirebaseAuthAdapter } = await import('@/lib/services/auth/FirebaseAuthAdapter');
-      _authService = new FirebaseAuthAdapter(env.firebase);
-      break;
-    }
-    default:
-      throw new Error(`Unknown auth provider: ${env.authProvider}`);
-  }
+  const { MockAuthAdapter } = await import('@/lib/services/auth/MockAuthAdapter');
+  _authService = new MockAuthAdapter();
 
   return _authService;
 }
@@ -74,9 +62,9 @@ export async function getStorageService(): Promise<IFileStorageService> {
   if (_storageService) return _storageService;
 
   switch (env.storageProvider) {
-    case 'firebase': {
-      const { FirebaseStorageAdapter } = await import('@/lib/services/storage/FirebaseStorageAdapter');
-      _storageService = new FirebaseStorageAdapter(env.firebase);
+    case 'mock': {
+      const { MockStorageAdapter } = await import('@/lib/services/storage/MockStorageAdapter');
+      _storageService = new MockStorageAdapter();
       break;
     }
     default:
