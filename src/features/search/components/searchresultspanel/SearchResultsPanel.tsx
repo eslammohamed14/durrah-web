@@ -36,7 +36,6 @@ export default function SearchResultsPanel({
     },
     [pathname, router, searchParams],
   );
-console.log(seedProperties)
   return (
     <>
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
