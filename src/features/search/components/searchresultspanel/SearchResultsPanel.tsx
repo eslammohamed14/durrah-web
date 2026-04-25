@@ -1,17 +1,42 @@
+ "use client";
+
+import { useCallback } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { MapIcon } from "@/assets/icons/MapIcon";
 import ViewModeButton from "../ViewModeButton";
 import { ListIcon } from "@/assets/icons/ListIcon";
 import { GridIcon } from "@/assets/icons/GridIcon";
 import { PropertyCard } from "@/components/ui/PropertyCard";
 import type { Property } from "@/lib/types";
+import { seedProperties } from "@/lib/api/mock/seedData";
+import LocationMap from "../LocationMap/LocationMap";
+
+type ViewMode = "grid" | "list" | "map";
 
 export default function SearchResultsPanel({
   properties,
 }: {
   properties: Property[];
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const count = properties.length;
+  const rawView = searchParams.get("view");
+  const currentView: ViewMode =
+    rawView === "list" || rawView === "map" ? rawView : "grid";
+  const numberOfColumns = currentView === "list" ? 1 : 2;
 
+  const handleViewChange = useCallback(
+    (view: ViewMode) => {
+      const next = new URLSearchParams(searchParams.toString());
+      next.set("view", view);
+      const qs = next.toString();
+      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    },
+    [pathname, router, searchParams],
+  );
+console.log(seedProperties)
   return (
     <>
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -20,13 +45,25 @@ export default function SearchResultsPanel({
         </p>
         <div className="flex flex-wrap items-center gap-3">
           <div className="inline-flex items-center rounded-lg bg-grey-50 p-1 ring-1 ring-black/[0.06]">
-            <ViewModeButton active aria-label="Map view">
+            <ViewModeButton
+              active={currentView === "map"}
+              aria-label="Map view"
+              onClick={() => handleViewChange("map")}
+            >
               <MapIcon />
             </ViewModeButton>
-            <ViewModeButton aria-label="List view">
+            <ViewModeButton
+              active={currentView === "list"}
+              aria-label="List view"
+              onClick={() => handleViewChange("list")}
+            >
               <ListIcon />
             </ViewModeButton>
-            <ViewModeButton aria-label="Grid view">
+            <ViewModeButton
+              active={currentView === "grid"}
+              aria-label="Grid view"
+              onClick={() => handleViewChange("grid")}
+            >
               <GridIcon />
             </ViewModeButton>
           </div>
@@ -40,11 +77,16 @@ export default function SearchResultsPanel({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
+     {currentView==='map'? <LocationMap /> : <div
+        className={[
+          "grid gap-6",
+          numberOfColumns === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2",
+        ].join(" ")}
+      >
         {properties.map((property) => (
-          <PropertyCard key={property.id} property={property} />
+          <PropertyCard key={property.id} property={property}  />
         ))}
-      </div>
+      </div>}
     </>
   );
 }

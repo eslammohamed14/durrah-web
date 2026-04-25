@@ -6,13 +6,17 @@ import FilterSection from "../filterSection/FilterSection";
 import CheckboxRow, {
   type CheckboxRowChangeDetail,
 } from "../CheckboxRow";
-import RadioRow from "../RadioRow";
 import { seedProperties } from "@/lib/api/mock/seedData";
 import { CloseFilterIcon } from "@/assets/icons";
 import {
   TRIAL_FILTER_SEARCH_KEYS,
   parseCommaSeparatedParam,
 } from "@/features/search/lib/filterSeedProperties";
+import RangeSlider from "../rangeslider/RangeSlider";
+import { useRangeQueryParams } from "@/features/search/hooks/useRangeQueryParams";
+
+const PRICE_RANGE_LIMITS = { min: 0, max: 20000 } as const;
+const LAND_RANGE_LIMITS = { min: 0, max: 3000 } as const;
 
 function getSpecOptions(
   properties: typeof seedProperties,
@@ -66,6 +70,33 @@ export default function SearchFiltersPanel() {
     () => parseCommaSeparatedParam(searchParams, TRIAL_FILTER_SEARCH_KEYS.furnishing),
     [searchParams],
   );
+  const [priceRange, setPriceRange, commitPriceRange] = useRangeQueryParams({
+    minKey: "priceMin",
+    maxKey: "priceMax",
+    limits: PRICE_RANGE_LIMITS,
+  });
+  const [landRange, setLandRange, commitLandRange] = useRangeQueryParams({
+    minKey: "landMin",
+    maxKey: "landMax",
+    limits: LAND_RANGE_LIMITS,
+  });
+
+  const roomsParamKey = TRIAL_FILTER_SEARCH_KEYS.rooms;
+  const bathroomsParamKey = TRIAL_FILTER_SEARCH_KEYS.bathrooms;
+
+  const selectedRooms = useMemo(() => {
+    const raw = searchParams.get(roomsParamKey);
+    if (raw == null || raw === "") return undefined;
+    const n = Number(raw);
+    return Number.isFinite(n) && Number.isInteger(n) && n >= 0 ? n : undefined;
+  }, [roomsParamKey, searchParams]);
+
+  const selectedBathrooms = useMemo(() => {
+    const raw = searchParams.get(bathroomsParamKey);
+    if (raw == null || raw === "") return undefined;
+    const n = Number(raw);
+    return Number.isFinite(n) && Number.isInteger(n) && n >= 0 ? n : undefined;
+  }, [bathroomsParamKey, searchParams]);
 
   const replaceParams = useCallback(
     (next: URLSearchParams) => {
@@ -91,14 +122,7 @@ export default function SearchFiltersPanel() {
     [replaceParams, searchParams],
   );
 
-  const clearCategory = useCallback(
-    (paramKey: string) => {
-      const next = new URLSearchParams(searchParams.toString());
-      next.delete(paramKey);
-      replaceParams(next);
-    },
-    [replaceParams, searchParams],
-  );
+  
 
   const resetAll = useCallback(() => {
     router.replace(pathname, { scroll: false });
@@ -127,6 +151,37 @@ export default function SearchFiltersPanel() {
       toggleFilter(fuKey, _detail.value);
     },
     [toggleFilter, fuKey],
+  );
+
+  const handleToggleRooms = useCallback(
+    (value: number) => {
+      const next = new URLSearchParams(searchParams.toString());
+      if (selectedRooms === value) {
+        next.delete(roomsParamKey);
+      } else {
+        next.set(roomsParamKey, String(value));
+      }
+      replaceParams(next);
+    },
+    [replaceParams, roomsParamKey, searchParams, selectedRooms],
+  );
+
+  const handleToggleBathrooms = useCallback(
+    (value: number) => {
+      const next = new URLSearchParams(searchParams.toString());
+      if (selectedBathrooms === value) {
+        next.delete(bathroomsParamKey);
+      } else {
+        next.set(bathroomsParamKey, String(value));
+      }
+      replaceParams(next);
+    },
+    [
+      bathroomsParamKey,
+      replaceParams,
+      searchParams,
+      selectedBathrooms,
+    ],
   );
 
   const unitTypes = Array.from(new Set(seedProperties.map((p) => p.type)));
@@ -163,51 +218,84 @@ export default function SearchFiltersPanel() {
         ))}
       </FilterSection>
 
-      <FilterSection showChevron={false} title="Price Range" defaultOpen>
-        <p className="mb-3 text-sm font-normal leading-[21px] text-grey-800">
-          $25.00 - $125.00
-        </p>
-        <div className="relative h-1.5 w-full rounded-full bg-grey-100">
-          <div className="absolute left-[18%] right-[28%] top-0 h-full rounded-full bg-primary-blue-400" />
-          <span className="absolute left-[18%] top-1/2 size-[18px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-primary-blue-400 shadow-sm" />
-          <span className="absolute right-[28%] top-1/2 size-[18px] translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-primary-blue-400 shadow-sm" />
-        </div>
+      <FilterSection
+        collapsible={false}
+        showChevron={false}
+        title="Price Range"
+        defaultOpen
+      >
+        <RangeSlider
+          min={PRICE_RANGE_LIMITS.min}
+          max={PRICE_RANGE_LIMITS.max}
+          value={priceRange}
+          onChange={setPriceRange}
+          onChangeEnd={commitPriceRange}
+          step={1000}
+          unitLabel="SAR"
+          minAriaLabel="Minimum price"
+          maxAriaLabel="Maximum price"
+        />
       </FilterSection>
 
-      <FilterSection title="Land Area (Sqft)" defaultOpen>
-        <p className="mb-3 text-sm font-normal leading-[21px] text-grey-800">
-          1500 - 3000
-        </p>
-        <div className="relative h-1.5 w-full rounded-full bg-grey-100">
-          <div className="absolute left-[22%] right-[30%] top-0 h-full rounded-full bg-primary-blue-400" />
-          <span className="absolute left-[22%] top-1/2 size-[18px] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-primary-blue-400 shadow-sm" />
-          <span className="absolute right-[30%] top-1/2 size-[18px] translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-primary-blue-400 shadow-sm" />
-        </div>
+      <FilterSection title="Land Area (Sqft)"  defaultOpen collapsible={false}>
+        <RangeSlider
+          min={LAND_RANGE_LIMITS.min}
+          max={LAND_RANGE_LIMITS.max}
+          value={landRange}
+          onChange={setLandRange}
+          onChangeEnd={commitLandRange}
+          step={50}
+          unitLabel="sqft"
+          minAriaLabel="Minimum land area"
+          maxAriaLabel="Maximum land area"
+        />
       </FilterSection>
 
-      <FilterSection title="Rooms" defaultOpen>
+      <FilterSection title="Rooms" collapsible={false} defaultOpen>
         <div className="flex flex-wrap gap-2">
-          {roomOptions.map((n) => (
-            <span
-              key={n}
-              className="flex size-9 items-center justify-center rounded-lg border border-border-default bg-surface-primary text-sm font-medium text-text-dark"
-            >
-              {n}
-            </span>
-          ))}
+          {roomOptions.map((n) => {
+            const active = selectedRooms === n;
+            return (
+              <button
+                key={n}
+                type="button"
+                aria-pressed={active}
+                onClick={() => handleToggleRooms(n)}
+                className={[
+                  "flex size-9 items-center justify-center rounded-lg border text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-blue-400",
+                  active
+                    ? "border-primary-blue-400 bg-primary-coral-400 text-white"
+                    : "border-border-default bg-surface-primary text-text-dark hover:border-grey-400",
+                ].join(" ")}
+              >
+                {n}
+              </button>
+            );
+          })}
         </div>
       </FilterSection>
 
-      <FilterSection title="Bathrooms" defaultOpen>
+      <FilterSection title="Bathrooms" collapsible={false} defaultOpen>
         <div className="flex flex-wrap gap-2">
-          {bathroomOptions.map((n) => (
-            <span
-              key={n}
-              className="flex size-9 items-center justify-center rounded-lg border border-border-default bg-surface-primary text-sm font-medium text-text-dark"
-            >
-              {n}
-            </span>
-          ))}
+          {bathroomOptions.map((n) => {
+            const active = selectedBathrooms === n;
+            return (
+              <button
+                key={n}
+                type="button"
+                aria-pressed={active}
+                onClick={() => handleToggleBathrooms(n)}
+                className={[
+                  "flex size-9 items-center justify-center rounded-lg border text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-blue-400",
+                  active
+                    ? "border-primary-blue-400 bg-primary-coral-400 text-white"
+                    : "border-border-default bg-surface-primary text-text-dark hover:border-grey-400",
+                ].join(" ")}
+              >
+                {n}
+              </button>
+            );
+          })}
         </div>
       </FilterSection>
 
@@ -223,10 +311,7 @@ export default function SearchFiltersPanel() {
         ))}
       </FilterSection>
 
-      <FilterSection title="Availability" defaultOpen>
-        <RadioRow label="Available Now" checked readOnly />
-        <RadioRow label="Under Construction" />
-      </FilterSection>
+      
 
       <FilterSection title="Amenities" defaultOpen className="border-b-0 pb-0">
         <div className="grid grid-cols-1 gap-2 ">

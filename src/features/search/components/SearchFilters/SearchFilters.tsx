@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useLocale } from "@/lib/contexts/LocaleContext";
 import { Button } from "@/components/ui/Button";
+import RangeSlider from "@/features/search/components/rangeslider/RangeSlider";
 import type {
   PropertyCategory,
   PropertyType,
@@ -103,69 +104,6 @@ function FilterSection({
     <div className="border-b border-gray-200 py-4 last:border-0">
       <h3 className="mb-3 text-sm font-semibold text-gray-900">{title}</h3>
       {children}
-    </div>
-  );
-}
-
-function PriceRangeSlider({
-  min,
-  max,
-  value,
-  onChange,
-}: {
-  min: number;
-  max: number;
-  value: { min: number; max: number };
-  onChange: (v: { min: number; max: number }) => void;
-}) {
-  const { t } = useLocale();
-
-  return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between text-sm text-gray-600">
-        <span>
-          {value.min.toLocaleString()} {t("currency.SAR")}
-        </span>
-        <span>
-          {value.max.toLocaleString()} {t("currency.SAR")}
-        </span>
-      </div>
-      <div className="relative h-2">
-        <div className="absolute inset-0 rounded-full bg-gray-200" />
-        <div
-          className="absolute h-2 rounded-full bg-blue-500"
-          style={{
-            left: `${((value.min - min) / (max - min)) * 100}%`,
-            right: `${100 - ((value.max - min) / (max - min)) * 100}%`,
-          }}
-        />
-        <input
-          type="range"
-          min={min}
-          max={max}
-          step={500}
-          value={value.min}
-          onChange={(e) => {
-            const v = Number(e.target.value);
-            if (v < value.max) onChange({ ...value, min: v });
-          }}
-          aria-label="Minimum price"
-          className="absolute inset-0 h-2 w-full cursor-pointer appearance-none bg-transparent [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-600 [&::-webkit-slider-thumb]:shadow"
-        />
-        <input
-          type="range"
-          min={min}
-          max={max}
-          step={500}
-          value={value.max}
-          onChange={(e) => {
-            const v = Number(e.target.value);
-            if (v > value.min) onChange({ ...value, max: v });
-          }}
-          aria-label="Maximum price"
-          className="absolute inset-0 h-2 w-full cursor-pointer appearance-none bg-transparent [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-600 [&::-webkit-slider-thumb]:shadow"
-        />
-      </div>
     </div>
   );
 }
@@ -325,11 +263,15 @@ export function SearchFilters({
 
       {/* Price Range */}
       <FilterSection title={t("search.priceRange")}>
-        <PriceRangeSlider
+        <RangeSlider
           min={0}
           max={100000}
+          step={500}
           value={filters.priceRange ?? { min: 0, max: 100000 }}
           onChange={(v) => applyFilters({ ...filters, priceRange: v })}
+          unitLabel={t("currency.SAR")}
+          minAriaLabel="Minimum price"
+          maxAriaLabel="Maximum price"
         />
       </FilterSection>
 
