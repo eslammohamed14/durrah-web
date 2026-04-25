@@ -98,7 +98,7 @@
       "fullNameMin": "أدخل حرفين على الأقل",
       "fullNameMax": "الاسم طويل جداً",
       "phoneRequired": "رقم الجوال مطلوب",
-      "phoneInvalid": "أدخل رقم هاتف صالحاً للدولة المختارة",
+      "phoneInvalid": "أدخل رقم جوال سعودي صالح (5XXXXXXXX)",
       "phoneCountryRequired": "الدولة مطلوبة",
       "phoneCountryInvalid": "يرجى اختيار دولة صالحة",
       "nationalIdRequired": "رقم الهوية / الإقامة مطلوب",
@@ -109,6 +109,8 @@
     "loginPage": {
       "title": "مرحباً بعودتك",
       "subtitle": "سجّل الدخول للمتابعة إلى حسابك",
+      "phoneLabel": "رقم الجوال *",
+      "phonePlaceholder": "5XXXXXXXX",
       "emailLabel": "البريد الإلكتروني *",
       "emailPlaceholder": "أدخل بريدك الإلكتروني",
       "passwordLabel": "كلمة المرور *",

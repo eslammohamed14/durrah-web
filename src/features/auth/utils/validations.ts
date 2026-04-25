@@ -1,22 +1,14 @@
 import * as yup from "yup";
-import {
-  getCountryCallingCode,
-  isValidPhoneNumber,
-  type CountryCode,
-} from "libphonenumber-js";
 import { isValidSaudiNationalId } from "@/lib/saudiNationalId";
 
+const saudiPhoneRegex = /^5\d{8}$/;
+
 export const loginSchema = yup.object({
-  email: yup
+  phoneNumber: yup
     .string()
     .trim()
-    .email("validation.emailInvalid")
-    .required("validation.emailRequired"),
-  password: yup
-    .string()
-    .min(8, "validation.passwordMin")
-    .required("validation.passwordRequired"),
-  rememberMe: yup.boolean().default(false),
+    .required("validation.phoneRequired")
+    .matches(saudiPhoneRegex, "validation.phoneInvalid"),
 });
 
 export type LoginFormValues = yup.InferType<typeof loginSchema>;
@@ -74,34 +66,11 @@ export const registerSchema = yup.object({
       "validation.nationalIdInvalid",
       (v) => !!v && isValidSaudiNationalId(v),
     ),
-  password: yup
-    .string()
-    .min(8, "validation.passwordMin")
-    .required("validation.passwordRequired"),
-  phoneCountry: yup
-    .string()
-    .trim()
-    .length(2, "validation.phoneCountryInvalid")
-    .required("validation.phoneCountryRequired"),
-  phone: yup
+  phoneNumber: yup
     .string()
     .trim()
     .required("validation.phoneRequired")
-    .test("phone-e164", "validation.phoneInvalid", function (v) {
-      if (!v) return false;
-      const country = (this.parent as { phoneCountry?: string }).phoneCountry;
-      if (!country || country.length !== 2) return false;
-      const digits = v.replace(/\D/g, "");
-      if (!digits) return false;
-      try {
-        const cc = country.toUpperCase() as CountryCode;
-        const dial = getCountryCallingCode(cc);
-        const e164 = `+${dial}${digits}`;
-        return isValidPhoneNumber(e164, cc);
-      } catch {
-        return false;
-      }
-    }),
+    .matches(saudiPhoneRegex, "validation.phoneInvalid"),
   termsAccepted: yup
     .boolean()
     .oneOf([true], "validation.termsRequired")

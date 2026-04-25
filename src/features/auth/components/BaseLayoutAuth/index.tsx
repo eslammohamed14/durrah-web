@@ -121,7 +121,7 @@ export default async function BaseLayoutAuth({
         className={[
           "relative hidden lg:block",
           isRegisterShell
-            ? "h-[968px] w-full shrink-0 bg-transparent lg:w-[52%] lg:max-w-[52%]"
+            ? "h-full min-h-[100dvh] w-full shrink-0 overflow-hidden bg-black lg:h-[100dvh] lg:w-[52%] lg:max-w-[52%]"
             : "h-full min-h-0 bg-black",
         ].join(" ")}
       >

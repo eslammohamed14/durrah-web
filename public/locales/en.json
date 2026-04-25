@@ -98,7 +98,7 @@
       "fullNameMin": "Enter at least 2 characters",
       "fullNameMax": "Name is too long",
       "phoneRequired": "Phone number is required",
-      "phoneInvalid": "Enter a valid phone number for the selected country",
+      "phoneInvalid": "Enter a valid Saudi phone number (5XXXXXXXX)",
       "phoneCountryRequired": "Country is required",
       "phoneCountryInvalid": "Select a valid country",
       "nationalIdRequired": "National ID / Iqama number is required",
@@ -109,6 +109,8 @@
     "loginPage": {
       "title": "Welcome Back",
       "subtitle": "Sign in to continue to your account",
+      "phoneLabel": "Phone Number *",
+      "phonePlaceholder": "5XXXXXXXX",
       "emailLabel": "Email address *",
       "emailPlaceholder": "Enter your email address",
       "passwordLabel": "Password *",
